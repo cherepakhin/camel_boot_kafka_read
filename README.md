@@ -123,9 +123,8 @@ $ jq -rc . example1.json | ./kafka/bin/kafka-console-producer.sh --broker-list 1
 "suffix": "Suffix2"
 }
 
---
 
-Сообщени логируются:
+Сообщения логируются:
 2024-11-18 13:30:38.164  INFO 17625 --- [ro-information]] c.b.r.processor.MessageBodyLogger        : Polled Superhero information: SuperHero(id=f10e37fa-0da7-4854-a292-33948f2ce331, name=Name2, descriptor=Descriptor2, power=Power2, prefix=Prefix2, suffix=Suffix2, foundAt=null)
 Hibernate: insert into super_hero (descriptor, found_at, name, power, prefix, suffix, id) values (?, ?, ?, ?, ?, ?, ?)
 --
