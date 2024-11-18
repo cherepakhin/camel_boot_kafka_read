@@ -39,7 +39,7 @@ $ cat example1.json
 }
 ````
 
-[Примеры использования](#jq_example) в конце Readme.md.
+[Примеры использования jq](#jq_example) в конце Readme.md.
 
 ````shell
 $ jq -rc . example1.json | ./kafka/bin/kafka-console-producer.sh --broker-list 192.168.1.20:9092 --topic superhero-information
@@ -114,7 +114,6 @@ Transfer-Encoding: chunked
 
 []
 ````
-
 
 <a id="jq_example"></a>
 Использование __jq__
