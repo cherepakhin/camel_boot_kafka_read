@@ -97,7 +97,7 @@ $ jq -rc . example1.json | ./kafka/bin/kafka-console-producer.sh --broker-list 1
 Hibernate: insert into super_hero (descriptor, found_at, name, power, prefix, suffix, id) values (?, ?, ?, ?, ?, ?, ?)
 ````
 
-Camel route SuperHeroInformationConsumptionRoute читает из топика superhero-information и сохраняет memory database. Прочитать сообщение через REST 
+Camel route [SuperHeroInformationConsumptionRoute.java](https://github.com/cherepakhin/camel_boot_kafka_read/blob/main/superhero-searcher/src/main/java/com/behl/searcher/route/SuperHeroSearchScheduler.java) читает из топика superhero-information и сохраняет memory database. Прочитать сообщение через REST 
 
 ````shell
 http :9090/v1/registry/superheroes
