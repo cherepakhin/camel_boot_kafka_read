@@ -6,12 +6,17 @@
 В проекте superhero-registry читаются сообщения из очереди Kafka "superhero-information" 
 (application.properties "com.behl.kafka.topic-name=superhero-information")
 
-REST "$ http :9090/v1/registry/superheroes" показывает последнее принятое сообщение
+Чтение последнего принятого сообщения:
+
+````shell
+$ http :9090/v1/registry/superheroes" 
+````
 
 Сообщения можно отправлять вручную (описано ниже) или генерировать другой программой 
-(см. [../camel-integration-spring-boot-kafka/superhero-searcher](https://github.com/cherepakhin/camel_boot_kafka_read/tree/main/superhero-searcher))
-----------------------------------
-Отправка сообщений вручную.
+(см. [https://github.com/cherepakhin/camel_boot_kafka_read/tree/main/superhero-searcher](https://github.com/cherepakhin/camel_boot_kafka_read/tree/main/superhero-searcher))
+
+
+# Отправка сообщений вручную.
 
 Можно использовать какой-нибудь UI инструмент или через консоль (предполагается, что дистрибутив kafka развернут в ~/tools/kafka).
 
