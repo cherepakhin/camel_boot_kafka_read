@@ -1,6 +1,5 @@
 Проект не мой.
 [Источник](https://github.com/hardikSinghBehl/camel-integration-spring-boot-kafka)
-[Оригинальный Readme.md](https://github.com/hardikSinghBehl/camel-integration-spring-boot-kafka/Readme.md)
 
 Ниже мои комментарии.
 
