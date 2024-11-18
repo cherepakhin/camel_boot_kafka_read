@@ -4,8 +4,8 @@
 # Мои комметарии
 
 Два проекта __superhero-searcher__ и __superhero-registry__ .<br/>
-__superhero-searcher__ - генерирует сообщения и отправляет в очередь Kafka.<br/>
-__superhero-registry__ - читает сообщения из очереди Kafka.<br/>
+[superhero-searcher](https://github.com/cherepakhin/camel_boot_kafka_read/tree/main/superhero-registry) - генерирует сообщения и отправляет в очередь Kafka.<br/>
+[superhero-registry](https://github.com/cherepakhin/camel_boot_kafka_read/tree/main/superhero-searcher) - читает сообщения из очереди Kafka.<br/>
 
 Проекты запускаются раздельно скриптами run.sh в каталоге проектов.
 Проект __superhero-searcher__ генерирует сообщения по таймеру и отправляет их в очередь Kafka "superhero-information":
