@@ -3,8 +3,32 @@
 
 # Мои комметарии
 
-В проекте superhero-registry читаются сообщения из очереди Kafka "superhero-information" 
-(application.properties "com.behl.kafka.topic-name=superhero-information")
+Проект __superhero-searcher__ генерирует сообщения по таймеру и отправляет их в очередь Kafka "superhero-information":
+
+````java
+public class SuperHeroSearchScheduler extends RouteBuilder {
+    ....
+    public void configure() {
+        from("timer:superhero-search-scheduler?period=5000").bean(superHeroSearcher).process(messageBodyLogger)
+                .marshal(JsonDataFormatter.get(SuperHero.class))
+                .process(messageBodyLoggerSecond)
+                .to("kafka:" + kafkaConfigurationProperties.getTopicName()); // topic "superhero-information"
+    }
+    ....
+````
+
+В проекте __superhero-registry__ читаются сообщения из очереди Kafka "superhero-information". Задано в [application.properties](https://github.com/cherepakhin/camel_boot_kafka_read/blob/main/superhero-registry/src/main/resources/application.properties):
+
+````properties
+...
+# Kafka Configuration
+camel.component.kafka.brokers=${BOOTSTRAP_SERVERS:http://192.168.1.20:9092}
+com.behl.kafka.topic-name=superhero-information
+....
+````
+
+com.behl.kafka.topic-name=superhero-information
+
 
 Чтение последнего принятого сообщения:
 
