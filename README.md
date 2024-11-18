@@ -9,8 +9,7 @@
 REST "$ http :9090/v1/registry/superheroes" показывает последнее принятое сообщение
 
 Сообщения можно отправлять вручную (описано ниже) или генерировать другой программой 
-(см. ../camel-integration-spring-boot-kafka/superhero-searcher)
-
+(см. [../camel-integration-spring-boot-kafka/superhero-searcher](https://github.com/cherepakhin/camel_boot_kafka_read/tree/main/superhero-searcher))
 ----------------------------------
 Отправка сообщений вручную.
 
