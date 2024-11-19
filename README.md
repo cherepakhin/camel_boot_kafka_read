@@ -1,14 +1,20 @@
 Проект не мой.
 [Источник camel-integration-spring-boot-kafka](https://github.com/hardikSinghBehl/camel-integration-spring-boot-kafka)
 
-# Мои комметарии
+# О чем это?
+
+Демонстрация работы Camel на примере работы с Kafka.<br/>
 
 Два проекта __superhero-searcher__ и __superhero-registry__ .<br/>
 [superhero-searcher](https://github.com/cherepakhin/camel_boot_kafka_read/tree/main/superhero-registry) - генерирует сообщения и отправляет в очередь Kafka.<br/>
 [superhero-registry](https://github.com/cherepakhin/camel_boot_kafka_read/tree/main/superhero-searcher) - читает сообщения из очереди Kafka.<br/>
 
+# Запуск
+
 Проекты запускаются раздельно скриптами run.sh в каталоге проектов.
-Проект __superhero-searcher__ генерирует сообщения по таймеру и отправляет их в очередь Kafka "superhero-information":
+
+## Проект __superhero-searcher__.
+Генерирует сообщения по таймеру и отправляет их в очередь Kafka "superhero-information":
 
 ````java
 public class SuperHeroSearchScheduler extends RouteBuilder {
@@ -21,8 +27,11 @@ public class SuperHeroSearchScheduler extends RouteBuilder {
     }
     ....
 ````
+Использован Camel.
 
-В проекте __superhero-registry__ читаются сообщения из очереди Kafka "superhero-information". Задано в [application.properties](https://github.com/cherepakhin/camel_boot_kafka_read/blob/main/superhero-registry/src/main/resources/application.properties):
+## Проект __superhero-registry__.
+
+Читаются сообщения из очереди Kafka "superhero-information". Задано в [application.properties](https://github.com/cherepakhin/camel_boot_kafka_read/blob/main/superhero-registry/src/main/resources/application.properties):
 
 ````properties
 ...
@@ -32,22 +41,17 @@ com.behl.kafka.topic-name=superhero-information
 ....
 ````
 
-com.behl.kafka.topic-name=superhero-information
-
-
 Чтение последнего принятого сообщения:
 
 ````shell
 $ http :9090/v1/registry/superheroes" 
 ````
 
-Сообщения можно отправлять вручную (описано ниже) или генерировать другой программой 
-(см. [https://github.com/cherepakhin/camel_boot_kafka_read/tree/main/superhero-searcher](https://github.com/cherepakhin/camel_boot_kafka_read/tree/main/superhero-searcher))
-
-
 # Отправка сообщений вручную.
 
-Можно использовать какой-нибудь UI инструмент или через консоль (предполагается, что дистрибутив kafka развернут в ~/tools/kafka).
+Для отладки можно использовать какой-нибудь UI инструмент или через консоль (предполагается, что дистрибутив kafka развернут в ~/tools/kafka).
+
+Через консоль:
 
 ````shell
 echo "Hello, World from Kafka" | ~/tools/kafka/bin/kafka-console-producer.sh --broker-list 192.168.1.20:9092 --topic superhero-information
@@ -107,27 +111,26 @@ Camel route [SuperHeroInformationConsumptionRoute.java](https://github.com/chere
 ````shell
 http :9090/v1/registry/superheroes
 [
-{
-"descriptor": "Descriptor1",
-"foundAt": null,
-"id": "f10e37fa-0da7-4854-a292-33948f2ce330",
-"name": "Name1",
-"power": "Power1",
-"prefix": "Prefix1",
-"suffix": "Suffix1"
-},
-{
-"descriptor": "Descriptor2",
-"foundAt": null,
-"id": "f10e37fa-0da7-4854-a292-33948f2ce331",
-"name": "Name2",
-"power": "Power2",
-"prefix": "Prefix2",
-"suffix": "Suffix2"
-}
+    {
+        "descriptor": "Descriptor1",
+        "foundAt": null,
+        "id": "f10e37fa-0da7-4854-a292-33948f2ce330",
+        "name": "Name1",
+        "power": "Power1",
+        "prefix": "Prefix1",
+        "suffix": "Suffix1"
+    },
+    {
+        "descriptor": "Descriptor2",
+        "foundAt": null,
+        "id": "f10e37fa-0da7-4854-a292-33948f2ce331",
+        "name": "Name2",
+        "power": "Power2",
+        "prefix": "Prefix2",
+        "suffix": "Suffix2"
+    }
 ]
 ````
-
 
 SuperHeroController
 
