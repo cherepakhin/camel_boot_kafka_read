@@ -86,11 +86,6 @@
 						</goals>
 					</execution>
 				</executions>
-				<configuration>
-					<repository>hardikbehl/${project.name}</repository>
-					<tag>${project.version}</tag>
-					<skipDockerInfo>true</skipDockerInfo>
-				</configuration>
 			</plugin>
 		</plugins>
 	</build>
