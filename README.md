@@ -3,7 +3,7 @@
 
 # О чем это?
 
-Демонстрация работы Camel на примере работы с Kafka.<br/>
+Демонстрация работы Camel с Kafka.<br/>
 
 Два проекта __superhero-searcher__ и __superhero-registry__ .<br/>
 [superhero-searcher](https://github.com/cherepakhin/camel_boot_kafka_read/tree/main/superhero-registry) - генерирует сообщения и отправляет в очередь Kafka.<br/>
@@ -66,7 +66,7 @@ echo "Hello, World from Kafka" | ~/tools/kafka/bin/kafka-console-producer.sh --b
 $ cat example1.json
 {
 "id": "f10e37fa-0da7-4854-a292-33948f2ce330",
-"name": "Name1",
+"name": "Name2",
 "descriptor": "Descriptor1",
 "power": "Power1",
 "prefix": "Prefix1",
