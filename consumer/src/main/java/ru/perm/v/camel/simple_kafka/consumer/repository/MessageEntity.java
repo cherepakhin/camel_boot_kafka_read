@@ -14,17 +14,17 @@ public class MessageEntity {
     private UUID id = UUID.randomUUID();
     @Column(name = "name")
     private String name = "";
-    @Column(name = "descriptor")
-    private String descriptor = "";
+    @Column(name = "description")
+    private String description = "";
     private static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
     public MessageEntity() {
     }
 
-    public MessageEntity(UUID id, String name, String descriptor) {
+    public MessageEntity(UUID id, String name, String description) {
         this.id = id;
         this.name = name;
-        this.descriptor = descriptor;
+        this.description = description;
     }
 
     public static int getCounter() {
@@ -51,23 +51,23 @@ public class MessageEntity {
         this.name = name;
     }
 
-    public String getDescriptor() {
-        return descriptor;
+    public String getDescription() {
+        return description;
     }
 
-    public void setDescriptor(String descriptor) {
-        this.descriptor = descriptor;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof MessageEntity that)) return false;
-        return Objects.equals(id, that.id) && Objects.equals(name, that.name) && Objects.equals(descriptor, that.descriptor);
+        return Objects.equals(id, that.id) && Objects.equals(name, that.name) && Objects.equals(description, that.description);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, descriptor);
+        return Objects.hash(id, name, description);
     }
 }

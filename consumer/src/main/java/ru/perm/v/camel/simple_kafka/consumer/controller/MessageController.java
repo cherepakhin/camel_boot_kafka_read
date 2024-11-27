@@ -32,7 +32,7 @@ class MessageController {
 	@ApiResponse(responseCode = "200", description = "Successful operation")
     public List<MessageDTO> getAllMessages() {
         return messageRepository.findAll().stream()
-				.map(m -> new MessageDTO(m.getId(), m.getName(), m.getDescriptor()))
+				.map(m -> new MessageDTO(m.getId(), m.getName(), m.getDescription()))
 				.collect(Collectors.toList());
     }
 
@@ -46,7 +46,7 @@ class MessageController {
                     new MessageDTO(
                             messageEntity.getId(),
                             messageEntity.getName(),
-                            messageEntity.getDescriptor()
+                            messageEntity.getDescription()
                     )
                 )
             ).orElseGet(() -> ResponseEntity.notFound().build());
@@ -58,9 +58,9 @@ class MessageController {
 
     @ApiResponse(responseCode = "400", description = "Invalid input")
     public MessageDTO createMessage(@Parameter(description = "Message to be created", required = true) @RequestBody MessageDTO messageDTO) {
-        MessageEntity messageEntity = new MessageEntity(messageDTO.getId(), messageDTO.getName(), messageDTO.getDescriptor());
+        MessageEntity messageEntity = new MessageEntity(messageDTO.getId(), messageDTO.getName(), messageDTO.getDescription());
         MessageEntity savedEntity = messageRepository.save(messageEntity);
-        return new MessageDTO(savedEntity.getId(), savedEntity.getName(), savedEntity.getDescriptor());
+        return new MessageDTO(savedEntity.getId(), savedEntity.getName(), savedEntity.getDescription());
     }
 
 //	@PutMapping("/{id}")

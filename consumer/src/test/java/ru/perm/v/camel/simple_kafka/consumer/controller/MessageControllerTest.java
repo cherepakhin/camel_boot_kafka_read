@@ -2,11 +2,14 @@ package ru.perm.v.camel.simple_kafka.consumer.controller;
 
 
 import org.junit.jupiter.api.Test;
+import org.springframework.http.ResponseEntity;
 import ru.perm.v.camel.simple_kafka.consumer.dto.MessageDTO;
 import ru.perm.v.camel.simple_kafka.consumer.repository.MessageEntity;
 import ru.perm.v.camel.simple_kafka.consumer.repository.MessageRepository;
 
 import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -40,5 +43,20 @@ class MessageControllerTest {
         List<MessageDTO> messages = ctrl.getAllMessages();
 
         assertEquals(0, messages.size());
+    }
+
+    @Test
+    void getMessageByIdExist() {
+        MessageRepository messageRepository = mock(MessageRepository.class);
+        UUID uuid = new UUID(2,2);
+        MessageEntity messageEntity = new MessageEntity(uuid, "NAME", "DESCRIPTION");
+        when(messageRepository.findById(uuid)).thenReturn(Optional.of(messageEntity));
+        MessageController ctrl = new MessageController(messageRepository);
+
+        ResponseEntity<MessageDTO> receivedMessage = ctrl.getMessageById(uuid);
+
+        assertEquals(uuid, Objects.requireNonNull(receivedMessage.getBody()).getId());
+        assertEquals("NAME", receivedMessage.getBody().getName());
+        assertEquals("NAME", receivedMessage.getBody().getName());
     }
 }

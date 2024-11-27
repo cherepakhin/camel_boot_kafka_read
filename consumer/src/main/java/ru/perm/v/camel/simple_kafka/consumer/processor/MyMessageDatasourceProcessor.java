@@ -28,7 +28,7 @@ public class MyMessageDatasourceProcessor implements Processor {
             MessageEntity entity = new MessageEntity();
             entity.setId(dto.getId());
             entity.setName(dto.getName());
-            entity.setDescriptor(dto.getDescriptor());
+            entity.setDescription(dto.getDescription());
             myMessageRepository.save(entity);
         } catch (JsonProcessingException e) {
             logger.severe("Error convert to MessageDTO json: " + json);
