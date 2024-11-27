@@ -67,7 +67,7 @@ class MessageController {
             Optional<MessageEntity> optionalMessage = messageRepository.findById(messageDTO.getId());
             if (optionalMessage.isPresent()) {
                 return new ResponseEntity<>(format("Message with id %s exist", messageDTO.getId()),
-                        HttpStatus.NOT_FOUND);
+                        HttpStatus.BAD_GATEWAY);
             }
         }
 

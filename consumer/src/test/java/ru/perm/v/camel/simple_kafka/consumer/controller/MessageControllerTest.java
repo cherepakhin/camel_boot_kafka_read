@@ -95,4 +95,22 @@ class MessageControllerTest {
         assertEquals(NAME, body.getName());
         assertEquals(DESCRIPTION, body.getDescription());
     }
+    @Test
+    void createMessageIfxist() {
+        UUID uuid = new UUID(2, 2);
+        String NAME = "NAME";
+        String DESCRIPTION = "DESCRIPTION";
+        MessageRepository messageRepository = mock(MessageRepository.class);
+        when(messageRepository.findById(uuid)).thenReturn(Optional.of(new MessageEntity()));
+        MessageEntity createdMessageEntity = new MessageEntity(uuid, NAME, DESCRIPTION);
+        when(messageRepository.save(any())).thenReturn(createdMessageEntity);
+        MessageController ctrl = new MessageController(messageRepository);
+
+        ResponseEntity<?> result = ctrl.createMessage(new MessageDTO(uuid, NAME, DESCRIPTION));
+
+        assertEquals(502, result.getStatusCode().value());
+        assertEquals("Message with id 00000000-0000-0002-0000-000000000002 exist", result.getBody().toString());
+
+    }
+
 }
