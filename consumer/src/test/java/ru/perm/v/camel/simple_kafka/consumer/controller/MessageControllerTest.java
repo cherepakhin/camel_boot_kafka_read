@@ -31,4 +31,14 @@ class MessageControllerTest {
         assertEquals(new MessageDTO(UUID.fromString(validUUID1), "NAME1", "DESCR1"), messages.get(0));
         assertEquals(new MessageDTO(UUID.fromString(validUUID2), "NAME2", "DESCR2"), messages.get(1));
     }
+    @Test
+    void getAllMessagesForEmpty() {
+        MessageRepository messageRepository = mock(MessageRepository.class);
+        when(messageRepository.findAll()).thenReturn(List.of());
+
+        MessageController ctrl = new MessageController(messageRepository);
+        List<MessageDTO> messages = ctrl.getAllMessages();
+
+        assertEquals(0, messages.size());
+    }
 }

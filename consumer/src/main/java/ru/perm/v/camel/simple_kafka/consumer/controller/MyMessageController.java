@@ -42,14 +42,14 @@ class MessageController {
     @ApiResponse(responseCode = "404", description = "Message not found")
     public ResponseEntity<MessageDTO> getMessageById(@Parameter(description = "Message ID") @PathVariable UUID uuid) {
         Optional<MessageEntity> optionalMessage = messageRepository.findById(uuid);
-        if (optionalMessage.isPresent()) {
-            return ResponseEntity.ok(new MessageDTO(optionalMessage.get().getId(), optionalMessage.get().getName(), optionalMessage.get().getDescriptor()));
-        } else {
-            return ResponseEntity.notFound().build();
-        }
-//		return messageRepository.findById(uuid).map(m -> ResponseEntity.ok(MessageDTO(m.id, m.body)))
-//				.map { ResponseEntity.ok(MessageDTO(it.id, it.body)) }
-//            .orElse(ResponseEntity.notFound().build())
+        return optionalMessage.map(messageEntity -> ResponseEntity.ok(
+                    new MessageDTO(
+                            messageEntity.getId(),
+                            messageEntity.getName(),
+                            messageEntity.getDescriptor()
+                    )
+                )
+            ).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
 //	@PutMapping()
