@@ -75,4 +75,22 @@ class MessageControllerTest {
         assertNull(receivedMessage.getBody());
         assertEquals(HttpStatus.NOT_FOUND, receivedMessage.getStatusCode());
     }
+
+    @Test
+    void createMessage() {
+        UUID uuid = new UUID(2, 2);
+        String NAME = "NAME";
+        String DESCRIPTION = "DESCRIPTION";
+        MessageRepository messageRepository = mock(MessageRepository.class);
+
+        MessageEntity createdMessageEntity = new MessageEntity(uuid, NAME, DESCRIPTION);
+        when(messageRepository.save(createdMessageEntity)).thenReturn(createdMessageEntity);
+        MessageController ctrl = new MessageController(messageRepository);
+
+        MessageDTO createdMessageDTO = ctrl.createMessage(new MessageDTO(uuid, NAME, DESCRIPTION));
+
+        assertEquals(uuid, createdMessageDTO.getId());
+        assertEquals(NAME, createdMessageDTO.getName());
+        assertEquals(DESCRIPTION, createdMessageDTO.getDescription());
+    }
 }
