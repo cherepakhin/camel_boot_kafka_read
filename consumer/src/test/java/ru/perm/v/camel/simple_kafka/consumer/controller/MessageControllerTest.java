@@ -14,7 +14,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -56,7 +56,7 @@ class MessageControllerTest {
         when(messageRepository.findById(uuid)).thenReturn(Optional.of(messageEntity));
         MessageController ctrl = new MessageController(messageRepository);
 
-        ResponseEntity<MessageDTO> receivedMessage = ctrl.getMessageById(uuid);
+        ResponseEntity<MessageDTO> receivedMessage = (ResponseEntity<MessageDTO>) ctrl.getMessageById(uuid);
 
         assertEquals(uuid, Objects.requireNonNull(receivedMessage.getBody()).getId());
         assertEquals("NAME", receivedMessage.getBody().getName());
@@ -70,9 +70,10 @@ class MessageControllerTest {
         when(messageRepository.findById(uuid)).thenReturn(Optional.empty());
         MessageController ctrl = new MessageController(messageRepository);
 
-        ResponseEntity<MessageDTO> receivedMessage = ctrl.getMessageById(uuid);
+        ResponseEntity<?> receivedMessage = ctrl.getMessageById(uuid);
 
-        assertNull(receivedMessage.getBody());
+        assertEquals("Message with id=00000000-0000-0002-0000-000000000002 not found.",
+                receivedMessage.getBody());
         assertEquals(HttpStatus.NOT_FOUND, receivedMessage.getStatusCode());
     }
 
@@ -84,13 +85,14 @@ class MessageControllerTest {
         MessageRepository messageRepository = mock(MessageRepository.class);
 
         MessageEntity createdMessageEntity = new MessageEntity(uuid, NAME, DESCRIPTION);
-        when(messageRepository.save(createdMessageEntity)).thenReturn(createdMessageEntity);
+        when(messageRepository.save(any())).thenReturn(createdMessageEntity);
         MessageController ctrl = new MessageController(messageRepository);
 
-        MessageDTO createdMessageDTO = ctrl.createMessage(new MessageDTO(uuid, NAME, DESCRIPTION));
+        ResponseEntity<?> createdMessageDTO = ctrl.createMessage(new MessageDTO(uuid, NAME, DESCRIPTION));
+        MessageDTO body = (MessageDTO) createdMessageDTO.getBody();
 
-        assertEquals(uuid, createdMessageDTO.getId());
-        assertEquals(NAME, createdMessageDTO.getName());
-        assertEquals(DESCRIPTION, createdMessageDTO.getDescription());
+        assertEquals(uuid, body.getId());
+        assertEquals(NAME, body.getName());
+        assertEquals(DESCRIPTION, body.getDescription());
     }
 }

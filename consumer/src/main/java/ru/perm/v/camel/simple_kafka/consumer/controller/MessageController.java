@@ -5,6 +5,7 @@ import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.perm.v.camel.simple_kafka.consumer.dto.MessageDTO;
@@ -15,6 +16,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
+
+import static java.lang.String.format;
 
 @RestController
 @RequestMapping("/api/messages")
@@ -28,39 +31,50 @@ class MessageController {
     }
 
     @GetMapping
-	@Operation(summary = "Get all messages", description = "Retrieve a list of all messages")
-	@ApiResponse(responseCode = "200", description = "Successful operation")
+    @Operation(summary = "Get all messages", description = "Retrieve a list of all messages")
+    @ApiResponse(responseCode = "200", description = "Successful operation")
     public List<MessageDTO> getAllMessages() {
         return messageRepository.findAll().stream()
-				.map(m -> new MessageDTO(m.getId(), m.getName(), m.getDescription()))
-				.collect(Collectors.toList());
+                .map(m -> new MessageDTO(m.getId(), m.getName(), m.getDescription()))
+                .collect(Collectors.toList());
     }
 
     @GetMapping("/{id}")
     @Operation(summary = "Get a message by ID", description = "Retrieve a message by its unique identifier")
     @ApiResponse(responseCode = "200", description = "Successful operation")
     @ApiResponse(responseCode = "404", description = "Message not found")
-    public ResponseEntity<MessageDTO> getMessageById(@Parameter(description = "Message ID") @PathVariable UUID uuid) {
+    public ResponseEntity<?> getMessageById(@Parameter(description = "Message ID") @PathVariable UUID uuid) {
         Optional<MessageEntity> optionalMessage = messageRepository.findById(uuid);
-        return optionalMessage.map(messageEntity -> ResponseEntity.ok(
+        if(optionalMessage.isPresent()) {
+            MessageEntity messageEntity = optionalMessage.get();
+            return ResponseEntity.ok(
                     new MessageDTO(
                             messageEntity.getId(),
                             messageEntity.getName(),
                             messageEntity.getDescription()
                     )
-                )
-            ).orElseGet(() -> ResponseEntity.notFound().build());
+            );
+        } else {
+            return new ResponseEntity<>(format("Message with id=%s not found.", uuid), HttpStatus.NOT_FOUND);
+        }
     }
 
-//	@PutMapping()
-    //	@Operation(summary = "Create a new message", description = "Create a new message with the provided body")
-//    @ApiResponse(responseCode = "200", description = "Successful operation", content =[Content(schema = Schema(implementation = MessageDTO::class))])
-
+    @PutMapping
+    @Operation(summary = "Create a new message", description = "Create a new message with the provided body")
     @ApiResponse(responseCode = "400", description = "Invalid input")
-    public MessageDTO createMessage(@Parameter(description = "Message to be created", required = true) @RequestBody MessageDTO messageDTO) {
-        MessageEntity messageEntity = new MessageEntity(messageDTO.getId(), messageDTO.getName(), messageDTO.getDescription());
+    public ResponseEntity createMessage(@Parameter(description = "Message to be created", required = true) @RequestBody MessageDTO messageDTO) {
+        if (messageDTO.getId() != null) {
+            Optional<MessageEntity> optionalMessage = messageRepository.findById(messageDTO.getId());
+            if (optionalMessage.isPresent()) {
+                return new ResponseEntity<>(format("Message with id %s exist", messageDTO.getId()),
+                        HttpStatus.NOT_FOUND);
+            }
+        }
+
+        MessageEntity messageEntity = new MessageEntity(UUID.randomUUID(), messageDTO.getName(), messageDTO.getDescription());
         MessageEntity savedEntity = messageRepository.save(messageEntity);
-        return new MessageDTO(savedEntity.getId(), savedEntity.getName(), savedEntity.getDescription());
+        MessageDTO dto = new MessageDTO(savedEntity.getId(), savedEntity.getName(), savedEntity.getDescription());
+        return new ResponseEntity<>(dto, HttpStatus.OK);
     }
 
 //	@PutMapping("/{id}")
