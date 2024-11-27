@@ -57,6 +57,6 @@ class MessageControllerTest {
 
         assertEquals(uuid, Objects.requireNonNull(receivedMessage.getBody()).getId());
         assertEquals("NAME", receivedMessage.getBody().getName());
-        assertEquals("NAME", receivedMessage.getBody().getName());
+        assertEquals("DESCRIPTION", receivedMessage.getBody().getDescription());
     }
 }
