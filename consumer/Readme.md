@@ -119,3 +119,4 @@ $ jq -C . example1.json
 "suffix": "Suffix1"
 }
 
+http :9090/v1/api/messages

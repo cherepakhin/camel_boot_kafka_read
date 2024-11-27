@@ -8,8 +8,8 @@ import lombok.Data;
 @ConfigurationProperties(prefix = "ru.perm.v.kafka")
 public class KafkaConfigurationProperties {
 
-	// in application.properties: ru.perm.v.kafka.topic-name=camel-integration
-	// in application.properties : ..."topic-name" , in code: "topicName"
+	// in application.yaml: ru.perm.v.kafka.topic-name=camel-integration
+	// in application.yaml : ..."topic-name" , in code: "topicName"
 	private String topicName;
 
 }

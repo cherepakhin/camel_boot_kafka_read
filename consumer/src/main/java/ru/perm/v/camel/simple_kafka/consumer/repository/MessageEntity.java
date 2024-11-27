@@ -1,8 +1,11 @@
 package ru.perm.v.camel.simple_kafka.consumer.repository;
 
+import org.hibernate.annotations.Type;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Table;
 import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 import java.util.UUID;
@@ -11,7 +14,9 @@ import java.util.UUID;
 public class MessageEntity {
     private static int counter = 0;
     @Id
-    private UUID id = UUID.randomUUID();
+    @Type(type="uuid-char")
+    @Column(name = "n")
+    private UUID n = UUID.randomUUID();
     @Column(name = "name")
     private String name = "";
     @Column(name = "description")
@@ -21,8 +26,8 @@ public class MessageEntity {
     public MessageEntity() {
     }
 
-    public MessageEntity(UUID id, String name, String description) {
-        this.id = id;
+    public MessageEntity(UUID n, String name, String description) {
+        this.n = n;
         this.name = name;
         this.description = description;
     }
@@ -36,11 +41,11 @@ public class MessageEntity {
     }
 
     public UUID getId() {
-        return id;
+        return n;
     }
 
-    public void setId(UUID id) {
-        this.id = id;
+    public void setId(UUID n) {
+        this.n = n;
     }
 
     public String getName() {
@@ -63,11 +68,11 @@ public class MessageEntity {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof MessageEntity that)) return false;
-        return Objects.equals(id, that.id) && Objects.equals(name, that.name) && Objects.equals(description, that.description);
+        return Objects.equals(n, that.n) && Objects.equals(name, that.name) && Objects.equals(description, that.description);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, description);
+        return Objects.hash(n, name, description);
     }
 }

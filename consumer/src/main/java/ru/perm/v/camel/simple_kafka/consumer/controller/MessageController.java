@@ -30,7 +30,7 @@ class MessageController {
         this.messageRepository = messageRepository;
     }
 
-    @GetMapping
+    @GetMapping("/")
     @Operation(summary = "Get all messages", description = "Retrieve a list of all messages")
     @ApiResponse(responseCode = "200", description = "Successful operation")
     public List<MessageDTO> getAllMessages() {
