@@ -85,7 +85,7 @@ SuperHeroController
 $ export BOOTSTRAP_SERVERS=http://192.168.1.20:9092
 $ ./mvnw spring-boot:run
 
-$ http :9090/v1/registry/superheroes
+$ http :9090/v1/registry/messages
 HTTP/1.1 200
 Connection: keep-alive
 Content-Type: application/json

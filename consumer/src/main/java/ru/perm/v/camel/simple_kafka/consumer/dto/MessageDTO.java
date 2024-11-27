@@ -1,4 +1,4 @@
-package ru.perm.v.camel.simple_kafka.producer.dto;
+package ru.perm.v.camel.simple_kafka.consumer.dto;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -19,6 +19,12 @@ public class MessageDTO {
     private static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
     public MessageDTO() {
+    }
+
+    public MessageDTO(UUID id, String name, String descriptor) {
+        this.id = id;
+        this.name = name;
+        this.descriptor = descriptor;
     }
 
     public MessageDTO(String name) {

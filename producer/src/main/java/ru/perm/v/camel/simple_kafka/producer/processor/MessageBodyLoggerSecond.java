@@ -13,11 +13,5 @@ public class MessageBodyLoggerSecond implements Processor {
 	public void process(Exchange exchange) throws Exception {
 		log.info("Exchange.body: {}", exchange.getMessage().getBody());
 		log.info("exchange.getProperties: {}", exchange.getProperties());
-		log(exchange.getMessage());
 	}
-
-	private void log(final Object messageBody) {
-		log.info("MessageBodyLoggerSecond information: {}", messageBody);
-	}
-
 }

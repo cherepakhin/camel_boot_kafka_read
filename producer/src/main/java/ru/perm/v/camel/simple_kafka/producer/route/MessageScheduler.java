@@ -4,7 +4,7 @@ import ru.perm.v.camel.simple_kafka.producer.dto.MessageDTO;
 import ru.perm.v.camel.simple_kafka.producer.processor.MessageBodyLogger;
 import ru.perm.v.camel.simple_kafka.producer.processor.MessageBodyLoggerSecond;
 import ru.perm.v.camel.simple_kafka.producer.properties.KafkaConfigurationProperties;
-import ru.perm.v.camel.simple_kafka.producer.transformer.MessageSearcher;
+import ru.perm.v.camel.simple_kafka.producer.transformer.MessageBuilder;
 import ru.perm.v.camel.simple_kafka.producer.utility.JsonDataFormatter;
 import org.apache.camel.builder.RouteBuilder;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -15,9 +15,9 @@ import lombok.RequiredArgsConstructor;
 @Component
 @RequiredArgsConstructor
 @EnableConfigurationProperties(value = KafkaConfigurationProperties.class)
-public class MessageSearchScheduler extends RouteBuilder {
+public class MessageScheduler extends RouteBuilder {
 
-	private final MessageSearcher superHeroSearcher;
+	private final MessageBuilder messageBuilder;
 	private final MessageBodyLogger messageBodyLogger;
 	private final MessageBodyLoggerSecond messageBodyLoggerSecond;
 	private final KafkaConfigurationProperties kafkaConfigurationProperties;
@@ -29,7 +29,7 @@ public class MessageSearchScheduler extends RouteBuilder {
 				.maximumRedeliveries(deadLetterTopicConfiguration.getRetries())
 				.maximumRedeliveryDelay(deadLetterTopicConfiguration.getDelay()));
 
-		from("timer:v-search-scheduler?period=5000").bean(superHeroSearcher).process(messageBodyLogger)
+		from("timer:v-search-scheduler?period=5000").bean(messageBuilder).process(messageBodyLogger)
 				.marshal(JsonDataFormatter.get(MessageDTO.class))
 				.process(messageBodyLoggerSecond)
 				.to("kafka:" + kafkaConfigurationProperties.getTopicName());
