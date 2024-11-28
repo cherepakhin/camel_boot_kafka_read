@@ -9,7 +9,7 @@ REST "$ http :9090/v1/registry/superheroes" показывает последн�
 ----------------------------------
 Отправка сообщений вручную.
 
-Можно использовать какой-нибудь UI инструмен или через консоль.
+Можно использовать какой-нибудь UI инструмент [UI для Kafka](https://v.perm.ru/index.php/instrumenty-devops/ui-dla-kafka) или через консоль.
 
 echo "Hello, World from Kafka" | /home/vasi/tools/kafka/bin/kafka-console-producer.sh --broker-list 192.168.1.20:9092 --topic superhero-information
 
