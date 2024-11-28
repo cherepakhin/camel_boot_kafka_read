@@ -37,5 +37,6 @@ camel:
 # in class KafkaConfigurationProperties.java
 # @ConfigurationProperties(prefix = "ru.perm.v.kafka")
 # used as private String topicName;
-ru.perm.v:
-  kafka.topic-name: camel-integration
+
+ru.perm.v.camelkafka:
+  topic-name: camel-integration

@@ -5,7 +5,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import lombok.Data;
 
 @Data
-@ConfigurationProperties(prefix = "ru.perm.v.kafka")
+@ConfigurationProperties(prefix = "ru.perm.v.camelkafka")
 public class KafkaConfigurationProperties {
 
 	// in application.yaml: ru.perm.v.kafka.topic-name=camel-integration

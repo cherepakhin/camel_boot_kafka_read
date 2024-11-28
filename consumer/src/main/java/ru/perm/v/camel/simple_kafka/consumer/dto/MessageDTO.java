@@ -11,7 +11,6 @@ import java.util.UUID;
 @Setter
 @Getter
 public class MessageDTO {
-
     private static int counter = 0;
     private UUID id = UUID.randomUUID();
     private String name = "";

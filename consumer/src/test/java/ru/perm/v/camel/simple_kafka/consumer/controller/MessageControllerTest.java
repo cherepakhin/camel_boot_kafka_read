@@ -96,7 +96,7 @@ class MessageControllerTest {
         assertEquals(DESCRIPTION, body.getDescription());
     }
     @Test
-    void createMessageIfxist() {
+    void createMessageIfExist() {
         UUID uuid = new UUID(2, 2);
         String NAME = "NAME";
         String DESCRIPTION = "DESCRIPTION";
@@ -110,7 +110,6 @@ class MessageControllerTest {
 
         assertEquals(502, result.getStatusCode().value());
         assertEquals("Message with id 00000000-0000-0002-0000-000000000002 exist", result.getBody().toString());
-
     }
 
 }
