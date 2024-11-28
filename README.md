@@ -5,16 +5,16 @@
 
 Демонстрация работы Camel с Kafka.<br/>
 
-Два проекта __superhero-searcher__ и __superhero-registry__ .<br/>
-[superhero-searcher](https://github.com/cherepakhin/camel_boot_kafka_read/tree/main/superhero-registry) - генерирует сообщения и отправляет в очередь Kafka.<br/>
-[superhero-registry](https://github.com/cherepakhin/camel_boot_kafka_read/tree/main/superhero-searcher) - читает сообщения из очереди Kafka.<br/>
+Два проекта __producer__ и __consumer__ .<br/>
+[producer](https://github.com/cherepakhin/camel_boot_kafka_read/tree/main/producer) - генерирует сообщения и отправляет в очередь Kafka.<br/>
+[consumer](https://github.com/cherepakhin/camel_boot_kafka_read/tree/main/consumer) - читает сообщения из очереди Kafka.<br/>
 
 # Запуск
 
 Проекты запускаются раздельно скриптами run.sh в каталоге проектов.
 
-## Проект __superhero-searcher__.
-Генерирует сообщения по таймеру и отправляет их в очередь Kafka "superhero-information":
+## Проект __producer__.
+Генерирует сообщения по таймеру и отправляет их в очередь Kafka "camel-integration":
 
 ````java
 public class SuperHeroSearchScheduler extends RouteBuilder {
@@ -23,28 +23,28 @@ public class SuperHeroSearchScheduler extends RouteBuilder {
         from("timer:superhero-search-scheduler?period=5000").bean(superHeroSearcher).process(messageBodyLogger)
                 .marshal(JsonDataFormatter.get(SuperHero.class))
                 .process(messageBodyLoggerSecond)
-                .to("kafka:" + kafkaConfigurationProperties.getTopicName()); // topic "superhero-information"
+                .to("kafka:" + kafkaConfigurationProperties.getTopicName()); // topic "camel-integration"
     }
     ....
 ````
 Использован Camel.
 
-## Проект __superhero-registry__.
+## Проект __consumer__.
 
-Читаются сообщения из очереди Kafka "superhero-information". Задано в [application.properties](https://github.com/cherepakhin/camel_boot_kafka_read/blob/main/superhero-registry/src/main/resources/application.properties):
+Читаются сообщения из очереди Kafka "camel-integration". Задано в [application.properties](https://github.com/cherepakhin/camel_boot_kafka_read/blob/main/superhero-registry/src/main/resources/application.properties):
 
 ````properties
 ...
 # Kafka Configuration
 camel.component.kafka.brokers=${BOOTSTRAP_SERVERS:http://192.168.1.20:9092}
-com.behl.kafka.topic-name=superhero-information
+com.behl.kafka.topic-name=camel-integration
 ....
 ````
 
 Чтение последнего принятого сообщения:
 
 ````shell
-$ http :9090/v1/registry/superheroes" 
+$ http :9090/api/messages/ 
 ````
 
 # Отправка сообщений вручную.
@@ -54,12 +54,15 @@ $ http :9090/v1/registry/superheroes"
 Через консоль:
 
 ````shell
-echo "Hello, World from Kafka" | ~/tools/kafka/bin/kafka-console-producer.sh --broker-list 192.168.1.20:9092 --topic superhero-information
+echo "Hello, World from Kafka" | ~/tools/kafka/bin/kafka-console-producer.sh --broker-list 192.168.1.20:9092 --topic camel-integration
+
+cat ./producer/doc/example_message1.json | ~/tools/kafka/bin/kafka-console-producer.sh --broker-list 192.168.1.20:9092 --topic camel-integration
+
 ````
 
 192.168.1.20:9092 - адрес Kafka сервера.
 
-Для демонстрации отправить сообщения по одному в Kafka топик "superhero-information" (ниже использована утилита  [jq](https://www.baeldung.com/linux/jq-command-json)). ИСПОЛЬЗОВАТЬ НУЖНО ИМЕННО JQ (убирает переводы строк), т.к. "cat" не так сработает (не убирает переводы строк).
+Для демонстрации отправить сообщения по одному в Kafka топик "camel-integration" (ниже использована утилита  [jq](https://www.baeldung.com/linux/jq-command-json)). ИСПОЛЬЗОВАТЬ НУЖНО ИМЕННО JQ (убирает переводы строк), т.к. "cat" не так сработает (не убирает переводы строк).
 
 Примеры сообщений:
 ````shell
@@ -77,7 +80,7 @@ $ cat example1.json
 [Примеры использования jq](#jq_example) в конце Readme.md.
 
 ````shell
-$ jq -rc . example1.json | ./kafka/bin/kafka-console-producer.sh --broker-list 192.168.1.20:9092 --topic superhero-information
+$ jq -rc . example1.json | ./kafka/bin/kafka-console-producer.sh --broker-list 192.168.1.20:9092 --topic camel-integration
 
 
 {
@@ -106,7 +109,7 @@ $ jq -rc . example1.json | ./kafka/bin/kafka-console-producer.sh --broker-list 1
 Hibernate: insert into super_hero (descriptor, found_at, name, power, prefix, suffix, id) values (?, ?, ?, ?, ?, ?, ?)
 ````
 
-Camel route [SuperHeroInformationConsumptionRoute.java](https://github.com/cherepakhin/camel_boot_kafka_read/blob/main/superhero-searcher/src/main/java/com/behl/searcher/route/SuperHeroSearchScheduler.java) читает из топика superhero-information и сохраняет memory database. Прочитать сообщение через REST 
+Camel route [MessageInformationConsumptionRoute.java](https://github.com/cherepakhin/camel_boot_kafka_read/blob/main/superhero-searcher/src/main/java/com/behl/searcher/route/SuperHeroSearchScheduler.java) читает из топика camel-integration и сохраняет memory database. Прочитать сообщение через REST 
 
 ````shell
 http :9090/v1/registry/superheroes
@@ -175,4 +178,10 @@ $ jq -C . example1.json
 "prefix": "Prefix1",
 "suffix": "Suffix1"
 }
+````
+
+# Чтение сообщения из topic Kafka
+
+````shell
+~/tools/kafka/bin/kafka-console-consumer.sh --bootstrap-server 192.168.1.20:9092 --topic camel-integration
 ````

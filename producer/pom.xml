@@ -12,7 +12,7 @@
 	</parent>
 
 	<groupId>ru.perm.v.spring_boot_kafka.example1</groupId>
-	<artifactId>camel_producer</artifactId>
+	<artifactId>producer</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>Camel producer example</name>
 	<description>Application that searches for superheroes disguised as normal human beings, collects their information and publishes it to a kafka topic through a Camel Route</description>
