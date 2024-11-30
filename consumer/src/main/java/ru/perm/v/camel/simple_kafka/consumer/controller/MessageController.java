@@ -1,5 +1,6 @@
 package ru.perm.v.camel.simple_kafka.consumer.controller;
 
+import com.google.common.collect.Lists;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -12,10 +13,13 @@ import ru.perm.v.camel.simple_kafka.consumer.dto.MessageDTO;
 import ru.perm.v.camel.simple_kafka.consumer.repository.MessageEntity;
 import ru.perm.v.camel.simple_kafka.consumer.repository.MessageRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static java.lang.String.format;
 
@@ -24,6 +28,9 @@ import static java.lang.String.format;
 @Tag(name = "Messages", description = "The Message API")
 class MessageController {
 
+    Logger logger = Logger.getLogger(MessageController.class.getName());
+
+    @Autowired
     private MessageRepository messageRepository;
 
     public MessageController(@Autowired MessageRepository messageRepository) {
@@ -34,8 +41,10 @@ class MessageController {
     @Operation(summary = "Get all messages", description = "Retrieve a list of all messages")
     @ApiResponse(responseCode = "200", description = "Successful operation")
     public List<MessageDTO> getAllMessages() {
-        return messageRepository.findAll().stream()
-                .map(m -> new MessageDTO(m.getId(), m.getName(), m.getDescription()))
+        Iterable<MessageEntity> iterable = messageRepository.findAll();
+        List<MessageEntity> entities = Lists.newArrayList(iterable);
+        return entities.stream().map(messageEntity ->
+                new MessageDTO(messageEntity.getId(), messageEntity.getName(), messageEntity.getDescription()))
                 .collect(Collectors.toList());
     }
 
@@ -43,9 +52,10 @@ class MessageController {
     @Operation(summary = "Get a message by ID", description = "Retrieve a message by its unique identifier")
     @ApiResponse(responseCode = "200", description = "Successful operation")
     @ApiResponse(responseCode = "404", description = "Message not found")
-    public ResponseEntity<?> getMessageById(@Parameter(description = "Message ID") @PathVariable UUID uuid) {
+    public ResponseEntity<?> getMessageById(@Parameter(description = "Message ID") @PathVariable("id") UUID uuid) {
+        logger.info(format("Get by ID=%s", uuid));
         Optional<MessageEntity> optionalMessage = messageRepository.findById(uuid);
-        if(optionalMessage.isPresent()) {
+        if (optionalMessage.isPresent()) {
             MessageEntity messageEntity = optionalMessage.get();
             return ResponseEntity.ok(
                     new MessageDTO(
@@ -77,6 +87,13 @@ class MessageController {
         return new ResponseEntity<>(dto, HttpStatus.OK);
     }
 
+    @DeleteMapping("/")
+    @Operation(summary = "Delete all messages")
+    @ApiResponse(responseCode = "400", description = "Invalid input")
+    public void deleteAll() {
+        logger.info("Delete all messages");
+        messageRepository.deleteMessages();
+    }
 //	@PutMapping("/{id}")
 //	@Operation(summary = "Update an existing message", description = "Update an existing message with the provided body")
 //	@ApiResponse(responseCode = "200", description = "Successful operation", content = [Content(schema = Schema(implementation = MessageDTO::class))])

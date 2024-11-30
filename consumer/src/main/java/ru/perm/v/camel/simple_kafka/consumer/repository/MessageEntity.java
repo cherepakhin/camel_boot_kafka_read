@@ -11,6 +11,7 @@ import java.util.Objects;
 import java.util.UUID;
 
 @Entity
+@Table(name = "messages")
 public class MessageEntity {
     private static int counter = 0;
     @Id
@@ -74,5 +75,14 @@ public class MessageEntity {
     @Override
     public int hashCode() {
         return Objects.hash(n, name, description);
+    }
+
+    @Override
+    public String toString() {
+        return "MessageEntity{" +
+                "n=" + n +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                '}';
     }
 }
