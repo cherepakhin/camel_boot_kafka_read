@@ -41,11 +41,23 @@ class MessageController {
     @Operation(summary = "Get all messages", description = "Retrieve a list of all messages")
     @ApiResponse(responseCode = "200", description = "Successful operation")
     public List<MessageDTO> getAllMessages() {
+// Variant 1 of convert
+//        List<MessageDTO> messages = new ArrayList<>();
+//        messageRepository
+//                .findAll()
+//                .forEach(messageEntity ->
+//                        messages.add(
+//                                new MessageDTO(
+//                                        messageEntity.getId(),
+//                                        messageEntity.getName(),
+//                                        messageEntity.getDescription())));
+//        return messages;
+// Variant 2 of convert (with stream ... toList())
         Iterable<MessageEntity> iterable = messageRepository.findAll();
         List<MessageEntity> entities = Lists.newArrayList(iterable);
-        return entities.stream().map(messageEntity ->
-                new MessageDTO(messageEntity.getId(), messageEntity.getName(), messageEntity.getDescription()))
-                .collect(Collectors.toList());
+
+        return entities.stream().map(e ->
+                new MessageDTO(e.getId(), e.getName(), e.getDescription())).toList();
     }
 
     @GetMapping("/{id}")
