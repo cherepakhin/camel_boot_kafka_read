@@ -40,3 +40,27 @@ camel:
 
 ru.perm.v.camelkafka:
   topic-name: camel-integration
+
+management:
+  health:
+    probes:
+      enabled: true
+  endpoint:
+    metrics:
+      enabled: true
+    prometheus:
+      enabled: true
+    health:
+      show-details: always
+      enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+      base-path: "/actuator"
+  metrics:
+    export:
+      prometheus:
+        enabled: true
+  server:
+    port: 8781

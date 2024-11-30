@@ -11,8 +11,9 @@ export BOOTSTRAP_SERVERS=http://192.168.1.20:9092
 __Показать последнее принятое сообщение:__
 
 ````shell
-http :9090/api/messages 
+http :9090/api/messages/ 
 ````
+(внимание на последний "/")
 
 Сообщения можно отправлять вручную (описано ниже) или генерировать другой программой 
 (см. vasi@vasi-note:~/prog/java/camel/camel-integration-spring-boot-kafka/producer)
@@ -22,6 +23,7 @@ __Отправка сообщений вручную.__
 Можно использовать какой-нибудь UI инструмент [UI для Kafka](https://v.perm.ru/index.php/instrumenty-devops/ui-dla-kafka) или через консоль.
 
 ````shell
+cd ~/prog/java/camel/camel-integration-spring-boot-kafka
 jq -rc . producer/doc/example_message1.json | /home/vasi/tools/kafka/bin/kafka-console-producer.sh --broker-list 192.168.1.20:9092 --topic camel-integration
 ````
 
