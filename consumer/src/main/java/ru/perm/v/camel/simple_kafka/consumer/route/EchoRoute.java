@@ -3,8 +3,6 @@ package ru.perm.v.camel.simple_kafka.consumer.route;
 import org.apache.camel.builder.RouteBuilder;
 import org.springframework.stereotype.Component;
 
-import static java.lang.String.format;
-
 @Component
 public class EchoRoute extends RouteBuilder {
     @Override

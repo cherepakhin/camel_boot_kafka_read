@@ -2,12 +2,11 @@ package ru.perm.v.camel.simple_kafka.consumer.route;
 
 import org.apache.camel.CamelContext;
 import org.apache.camel.builder.RouteBuilder;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.stereotype.Component;
 import ru.perm.v.camel.simple_kafka.consumer.dto.MessageDTO;
-import ru.perm.v.camel.simple_kafka.consumer.processor.MyMessageBodyLogger;
 import ru.perm.v.camel.simple_kafka.consumer.processor.MessageDatasourceProcessor;
+import ru.perm.v.camel.simple_kafka.consumer.processor.MyMessageBodyLogger;
 import ru.perm.v.camel.simple_kafka.consumer.properties.KafkaConfigurationProperties;
 import ru.perm.v.camel.simple_kafka.consumer.utility.JsonDataFormatter;
 
@@ -15,30 +14,27 @@ import static java.lang.String.format;
 
 @Component
 @EnableConfigurationProperties(value = KafkaConfigurationProperties.class)
-public class MessageInformationConsumptionRoute extends RouteBuilder {
+public class ConsumerKafkaQueueCamelIntegrationRoute extends RouteBuilder {
 
-    private String topic = "camel-integration";
-    @Autowired
     private KafkaConfigurationProperties kafkaConfigurationProperties;
-    @Autowired
     private MyMessageBodyLogger myMessageBodyLogger;
-    @Autowired
     private MessageDatasourceProcessor myProcessor;
 
-    String kafkaServer = "192.168.1.20";
-    String topicName = "camel-integration";
-    String zooKeeperHost="192.168.1.20";
-    String serializerClass = "serializerClass=kafka.serializer.StringEncoder";
-    String autoOffsetOption = "autoOffsetReset=smallest";
-    String groupId = "testing_camel";
+    private static final String kafkaServer = "192.168.1.20";
+    private static final String zooKeeperHost = "192.168.1.20";
+    private static final String serializerClass = "serializerClass=kafka.serializer.StringEncoder";
+    private static final String autoOffsetOption = "autoOffsetReset=smallest";
+    private static final String groupId = "testing_camel";
 
 //    public MessageInformationConsumptionRoute() {
 //        log.info("default constructor");
 //    }
 
-    public MessageInformationConsumptionRoute(CamelContext context,
-                                              MyMessageBodyLogger myMessageBodyLogger,
-                                              MessageDatasourceProcessor myProcessor) {
+    public ConsumerKafkaQueueCamelIntegrationRoute(
+            KafkaConfigurationProperties kafkaConfigurationProperties,
+            CamelContext context,
+            MyMessageBodyLogger myMessageBodyLogger,
+            MessageDatasourceProcessor myProcessor) {
         super(context);
         log.info("constructor with params");
         log.info(format("CamelContext: %s", context));
@@ -49,8 +45,7 @@ public class MessageInformationConsumptionRoute extends RouteBuilder {
         log.info(format("myMessageBodyLogger: %s", myMessageBodyLogger));
         log.info(format("myProcessor: %s", myProcessor));
 
-//        this.kafkaConfigurationProperties = kafkaConfigurationProperties;
-        this.topic = "camel-integration";
+        this.kafkaConfigurationProperties = kafkaConfigurationProperties;
         this.myMessageBodyLogger = myMessageBodyLogger;
         this.myProcessor = myProcessor;
     }
@@ -85,7 +80,7 @@ public class MessageInformationConsumptionRoute extends RouteBuilder {
     @Override
     public String toString() {
         return "MessageInformationConsumptionRoute{" +
-                "topic='" + topic + '\'' +
+                "topic='" + kafkaConfigurationProperties.topicName + '\'' +
                 ", kafkaConfigurationProperties=" + kafkaConfigurationProperties +
                 ", myMessageBodyLogger=" + myMessageBodyLogger +
                 ", myProcessor=" + myProcessor +
