@@ -110,3 +110,33 @@ $ jq -C . example1.json
 }
 ````
 
+__Разное__
+
+Два варианта конвертации в __stream в list__.
+
+с __foreach__:
+
+```java
+// Variant 1 of convert
+        List<MessageDTO> messages = new ArrayList<>();
+        messageRepository
+                .findAll()
+                .forEach(messageEntity ->
+                        messages.add(
+                                new MessageDTO(
+                                        messageEntity.getId(),
+                                        messageEntity.getName(),
+                                        messageEntity.getDescription())));
+        return messages;
+````
+с __map__:
+```java
+// Variant 2 of convert (with stream ... toList())
+        Iterable<MessageEntity> iterable = messageRepository.findAll();
+        List<MessageEntity> entities = Lists.newArrayList(iterable);
+
+        return entities.stream().map(e ->
+                new MessageDTO(e.getId(), e.getName(), e.getDescription())).toList();
+
+```
+

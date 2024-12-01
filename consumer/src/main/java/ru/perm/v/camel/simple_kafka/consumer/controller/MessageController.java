@@ -38,7 +38,7 @@ class MessageController {
     @Operation(summary = "Get all messages", description = "Retrieve a list of all messages")
     @ApiResponse(responseCode = "200", description = "Successful operation")
     public List<MessageDTO> getAllMessages() {
-// Don't delete comment!!!
+// Don't delete THIS comment!!!
 // Variant 1 of convert
 //        List<MessageDTO> messages = new ArrayList<>();
 //        messageRepository
