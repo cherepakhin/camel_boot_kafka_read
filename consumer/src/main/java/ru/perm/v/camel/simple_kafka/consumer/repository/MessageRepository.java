@@ -15,4 +15,7 @@ public interface MessageRepository extends CrudRepository<MessageEntity, UUID> {
     @Modifying
     @Query("delete from MessageEntity")
     void deleteMessages();
+
+    @Modifying
+    void update(MessageEntity messageEntity);
 }

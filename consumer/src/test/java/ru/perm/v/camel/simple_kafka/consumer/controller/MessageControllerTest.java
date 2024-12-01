@@ -14,9 +14,9 @@ import java.util.Optional;
 import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 class MessageControllerTest {
 
@@ -137,5 +137,42 @@ class MessageControllerTest {
 
         assertEquals(HttpStatus.NOT_FOUND, result.getStatusCode());
         assertEquals("Message with id=00000000-0000-0002-0000-000000000002 not found.", result.getBody().toString());
+    }
+
+    @Test
+    void updateMessageForNullUUID() {
+        MessageDTO dto = new MessageDTO(null, "NAME", "DESCRIPTION");
+        MessageController ctrl = new MessageController(null);
+        ResponseEntity<?> result = ctrl.updateMessage(dto);
+        assertEquals(HttpStatus.BAD_REQUEST, result.getStatusCode());
+        assertEquals("UUID is required", result.getBody().toString());
+    }
+
+    @Test
+    void updateMessageForNotExist() {
+        UUID uuid = new UUID(2, 2);
+
+        MessageRepository messageRepository = mock(MessageRepository.class);
+        when(messageRepository.existsById(uuid)).thenReturn(false);
+        MessageController ctrl = new MessageController(messageRepository);
+
+        ResponseEntity<?> result = ctrl.updateMessage(new MessageDTO(uuid, "NAME", "DESCRIPTION"));
+
+        assertEquals(HttpStatus.NOT_FOUND, result.getStatusCode());
+        assertEquals("Message with id=00000000-0000-0002-0000-000000000002 not found.", result.getBody().toString());
+    }
+
+    @Test
+    void updateMessage() {
+        UUID uuid = new UUID(2, 2);
+
+        MessageRepository messageRepository = mock(MessageRepository.class);
+        when(messageRepository.existsById(uuid)).thenReturn(true);
+        MessageController ctrl = new MessageController(messageRepository);
+
+        ResponseEntity<?> result = ctrl.updateMessage(new MessageDTO(uuid, "NAME", "DESCRIPTION"));
+
+        assertEquals(HttpStatus.OK, result.getStatusCode());
+        verify(messageRepository, times(1)).save(any(MessageEntity.class));
     }
 }

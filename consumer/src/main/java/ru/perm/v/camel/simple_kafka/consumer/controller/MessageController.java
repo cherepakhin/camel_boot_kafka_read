@@ -122,33 +122,22 @@ class MessageController {
         logger.info("Delete all messages");
         messageRepository.deleteMessages();
     }
-//	@PutMapping("/{id}")
-//	@Operation(summary = "Update an existing message", description = "Update an existing message with the provided body")
-//	@ApiResponse(responseCode = "200", description = "Successful operation", content = [Content(schema = Schema(implementation = MessageDTO::class))])
-//	@ApiResponse(responseCode = "400", description = "Invalid input")
-//	@ApiResponse(responseCode = "404", description = "Message not found")
-//	fun updateMessage(
-//			@Parameter(description = "Message ID") @PathVariable id: UUID,
-//			@Parameter(description = "Updated message details", required = true) @RequestBody messageDTO: MessageDTO
-//    ): ResponseEntity<MessageDTO> {
-//		return messageRepository.findById(id)
-//				.map {
-//			it.body = messageDTO.body
-//			ResponseEntity.ok(MessageDTO(messageRepository.save(it).id, it.body))
-//		}
-//            .orElse(ResponseEntity.notFound().build())
-//	}
-//
-//	@DeleteMapping("/{id}")
-//	@Operation(summary = "Delete a message", description = "Delete a message by its unique identifier")
-//	@ApiResponse(responseCode = "204", description = "Message deleted successfully")
-//	@ApiResponse(responseCode = "404", description = "Message not found")
-//	fun deleteMessage(@Parameter(description = "Message ID") @PathVariable id: UUID): ResponseEntity<Void> {
-//		return if (messageRepository.existsById(id)) {
-//			messageRepository.deleteById(id)
-//			ResponseEntity.noContent().build()
-//		} else {
-//			ResponseEntity.notFound().build()
-//		}
-//	}
+
+    @PostMapping("/")
+    @Operation(summary = "Update a message", description = "Update a message")
+    @ApiResponse(responseCode = "204", description = "Message updated successfully")
+    @ApiResponse(responseCode = "404", description = "Message not found")
+    public ResponseEntity updateMessage(@Parameter(description = "DTO Message") @RequestBody MessageDTO messageDTO) {
+        logger.info(format("Update message %s", messageDTO));
+        if (messageDTO.getId() == null) {
+            return new ResponseEntity<>("UUID is required", HttpStatus.BAD_REQUEST);
+        }
+        if (!messageRepository.existsById(messageDTO.getId())) {
+            return new ResponseEntity<>(format("Message with id=%s not found.", messageDTO.getId()), HttpStatus.NOT_FOUND);
+        }
+        MessageEntity messageEntity = new MessageEntity(messageDTO.getId(), messageDTO.getName(), messageDTO.getDescription());
+        MessageEntity result = messageRepository.save(messageEntity);
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
 }
