@@ -7,7 +7,7 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.stereotype.Component;
 import ru.perm.v.camel.simple_kafka.consumer.dto.MessageDTO;
 import ru.perm.v.camel.simple_kafka.consumer.processor.MyMessageBodyLogger;
-import ru.perm.v.camel.simple_kafka.consumer.processor.MyMessageDatasourceProcessor;
+import ru.perm.v.camel.simple_kafka.consumer.processor.MessageDatasourceProcessor;
 import ru.perm.v.camel.simple_kafka.consumer.properties.KafkaConfigurationProperties;
 import ru.perm.v.camel.simple_kafka.consumer.utility.JsonDataFormatter;
 
@@ -23,7 +23,7 @@ public class MessageInformationConsumptionRoute extends RouteBuilder {
     @Autowired
     private MyMessageBodyLogger myMessageBodyLogger;
     @Autowired
-    private MyMessageDatasourceProcessor myProcessor;
+    private MessageDatasourceProcessor myProcessor;
 
     String kafkaServer = "192.168.1.20";
     String topicName = "camel-integration";
@@ -38,7 +38,7 @@ public class MessageInformationConsumptionRoute extends RouteBuilder {
 
     public MessageInformationConsumptionRoute(CamelContext context,
                                               MyMessageBodyLogger myMessageBodyLogger,
-                                              MyMessageDatasourceProcessor myProcessor) {
+                                              MessageDatasourceProcessor myProcessor) {
         super(context);
         log.info("constructor with params");
         log.info(format("CamelContext: %s", context));

@@ -1,7 +1,5 @@
 package ru.perm.v.camel.simple_kafka.consumer.processor;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.apache.camel.Exchange;
 import org.apache.camel.Processor;
@@ -9,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import ru.perm.v.camel.simple_kafka.consumer.dto.MessageDTO;
 import ru.perm.v.camel.simple_kafka.consumer.repository.MessageEntity;
-import ru.perm.v.camel.simple_kafka.consumer.repository.MessageRepository;
+import ru.perm.v.camel.simple_kafka.consumer.repository.MessageEntityRepository;
 
 import java.util.logging.Logger;
 
@@ -17,10 +15,10 @@ import static java.lang.String.format;
 
 @Component
 @RequiredArgsConstructor
-public class MyMessageDatasourceProcessor implements Processor {
+public class MessageDatasourceProcessor implements Processor {
     Logger logger = Logger.getLogger(this.getClass().getName());
     @Autowired
-    private final MessageRepository messageRepository;
+    private final MessageEntityRepository messageEntityRepository;
 
     @Override
     public void process(final Exchange exchange) {
@@ -35,7 +33,7 @@ public class MyMessageDatasourceProcessor implements Processor {
             entity.setName(dto.getName());
             entity.setDescription(dto.getDescription());
             logger.info(format("Save entity: %s", entity));
-            messageRepository.save(entity);
+            messageEntityRepository.save(entity);
         } catch (Exception e) {
             logger.severe("Error cast.");
         }

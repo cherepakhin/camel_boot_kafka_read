@@ -119,7 +119,7 @@ __Разное__
 ```java
 // Variant 1 of convert
         List<MessageDTO> messages = new ArrayList<>();
-        messageRepository
+        messageEntityRepository
                 .findAll()
                 .forEach(messageEntity ->
                         messages.add(
@@ -132,7 +132,7 @@ __Разное__
 с __map__:
 ```java
 // Variant 2 of convert (with stream ... toList())
-        Iterable<MessageEntity> iterable = messageRepository.findAll();
+        Iterable<MessageEntity> iterable = messageEntityRepository.findAll();
         List<MessageEntity> entities = Lists.newArrayList(iterable);
 
         return entities.stream().map(e ->

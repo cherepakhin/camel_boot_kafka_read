@@ -11,7 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.perm.v.camel.simple_kafka.consumer.dto.MessageDTO;
 import ru.perm.v.camel.simple_kafka.consumer.repository.MessageEntity;
-import ru.perm.v.camel.simple_kafka.consumer.repository.MessageRepository;
+import ru.perm.v.camel.simple_kafka.consumer.repository.MessageEntityRepository;
 
 import java.util.List;
 import java.util.Optional;
@@ -28,10 +28,10 @@ class MessageController {
     Logger logger = Logger.getLogger(MessageController.class.getName());
 
     @Autowired
-    private MessageRepository messageRepository;
+    private MessageEntityRepository messageEntityRepository;
 
-    public MessageController(@Autowired MessageRepository messageRepository) {
-        this.messageRepository = messageRepository;
+    public MessageController(@Autowired MessageEntityRepository messageEntityRepository) {
+        this.messageEntityRepository = messageEntityRepository;
     }
 
     @GetMapping("/")
@@ -52,7 +52,7 @@ class MessageController {
 //        return messages;
 
 // Variant 2 of convert (with stream ... toList())
-        Iterable<MessageEntity> iterable = messageRepository.findAll();
+        Iterable<MessageEntity> iterable = messageEntityRepository.findAll();
         List<MessageEntity> entities = Lists.newArrayList(iterable);
 
         return entities.stream().map(e ->
@@ -66,7 +66,7 @@ class MessageController {
     @ApiResponse(responseCode = "404", description = "Message not found")
     public ResponseEntity<?> getMessageById(@Parameter(description = "Message ID") @PathVariable("id") UUID uuid) {
         logger.info(format("Get by ID=%s", uuid));
-        Optional<MessageEntity> optionalMessage = messageRepository.findById(uuid);
+        Optional<MessageEntity> optionalMessage = messageEntityRepository.findById(uuid);
         if (optionalMessage.isPresent()) {
             MessageEntity messageEntity = optionalMessage.get();
             return ResponseEntity.ok(
@@ -86,7 +86,7 @@ class MessageController {
     @ApiResponse(responseCode = "400", description = "Invalid input")
     public ResponseEntity createMessage(@Parameter(description = "Message to be created", required = true) @RequestBody MessageDTO messageDTO) {
         if (messageDTO.getId() != null) {
-            Optional<MessageEntity> optionalMessage = messageRepository.findById(messageDTO.getId());
+            Optional<MessageEntity> optionalMessage = messageEntityRepository.findById(messageDTO.getId());
             if (optionalMessage.isPresent()) {
                 return new ResponseEntity<>(format("Message with id %s exist", messageDTO.getId()),
                         HttpStatus.BAD_GATEWAY);
@@ -94,7 +94,7 @@ class MessageController {
         }
 
         MessageEntity messageEntity = new MessageEntity(UUID.randomUUID(), messageDTO.getName(), messageDTO.getDescription());
-        MessageEntity savedEntity = messageRepository.save(messageEntity);
+        MessageEntity savedEntity = messageEntityRepository.save(messageEntity);
         MessageDTO dto = new MessageDTO(savedEntity.getId(), savedEntity.getName(), savedEntity.getDescription());
         return new ResponseEntity<>(dto, HttpStatus.OK);
     }
@@ -108,10 +108,10 @@ class MessageController {
             return new ResponseEntity<>("UUID is required", HttpStatus.BAD_REQUEST);
         }
         logger.info(format("Delete by ID=%s", uuid));
-        if (!messageRepository.existsById(uuid)) {
+        if (!messageEntityRepository.existsById(uuid)) {
             return new ResponseEntity<>(format("Message with id=%s not found.", uuid), HttpStatus.NOT_FOUND);
         }
-        messageRepository.deleteById(uuid);
+        messageEntityRepository.deleteById(uuid);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
@@ -120,7 +120,7 @@ class MessageController {
     @ApiResponse(responseCode = "400", description = "Invalid input")
     public void deleteAll() {
         logger.info("Delete all messages");
-        messageRepository.deleteMessages();
+        messageEntityRepository.deleteMessages();
     }
 
     @PostMapping("/")
@@ -132,11 +132,11 @@ class MessageController {
         if (messageDTO.getId() == null) {
             return new ResponseEntity<>("UUID is required", HttpStatus.BAD_REQUEST);
         }
-        if (!messageRepository.existsById(messageDTO.getId())) {
+        if (!messageEntityRepository.existsById(messageDTO.getId())) {
             return new ResponseEntity<>(format("Message with id=%s not found.", messageDTO.getId()), HttpStatus.NOT_FOUND);
         }
         MessageEntity messageEntity = new MessageEntity(messageDTO.getId(), messageDTO.getName(), messageDTO.getDescription());
-        MessageEntity result = messageRepository.save(messageEntity);
+        MessageEntity result = messageEntityRepository.save(messageEntity);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 

@@ -6,7 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import ru.perm.v.camel.simple_kafka.consumer.dto.MessageDTO;
 import ru.perm.v.camel.simple_kafka.consumer.repository.MessageEntity;
-import ru.perm.v.camel.simple_kafka.consumer.repository.MessageRepository;
+import ru.perm.v.camel.simple_kafka.consumer.repository.MessageEntityRepository;
 
 import java.util.List;
 import java.util.Objects;
@@ -22,14 +22,14 @@ class MessageControllerTest {
 
     @Test
     void getAllMessages() {
-        MessageRepository messageRepository = mock(MessageRepository.class);
+        MessageEntityRepository messageEntityRepository = mock(MessageEntityRepository.class);
         String validUUID1 = "26929514-237c-11ed-861d-0242ac120001";
         String validUUID2 = "26929514-237c-11ed-861d-0242ac120002";
         MessageEntity message1 = new MessageEntity(UUID.fromString(validUUID1), "NAME1", "DESCR1");
         MessageEntity message2 = new MessageEntity(UUID.fromString(validUUID2), "NAME2", "DESCR2");
 
-        when(messageRepository.findAll()).thenReturn(List.of(message1, message2));
-        MessageController ctrl = new MessageController(messageRepository);
+        when(messageEntityRepository.findAll()).thenReturn(List.of(message1, message2));
+        MessageController ctrl = new MessageController(messageEntityRepository);
         List<MessageDTO> messages = ctrl.getAllMessages();
 
         assertEquals(2, messages.size());
@@ -39,10 +39,10 @@ class MessageControllerTest {
 
     @Test
     void getAllMessagesForEmpty() {
-        MessageRepository messageRepository = mock(MessageRepository.class);
-        when(messageRepository.findAll()).thenReturn(List.of());
+        MessageEntityRepository messageEntityRepository = mock(MessageEntityRepository.class);
+        when(messageEntityRepository.findAll()).thenReturn(List.of());
 
-        MessageController ctrl = new MessageController(messageRepository);
+        MessageController ctrl = new MessageController(messageEntityRepository);
         List<MessageDTO> messages = ctrl.getAllMessages();
 
         assertEquals(0, messages.size());
@@ -50,11 +50,11 @@ class MessageControllerTest {
 
     @Test
     void getMessageByIdExist() {
-        MessageRepository messageRepository = mock(MessageRepository.class);
+        MessageEntityRepository messageEntityRepository = mock(MessageEntityRepository.class);
         UUID uuid = new UUID(2, 2);
         MessageEntity messageEntity = new MessageEntity(uuid, "NAME", "DESCRIPTION");
-        when(messageRepository.findById(uuid)).thenReturn(Optional.of(messageEntity));
-        MessageController ctrl = new MessageController(messageRepository);
+        when(messageEntityRepository.findById(uuid)).thenReturn(Optional.of(messageEntity));
+        MessageController ctrl = new MessageController(messageEntityRepository);
 
         ResponseEntity<MessageDTO> receivedMessage = (ResponseEntity<MessageDTO>) ctrl.getMessageById(uuid);
 
@@ -66,9 +66,9 @@ class MessageControllerTest {
     @Test
     void getMessageByIdNotExist() {
         UUID uuid = new UUID(2, 2);
-        MessageRepository messageRepository = mock(MessageRepository.class);
-        when(messageRepository.findById(uuid)).thenReturn(Optional.empty());
-        MessageController ctrl = new MessageController(messageRepository);
+        MessageEntityRepository messageEntityRepository = mock(MessageEntityRepository.class);
+        when(messageEntityRepository.findById(uuid)).thenReturn(Optional.empty());
+        MessageController ctrl = new MessageController(messageEntityRepository);
 
         ResponseEntity<?> receivedMessage = ctrl.getMessageById(uuid);
 
@@ -82,11 +82,11 @@ class MessageControllerTest {
         UUID uuid = new UUID(2, 2);
         String NAME = "NAME";
         String DESCRIPTION = "DESCRIPTION";
-        MessageRepository messageRepository = mock(MessageRepository.class);
+        MessageEntityRepository messageEntityRepository = mock(MessageEntityRepository.class);
 
         MessageEntity createdMessageEntity = new MessageEntity(uuid, NAME, DESCRIPTION);
-        when(messageRepository.save(any())).thenReturn(createdMessageEntity);
-        MessageController ctrl = new MessageController(messageRepository);
+        when(messageEntityRepository.save(any())).thenReturn(createdMessageEntity);
+        MessageController ctrl = new MessageController(messageEntityRepository);
 
         ResponseEntity<?> createdMessageDTO = ctrl.createMessage(new MessageDTO(uuid, NAME, DESCRIPTION));
         MessageDTO body = (MessageDTO) createdMessageDTO.getBody();
@@ -100,11 +100,11 @@ class MessageControllerTest {
         UUID uuid = new UUID(2, 2);
         String NAME = "NAME";
         String DESCRIPTION = "DESCRIPTION";
-        MessageRepository messageRepository = mock(MessageRepository.class);
-        when(messageRepository.findById(uuid)).thenReturn(Optional.of(new MessageEntity()));
+        MessageEntityRepository messageEntityRepository = mock(MessageEntityRepository.class);
+        when(messageEntityRepository.findById(uuid)).thenReturn(Optional.of(new MessageEntity()));
         MessageEntity createdMessageEntity = new MessageEntity(uuid, NAME, DESCRIPTION);
-        when(messageRepository.save(any())).thenReturn(createdMessageEntity);
-        MessageController ctrl = new MessageController(messageRepository);
+        when(messageEntityRepository.save(any())).thenReturn(createdMessageEntity);
+        MessageController ctrl = new MessageController(messageEntityRepository);
 
         ResponseEntity<?> result = ctrl.createMessage(new MessageDTO(uuid, NAME, DESCRIPTION));
 
@@ -116,10 +116,10 @@ class MessageControllerTest {
     void deleteMessageIfExist() {
         UUID uuid = new UUID(2, 2);
         MessageEntity messageEntity = new MessageEntity(uuid, "NAME", "DESCRIPTION");
-        MessageRepository messageRepository = mock(MessageRepository.class);
-        when(messageRepository.existsById(uuid)).thenReturn(true);
-        when(messageRepository.findById(uuid)).thenReturn(Optional.of(messageEntity));
-        MessageController ctrl = new MessageController(messageRepository);
+        MessageEntityRepository messageEntityRepository = mock(MessageEntityRepository.class);
+        when(messageEntityRepository.existsById(uuid)).thenReturn(true);
+        when(messageEntityRepository.findById(uuid)).thenReturn(Optional.of(messageEntity));
+        MessageController ctrl = new MessageController(messageEntityRepository);
 
         var result = ctrl.deleteMessage(uuid);
 
@@ -129,9 +129,9 @@ class MessageControllerTest {
     @Test
     void deleteMessageIfNotExist() {
         UUID uuid = new UUID(2, 2);
-        MessageRepository messageRepository = mock(MessageRepository.class);
-        when(messageRepository.existsById(uuid)).thenReturn(false);
-        MessageController ctrl = new MessageController(messageRepository);
+        MessageEntityRepository messageEntityRepository = mock(MessageEntityRepository.class);
+        when(messageEntityRepository.existsById(uuid)).thenReturn(false);
+        MessageController ctrl = new MessageController(messageEntityRepository);
 
         var result = ctrl.deleteMessage(uuid);
 
@@ -152,9 +152,9 @@ class MessageControllerTest {
     void updateMessageForNotExist() {
         UUID uuid = new UUID(2, 2);
 
-        MessageRepository messageRepository = mock(MessageRepository.class);
-        when(messageRepository.existsById(uuid)).thenReturn(false);
-        MessageController ctrl = new MessageController(messageRepository);
+        MessageEntityRepository messageEntityRepository = mock(MessageEntityRepository.class);
+        when(messageEntityRepository.existsById(uuid)).thenReturn(false);
+        MessageController ctrl = new MessageController(messageEntityRepository);
 
         ResponseEntity<?> result = ctrl.updateMessage(new MessageDTO(uuid, "NAME", "DESCRIPTION"));
 
@@ -166,13 +166,13 @@ class MessageControllerTest {
     void updateMessage() {
         UUID uuid = new UUID(2, 2);
 
-        MessageRepository messageRepository = mock(MessageRepository.class);
-        when(messageRepository.existsById(uuid)).thenReturn(true);
-        MessageController ctrl = new MessageController(messageRepository);
+        MessageEntityRepository messageEntityRepository = mock(MessageEntityRepository.class);
+        when(messageEntityRepository.existsById(uuid)).thenReturn(true);
+        MessageController ctrl = new MessageController(messageEntityRepository);
 
         ResponseEntity<?> result = ctrl.updateMessage(new MessageDTO(uuid, "NAME", "DESCRIPTION"));
 
         assertEquals(HttpStatus.OK, result.getStatusCode());
-        verify(messageRepository, times(1)).save(any(MessageEntity.class));
+        verify(messageEntityRepository, times(1)).save(any(MessageEntity.class));
     }
 }
