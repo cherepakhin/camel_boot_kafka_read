@@ -8,7 +8,7 @@ services:
     ports:
       - 22181:2181
     networks:
-      - superhero-information-network
+      - camel-integration
   
   kafka:
     image: confluentinc/cp-kafka:latest
@@ -24,11 +24,11 @@ services:
     depends_on:
       - zookeeper
     networks:
-      - superhero-information-network
+      - camel-integration-network
 
-  superhero-searcher:
+  producer:
     build:
-      context: superhero-searcher
+      context: producer
       dockerfile: Dockerfile
     depends_on:
       - kafka
@@ -36,22 +36,22 @@ services:
     environment:
       BOOTSTRAP_SERVERS: kafka:9092
     networks:
-      - superhero-information-network
+      - camel-integration-network
 
-  superhero-registry:
+  consumer:
     build:
-      context: superhero-registry
+      context: consumer
       dockerfile: Dockerfile
     ports:
     - 9090:9090
     depends_on:
       - kafka
       - zookeeper
-      - superhero-searcher
+      - producer
     environment:
       BOOTSTRAP_SERVERS: kafka:9092
     networks:
-      - superhero-information-network
+      - camel-integration-network
 
 networks:
-  superhero-information-network:
+  camel-integration-network:

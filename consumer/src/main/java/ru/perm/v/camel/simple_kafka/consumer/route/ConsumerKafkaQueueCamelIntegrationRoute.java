@@ -26,10 +26,6 @@ public class ConsumerKafkaQueueCamelIntegrationRoute extends RouteBuilder {
     private static final String autoOffsetOption = "autoOffsetReset=smallest";
     private static final String groupId = "testing_camel";
 
-//    public MessageInformationConsumptionRoute() {
-//        log.info("default constructor");
-//    }
-
     public ConsumerKafkaQueueCamelIntegrationRoute(
             KafkaConfigurationProperties kafkaConfigurationProperties,
             CamelContext context,

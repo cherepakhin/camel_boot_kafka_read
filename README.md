@@ -17,21 +17,19 @@
 Генерирует сообщения по таймеру и отправляет их в очередь Kafka "camel-integration":
 
 ````java
-public class SuperHeroSearchScheduler extends RouteBuilder {
+public class MessageScheduler extends RouteBuilder {
     ....
-    public void configure() {
-        from("timer:superhero-search-scheduler?period=5000").bean(superHeroSearcher).process(messageBodyLogger)
-                .marshal(JsonDataFormatter.get(SuperHero.class))
-                .process(messageBodyLoggerSecond)
-                .to("kafka:" + kafkaConfigurationProperties.getTopicName()); // topic "camel-integration"
-    }
+		from("timer:v-search-scheduler?period=5000").bean(messageBuilder).process(messageBodyLogger)
+				.marshal(JsonDataFormatter.get(MessageDTO.class))
+				.process(messageBodyLoggerSecond)
+				.to("kafka:" + kafkaConfigurationProperties.getTopicName());
     ....
 ````
 Использован Camel.
 
 ## Проект __consumer__.
 
-Читаются сообщения из очереди Kafka "camel-integration". Задано в [application.properties](https://github.com/cherepakhin/camel_boot_kafka_read/blob/main/superhero-registry/src/main/resources/application.properties):
+Читаются сообщения из очереди Kafka "camel-integration". Задано в [application.properties](https://github.com/cherepakhin/camel_boot_kafka_read/blob/main/consumer/src/main/resources/application.properties):
 
 ````properties
 ...
@@ -105,43 +103,35 @@ $ jq -rc . example1.json | ./kafka/bin/kafka-console-producer.sh --broker-list 1
 Сообщения логируются:
 
 ````shell
-2024-11-18 13:30:38.164  INFO 17625 --- [ro-information]] c.b.r.processor.MessageBodyLogger        : Polled Superhero information: SuperHero(id=f10e37fa-0da7-4854-a292-33948f2ce331, name=Name2, descriptor=Descriptor2, power=Power2, prefix=Prefix2, suffix=Suffix2, foundAt=null)
-Hibernate: insert into super_hero (descriptor, found_at, name, power, prefix, suffix, id) values (?, ?, ?, ?, ?, ?, ?)
+2024-11-18 13:30:38.164  INFO 17625 --- [ro-information]] c.b.r.processor.MessageBodyLogger        : Polled Message information: MessageDTO(id=f10e37fa-0da7-4854-a292-33948f2ce331, name=Name2, descriptor=Descriptor2, power=Power2, prefix=Prefix2, suffix=Suffix2, foundAt=null)
+Hibernate: insert into message (descriptor, found_at, name, power, prefix, suffix, id) values (?, ?, ?, ?, ?, ?, ?)
 ````
 
-Camel route [MessageInformationConsumptionRoute.java](https://github.com/cherepakhin/camel_boot_kafka_read/blob/main/superhero-searcher/src/main/java/com/behl/searcher/route/SuperHeroSearchScheduler.java) читает из топика camel-integration и сохраняет memory database. Прочитать сообщение через REST 
+Camel route ConsumerKafkaQueueCamelIntegrationRoute.java читает из топика camel-integration и сохраняет memory database. Прочитать сообщение через REST 
 
 ````shell
-http :9090/v1/registry/superheroes
+http :9090/api/messages/
 [
     {
-        "descriptor": "Descriptor1",
-        "foundAt": null,
         "id": "f10e37fa-0da7-4854-a292-33948f2ce330",
         "name": "Name1",
-        "power": "Power1",
-        "prefix": "Prefix1",
-        "suffix": "Suffix1"
+        "description": "Description1",
     },
     {
-        "descriptor": "Descriptor2",
-        "foundAt": null,
-        "id": "f10e37fa-0da7-4854-a292-33948f2ce331",
+        "id": "f10e37fa-0da7-4854-a292-33948f2ce440",
         "name": "Name2",
-        "power": "Power2",
-        "prefix": "Prefix2",
-        "suffix": "Suffix2"
+        "description": "Description2",
     }
 ]
 ````
 
-SuperHeroController
+Запуск:
 
 ````shell
 $ export BOOTSTRAP_SERVERS=http://192.168.1.20:9092
 $ ./mvnw spring-boot:run
 
-$ http :9090/v1/registry/superheroes
+$ http :9090/api/messages/
 HTTP/1.1 200
 Connection: keep-alive
 Content-Type: application/json
