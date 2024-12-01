@@ -112,4 +112,30 @@ class MessageControllerTest {
         assertEquals("Message with id 00000000-0000-0002-0000-000000000002 exist", result.getBody().toString());
     }
 
+    @Test
+    void deleteMessageIfExist() {
+        UUID uuid = new UUID(2, 2);
+        MessageEntity messageEntity = new MessageEntity(uuid, "NAME", "DESCRIPTION");
+        MessageRepository messageRepository = mock(MessageRepository.class);
+        when(messageRepository.existsById(uuid)).thenReturn(true);
+        when(messageRepository.findById(uuid)).thenReturn(Optional.of(messageEntity));
+        MessageController ctrl = new MessageController(messageRepository);
+
+        var result = ctrl.deleteMessage(uuid);
+
+        assertEquals(HttpStatus.OK, result.getStatusCode());
+    }
+
+    @Test
+    void deleteMessageIfNotExist() {
+        UUID uuid = new UUID(2, 2);
+        MessageRepository messageRepository = mock(MessageRepository.class);
+        when(messageRepository.existsById(uuid)).thenReturn(false);
+        MessageController ctrl = new MessageController(messageRepository);
+
+        var result = ctrl.deleteMessage(uuid);
+
+        assertEquals(HttpStatus.NOT_FOUND, result.getStatusCode());
+        assertEquals("Message with id=00000000-0000-0002-0000-000000000002 not found.", result.getBody().toString());
+    }
 }

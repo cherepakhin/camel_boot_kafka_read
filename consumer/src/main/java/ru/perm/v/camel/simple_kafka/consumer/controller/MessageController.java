@@ -13,13 +13,10 @@ import ru.perm.v.camel.simple_kafka.consumer.dto.MessageDTO;
 import ru.perm.v.camel.simple_kafka.consumer.repository.MessageEntity;
 import ru.perm.v.camel.simple_kafka.consumer.repository.MessageRepository;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.logging.Logger;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import static java.lang.String.format;
 
@@ -41,6 +38,7 @@ class MessageController {
     @Operation(summary = "Get all messages", description = "Retrieve a list of all messages")
     @ApiResponse(responseCode = "200", description = "Successful operation")
     public List<MessageDTO> getAllMessages() {
+// Don't delete comment!!!
 // Variant 1 of convert
 //        List<MessageDTO> messages = new ArrayList<>();
 //        messageRepository
@@ -52,6 +50,7 @@ class MessageController {
 //                                        messageEntity.getName(),
 //                                        messageEntity.getDescription())));
 //        return messages;
+
 // Variant 2 of convert (with stream ... toList())
         Iterable<MessageEntity> iterable = messageRepository.findAll();
         List<MessageEntity> entities = Lists.newArrayList(iterable);
@@ -59,6 +58,7 @@ class MessageController {
         return entities.stream().map(e ->
                 new MessageDTO(e.getId(), e.getName(), e.getDescription())).toList();
     }
+
 
     @GetMapping("/{id}")
     @Operation(summary = "Get a message by ID", description = "Retrieve a message by its unique identifier")
@@ -97,6 +97,22 @@ class MessageController {
         MessageEntity savedEntity = messageRepository.save(messageEntity);
         MessageDTO dto = new MessageDTO(savedEntity.getId(), savedEntity.getName(), savedEntity.getDescription());
         return new ResponseEntity<>(dto, HttpStatus.OK);
+    }
+
+    @DeleteMapping("/{id}")
+    @Operation(summary = "Delete a message", description = "Delete a message by its unique identifier")
+    @ApiResponse(responseCode = "204", description = "Message deleted successfully")
+    @ApiResponse(responseCode = "404", description = "Message not found")
+    public ResponseEntity deleteMessage(@Parameter(description = "Message ID") @PathVariable("id") UUID uuid) {
+        if (uuid == null) {
+            return new ResponseEntity<>("UUID is required", HttpStatus.BAD_REQUEST);
+        }
+        logger.info(format("Delete by ID=%s", uuid));
+        if (!messageRepository.existsById(uuid)) {
+            return new ResponseEntity<>(format("Message with id=%s not found.", uuid), HttpStatus.NOT_FOUND);
+        }
+        messageRepository.deleteById(uuid);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @DeleteMapping("/")
