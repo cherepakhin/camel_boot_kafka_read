@@ -42,12 +42,22 @@ export BOOTSTRAP_SERVERS=http://192.168.1.20:9092
 ````
 (consumer/run.sh)
 
+__Проверка через echo контроллер__:
+
+````shell
+http http://127.0.0.1:9090/api/fortest/echo/aaa
+
+aaa
+````
+
 __Показать последнее принятое сообщение:__
 
 ````shell
 http :9090/api/messages/ 
 ````
 (внимание на последний "/")
+
+
 
 Сообщения можно отправлять вручную (описано ниже) или генерировать другой программой 
 (см. vasi@vasi-note:~/prog/java/camel/camel-integration-spring-boot-kafka/producer)

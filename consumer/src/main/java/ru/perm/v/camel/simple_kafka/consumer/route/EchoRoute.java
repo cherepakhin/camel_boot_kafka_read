@@ -8,7 +8,7 @@ public class EchoRoute extends RouteBuilder {
     @Override
     public void configure() throws Exception {
 // for send message to other route
-//        from("direct:echo").routeId("echo").log(format("Message: %s", param)).to(echoRoute);
+//        from("direct:echo").routeId("echo").log(format("Message: %s", param)).to(otherRoute);
         from("direct:echo").routeId("echo").log("Body:${body}");
     }
 }

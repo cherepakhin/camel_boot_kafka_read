@@ -236,3 +236,19 @@ INFO 29650 --- [el-integration]] r.p.v.c.s.c.p.MessageDatasourceProcessor : Afte
 INFO 29650 --- [el-integration]] r.p.v.c.s.c.p.MessageDatasourceProcessor : Save entity: MessageEntity{n=228d2df0-1854-4d72-aa33-621a9618cdcd, name='2024-12-08 11:13:45', description='n: 3'}
 
 ````
+
+### Создание FAT jar файла
+
+````shell
+cd consumer
+./mvnv package
+````
+
+запуск:
+
+````shell
+$ echo $JAVA_HOME
+/usr/lib/jvm/java-17-openjdk-amd64
+
+/usr/lib/jvm/java-17-openjdk-amd64/bin/java -jar target/consumer-0.0.1.jar
+````

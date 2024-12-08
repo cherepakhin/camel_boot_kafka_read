@@ -14,17 +14,20 @@ import static java.lang.String.format;
 
 @RestController
 @RequestMapping("/api/fortest/")
-public class CamelTestController {
+public class CamelEchoController {
     @Autowired
     ApplicationContext context;
 
-    Logger logger = Logger.getLogger(CamelTestController.class.getName());
+    Logger logger = Logger.getLogger(CamelEchoController.class.getName());
 
     @GetMapping("/echo/{param}")
     public String getParam(@PathVariable String param) {
         logger.info(format("Get param: %s", param));
         ProducerTemplate template = context.getBean(ProducerTemplate.class);
+
+        // send to ru.perm.v.camel.simple_kafka.consumer.route.EchoRoute.java
         template.sendBody("direct:echo", param);
+
         return param;
     }
 }

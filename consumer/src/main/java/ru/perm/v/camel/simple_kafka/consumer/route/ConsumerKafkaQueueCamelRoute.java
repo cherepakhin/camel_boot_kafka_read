@@ -20,13 +20,13 @@ public class ConsumerKafkaQueueCamelRoute extends RouteBuilder {
 
     // demo logger processor
     private MyMessageBodyLogger myMessageBodyLogger;
-    private MessageDatasourceProcessor myProcessor;
+    private MessageDatasourceProcessor messageDatasourceProcessor;
 
     public ConsumerKafkaQueueCamelRoute(
             KafkaConfigurationProperties kafkaConfigurationProperties,
             CamelContext context,
             MyMessageBodyLogger myMessageBodyLogger,
-            MessageDatasourceProcessor myProcessor) {
+            MessageDatasourceProcessor messageDatasourceProcessor) {
         super(context);
         log.info("constructor with params");
         log.info(format("CamelContext: %s", context));
@@ -35,12 +35,12 @@ public class ConsumerKafkaQueueCamelRoute extends RouteBuilder {
         log.info(format("context.isDevConsole() after set: %s", context.isDevConsole()));
         log.info(format("context.getComponentNames(): %s", context.getComponentNames()));
         log.info(format("myMessageBodyLogger: %s", myMessageBodyLogger));
-        log.info(format("myProcessor: %s", myProcessor));
+        log.info(format("myProcessor: %s", messageDatasourceProcessor));
         log.info(format("kafkaConfigurationProperties: %s", kafkaConfigurationProperties));
 
         this.kafkaConfigurationProperties = kafkaConfigurationProperties;
         this.myMessageBodyLogger = myMessageBodyLogger;
-        this.myProcessor = myProcessor;
+        this.messageDatasourceProcessor = messageDatasourceProcessor;
     }
 
     @Override
@@ -51,7 +51,7 @@ public class ConsumerKafkaQueueCamelRoute extends RouteBuilder {
                 + "?brokers=" + kafkaConfigurationProperties.broker;
         log.info("fromKafka: {}", fromKafka);
         from(fromKafka).log("Message received from Kafka : ${body}").unmarshal(JsonDataFormatter.get(MessageDTO.class))
-                .process(myMessageBodyLogger).process(myProcessor).end();
+                .process(myMessageBodyLogger).process(messageDatasourceProcessor).end();
     }
 
     @Override
@@ -60,7 +60,7 @@ public class ConsumerKafkaQueueCamelRoute extends RouteBuilder {
                 "topic='" + kafkaConfigurationProperties.topicName + '\'' +
                 ", kafkaConfigurationProperties=" + kafkaConfigurationProperties +
                 ", myMessageBodyLogger=" + myMessageBodyLogger +
-                ", myProcessor=" + myProcessor +
+                ", myProcessor=" + messageDatasourceProcessor +
                 '}';
     }
 }

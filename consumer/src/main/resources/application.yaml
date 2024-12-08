@@ -26,13 +26,13 @@ spring:
           import_files_sql_extractor: org.hibernate.tool.hbm2ddl.MultipleLinesSqlCommandExtractor
 
 server:
-  port: 9090
+  port: 8082
 
 # Kafka Configuration
-camel:
-  component:
-    kafka:
-      brokers: ${BOOTSTRAP_SERVERS:http://192.168.1.20:9092}
+#camel:
+#  component:
+#    kafka:
+#      brokers: ${BOOTSTRAP_SERVERS:http://192.168.1.20:9092}
 
 # in class KafkaConfigurationProperties.java
 # @ConfigurationProperties(prefix = "ru.perm.v.kafka")
