@@ -13,7 +13,7 @@
 
 	<groupId>ru.perm.v.spring_boot_kafka.example1</groupId>
 	<artifactId>producer</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.0.1</version>
 	<name>Camel producer example</name>
 	<description>Application that searches collects information and publishes it to a kafka topic through a Camel Route</description>
 
@@ -87,6 +87,38 @@
 						<phase>install</phase>
 						<goals>
 							<goal>build</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<!-- fat jar -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<version>3.2.0</version>
+				<configuration>
+					<archive>
+						<manifest>
+							<mainClass>ru.perm.v.camel.simple_kafka.producer.CamelProducerApplication</mainClass>
+						</manifest>
+					</archive>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-assembly-plugin</artifactId>
+				<version>3.6.0</version>
+				<configuration>
+					<descriptorRefs>
+						<descriptorRef>jar-with-dependencies</descriptorRef>
+					</descriptorRefs>
+				</configuration>
+				<executions>
+					<execution>
+						<id>assemble-all</id>
+						<phase>package</phase>
+						<goals>
+							<goal>single</goal>
 						</goals>
 					</execution>
 				</executions>
