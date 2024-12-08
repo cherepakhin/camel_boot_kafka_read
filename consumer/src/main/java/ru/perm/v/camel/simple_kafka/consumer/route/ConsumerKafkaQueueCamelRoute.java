@@ -14,7 +14,7 @@ import static java.lang.String.format;
 
 @Component
 @EnableConfigurationProperties(value = KafkaConfigurationProperties.class)
-public class ConsumerKafkaQueueCamelIntegrationRoute extends RouteBuilder {
+public class ConsumerKafkaQueueCamelRoute extends RouteBuilder {
 
     private KafkaConfigurationProperties kafkaConfigurationProperties;
 
@@ -28,7 +28,7 @@ public class ConsumerKafkaQueueCamelIntegrationRoute extends RouteBuilder {
 //    private static final String autoOffsetOption = "autoOffsetReset=smallest";
 //    private static final String groupId = "testing_camel";
 
-    public ConsumerKafkaQueueCamelIntegrationRoute(
+    public ConsumerKafkaQueueCamelRoute(
             KafkaConfigurationProperties kafkaConfigurationProperties,
             CamelContext context,
             MyMessageBodyLogger myMessageBodyLogger,
@@ -42,6 +42,7 @@ public class ConsumerKafkaQueueCamelIntegrationRoute extends RouteBuilder {
         log.info(format("context.getComponentNames(): %s", context.getComponentNames()));
         log.info(format("myMessageBodyLogger: %s", myMessageBodyLogger));
         log.info(format("myProcessor: %s", myProcessor));
+        log.info(format("kafkaConfigurationProperties: %s", kafkaConfigurationProperties));
 
         this.kafkaConfigurationProperties = kafkaConfigurationProperties;
         this.myMessageBodyLogger = myMessageBodyLogger;

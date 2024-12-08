@@ -12,4 +12,10 @@ public class KafkaConfigurationProperties {
 	// in application.yaml : ..."topic-name" , in code: "topicName"
 	public String topicName;
 
+	@Override
+	public String toString() {
+		return "KafkaConfigurationProperties{ " +
+				"topicName='" + topicName + "'}";
+
+	}
 }
