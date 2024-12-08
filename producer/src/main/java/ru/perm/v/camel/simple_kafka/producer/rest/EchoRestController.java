@@ -14,7 +14,7 @@ public class EchoRestController {
     @PostMapping("/{message}")
     public String postMessage(@PathVariable String message) {
         if (message == null || message.isEmpty()) {
-            throw new IllegalArgumentException("Message is empty");
+            throw new Err502Exception("Message is empty");
         }
         return message;
     }

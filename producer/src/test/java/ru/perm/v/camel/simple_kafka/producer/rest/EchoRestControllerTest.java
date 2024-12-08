@@ -17,7 +17,7 @@ class EchoRestControllerTest {
     @Test
     void postForEmptyMessageCheckException() {
         EchoRestController controllerTest = new EchoRestController();
-        assertThrows(IllegalArgumentException.class, () -> controllerTest.postMessage(""));
+        assertThrows(Err502Exception.class, () -> controllerTest.postMessage(""));
     }
 
     @Test
@@ -27,7 +27,8 @@ class EchoRestControllerTest {
 
         try {
             controllerTest.postMessage("");
-        } catch (IllegalArgumentException e) {
+        } catch (Exception e) {
+            assertEquals(Err502Exception.class, e.getClass());
             assertEquals("Message is empty", e.getMessage());
             exception = true;
         }
