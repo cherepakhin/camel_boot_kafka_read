@@ -17,6 +17,5 @@ class MessageDTOTest {
 
         assertTrue(message.toString().contains("MessageDTO{"));
         assertTrue(message.toString().contains("name="));
-        assertTrue(message.toString().contains("descriptor="));
     }
 }

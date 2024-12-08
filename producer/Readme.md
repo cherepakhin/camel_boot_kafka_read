@@ -37,3 +37,16 @@ http :9090/api/messages/
 ````
 
 Сообщения отправляются каждые 5 сек, время отправки в __name__.
+
+### Создание FAT jar файла
+
+````shell
+cd producer
+./mvnv package
+````
+
+запуск:
+
+````shell
+/usr/lib/jvm/java-17-openjdk-amd64/bin/java -jar target/producer-0.0.1.jar
+````
