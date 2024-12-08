@@ -1,6 +1,15 @@
 В проекте читаются сообщения из очереди Kafka "camel-integration". 
 
-Название очереди задано в application.properties "ru.perm.v.kafka.topic-name=camel-integration"), задано в [ru.perm.v.camel.simple_kafka.consumer.properties.KafkaConfigurationProperties.java](https://github.com/cherepakhin/camel_boot_kafka_read/blob/main/consumer/src/main/java/ru/perm/v/camel/simple_kafka/consumer/properties/KafkaConfigurationProperties.java). (Это пример определения собственного параметра в yaml файле).
+Название очереди задано в application.yaml
+
+````yaml
+  ru.perm.v.camelkafka:
+    topic-name: camel-integration
+````
+
+В проект подтягивается через [ru.perm.v.camel.simple_kafka.consumer.properties.KafkaConfigurationProperties.java](https://github.com/cherepakhin/camel_boot_kafka_read/blob/main/consumer/src/main/java/ru/perm/v/camel/simple_kafka/consumer/properties/KafkaConfigurationProperties.java).
+
+Это собственный параметр в yaml файле (не spring и не другого фраймворка, а __частный__ параметр проекта).
 
 Использовано в [ru.perm.v.camel.simple_kafka.consumer.route.ConsumerKafkaQueueCamelIntegrationRoute]{https://github.com/cherepakhin/camel_boot_kafka_read/blob/main/consumer/src/main/java/ru/perm/v/camel/simple_kafka/consumer/route/ConsumerKafkaQueueCamelIntegrationRoute.java}
 
