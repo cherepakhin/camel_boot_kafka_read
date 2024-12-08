@@ -1,7 +1,29 @@
 В проекте читаются сообщения из очереди Kafka "camel-integration". 
 
-Название очереди задано в application.properties "ru.perm.v.kafka.topic-name=camel-integration"), задано в [ru.perm.v.camel.simple_kafka.consumer.properties.KafkaConfigurationProperties.java](https://github.com/cherepakhin/camel_boot_kafka_read/blob/main/consumer/src/main/java/ru/perm/v/camel/simple_kafka/consumer/properties/KafkaConfigurationProperties.java).
+Название очереди задано в application.properties "ru.perm.v.kafka.topic-name=camel-integration"), задано в [ru.perm.v.camel.simple_kafka.consumer.properties.KafkaConfigurationProperties.java](https://github.com/cherepakhin/camel_boot_kafka_read/blob/main/consumer/src/main/java/ru/perm/v/camel/simple_kafka/consumer/properties/KafkaConfigurationProperties.java). (Это пример определения собственного параметра в yaml файле).
 
+Использовано в [ru.perm.v.camel.simple_kafka.consumer.route.ConsumerKafkaQueueCamelIntegrationRoute]{https://github.com/cherepakhin/camel_boot_kafka_read/blob/main/consumer/src/main/java/ru/perm/v/camel/simple_kafka/consumer/route/ConsumerKafkaQueueCamelIntegrationRoute.java}
+
+````shell
+@EnableConfigurationProperties(value = KafkaConfigurationProperties.class)
+public class ConsumerKafkaQueueCamelIntegrationRoute extends RouteBuilder {
+
+    private KafkaConfigurationProperties kafkaConfigurationProperties;
+....
+    public ConsumerKafkaQueueCamelIntegrationRoute(
+            KafkaConfigurationProperties kafkaConfigurationProperties,
+            ....
+        this.kafkaConfigurationProperties = kafkaConfigurationProperties;
+        ...
+    }
+    
+    @Override
+    public void configure() throws Exception {
+        log.info("kafkaConfigurationProperties.topicName {}", kafkaConfigurationProperties.topicName);
+        ....
+    }                    
+....
+````
 
 __Запуск проекта:__
 
