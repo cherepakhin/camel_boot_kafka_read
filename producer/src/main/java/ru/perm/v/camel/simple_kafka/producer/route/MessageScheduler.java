@@ -29,7 +29,7 @@ public class MessageScheduler extends RouteBuilder {
 				.maximumRedeliveries(deadLetterTopicConfiguration.getRetries())
 				.maximumRedeliveryDelay(deadLetterTopicConfiguration.getDelay()));
 
-		from("timer:v-search-scheduler?period=5000").bean(messageBuilder).process(messageBodyLogger)
+		from("timer:v-producer-scheduler?period=2000").bean(messageBuilder).process(messageBodyLogger)
 				.marshal(JsonDataFormatter.get(MessageDTO.class))
 				.process(messageBodyLoggerSecond)
 				.to("kafka:" + kafkaConfigurationProperties.getTopicName());
