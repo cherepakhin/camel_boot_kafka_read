@@ -32,7 +32,16 @@ class EchoRestControllerMockMvcTest {
     }
 
     @Test
-    void postMessageWithMvcResult() throws Exception {
+    void postMessageWithMvcResultStatusIsOk() throws Exception {
+        String TEST_MESSAGE="TEST_MESSAGE";
+
+        MvcResult mvcResult = this.mockMvc.perform(post("/api/echo/" + TEST_MESSAGE)).andReturn();
+
+        assertEquals(HttpStatus.OK.value(), mvcResult.getResponse().getStatus());
+    }
+
+    @Test
+    void postMessageWithMvcBodyTest() throws Exception {
         String TEST_MESSAGE="TEST_MESSAGE";
 
         MvcResult mvcResult = this.mockMvc.perform(post("/api/echo/" + TEST_MESSAGE)).andReturn();
