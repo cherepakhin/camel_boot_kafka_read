@@ -9,7 +9,7 @@
 
 В проект подтягивается через [ru.perm.v.camel.simple_kafka.consumer.properties.KafkaConfigurationProperties.java](https://github.com/cherepakhin/camel_boot_kafka_read/blob/main/consumer/src/main/java/ru/perm/v/camel/simple_kafka/consumer/properties/KafkaConfigurationProperties.java).
 
-Это собственный параметр в yaml файле (не spring и не другого фраймворка, а __частный__ параметр проекта).
+Это собственный параметр в yaml файле (не spring и не другого фраймворка, а __частный__ параметр проекта [https://v.perm.ru/index.php/kotlin/simple-kotlin#add_param_to_application_yaml]{https://v.perm.ru/index.php/kotlin/simple-kotlin#add_param_to_application_yaml}).
 
 Использовано в [ru.perm.v.camel.simple_kafka.consumer.route.ConsumerKafkaQueueCamelIntegrationRoute]{https://github.com/cherepakhin/camel_boot_kafka_read/blob/main/consumer/src/main/java/ru/perm/v/camel/simple_kafka/consumer/route/ConsumerKafkaQueueCamelIntegrationRoute.java}
 
