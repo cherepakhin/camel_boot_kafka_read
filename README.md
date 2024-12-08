@@ -1,4 +1,3 @@
-Проект не мой.
 [Источник camel-integration-spring-boot-kafka](https://github.com/hardikSinghBehl/camel-integration-spring-boot-kafka)
 
 # О чем это?
@@ -174,4 +173,66 @@ $ jq -C . example1.json
 
 ````shell
 ~/tools/kafka/bin/kafka-console-consumer.sh --bootstrap-server 192.168.1.20:9092 --topic camel-integration
+````
+
+# Ручное проведение теста CONSUMER
+
+запустить consumer скриптом:
+
+````shell
+consumer$ ./run.sh
+````
+
+Отправить сообщения скриптом:
+
+````shell
+$ producer/doc/send_many_messages.sh 100
+````
+
+"100" - количество отправляемых сообщений.
+
+Consumer примет сообщения. Прочитать принятые сообщения командой:
+
+````shell
+$ http :9090/api/messages/
+````
+
+Удалить все сообщения в базе данных:
+
+````shell
+$ http DELETE :9090/api/messages/
+````
+
+# Запуск всего комплекса
+
+В одном сеансе окне запустить producer:
+
+````shell
+cd producer/
+./run.sh
+````
+в логах будет отражаться отправка сообщений:
+
+````shell
+INFO 29720 --- [earch-scheduler] r.p.v.c.s.p.processor.MessageBodyLogger  : Message information as MessageDTO: MessageDTO{id=5fbdac35-c46a-4c36-af5e-87c33082279a, name='2024-12-08 11:15:50', description='n: 28'}
+````
+
+В другом окне запустить consumer:
+
+````shell
+cd consumer/
+./run.sh
+````
+
+В логах consumer будут отражаться результаты приема сообщений:
+
+````shell
+...
+INFO 29650 --- [el-integration]] route1                                   : Message received from Kafka : {"id":"228d2df0-1854-4d72-aa33-621a9618cdcd","name":"2024-12-08 11:13:45","description":"n: 3"}
+INFO 29650 --- [el-integration]] r.p.v.c.s.c.p.MyMessageBodyLogger        : Polled RECEIVED MESSAGE information: MessageDTO{id=228d2df0-1854-4d72-aa33-621a9618cdcd, name='2024-12-08 11:13:45', description='n: 3'}
+INFO 29650 --- [el-integration]] r.p.v.c.s.c.p.MessageDatasourceProcessor : Process body: MessageDTO{id=228d2df0-1854-4d72-aa33-621a9618cdcd, name='2024-12-08 11:13:45', description='n: 3'}
+INFO 29650 --- [el-integration]] r.p.v.c.s.c.p.MessageDatasourceProcessor : Body: MessageDTO{id=228d2df0-1854-4d72-aa33-621a9618cdcd, name='2024-12-08 11:13:45', description='n: 3'}
+INFO 29650 --- [el-integration]] r.p.v.c.s.c.p.MessageDatasourceProcessor : After CAST:MessageDTO{id=228d2df0-1854-4d72-aa33-621a9618cdcd, name='2024-12-08 11:13:45', description='n: 3'}
+INFO 29650 --- [el-integration]] r.p.v.c.s.c.p.MessageDatasourceProcessor : Save entity: MessageEntity{n=228d2df0-1854-4d72-aa33-621a9618cdcd, name='2024-12-08 11:13:45', description='n: 3'}
+
 ````

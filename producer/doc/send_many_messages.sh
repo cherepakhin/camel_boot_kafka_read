@@ -4,7 +4,7 @@
 # Example:
 # /shop_kafka_producer$ ./doc/send_many_messages.sh
 
-max=100
+max=$1
 rm -f many.json
 for i in $(seq 1 $max)
 do
