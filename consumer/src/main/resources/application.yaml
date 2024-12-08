@@ -40,6 +40,7 @@ camel:
 
 ru.perm.v.camelkafka:
   topic-name: camel-integration
+  broker: 192.168.1.20:9092
 
 management:
   health:

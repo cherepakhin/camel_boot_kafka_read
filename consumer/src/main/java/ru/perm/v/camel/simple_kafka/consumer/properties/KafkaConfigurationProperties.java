@@ -11,6 +11,7 @@ public class KafkaConfigurationProperties {
 	// in application.yaml: ru.perm.v.kafka.topic-name=camel-integration
 	// in application.yaml : ..."topic-name" , in code: "topicName"
 	public String topicName;
+	public String broker;
 
 	@Override
 	public String toString() {

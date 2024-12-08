@@ -22,12 +22,6 @@ public class ConsumerKafkaQueueCamelRoute extends RouteBuilder {
     private MyMessageBodyLogger myMessageBodyLogger;
     private MessageDatasourceProcessor myProcessor;
 
-//    private static final String kafkaServer = "192.168.1.20";
-//    private static final String zooKeeperHost = "192.168.1.20";
-//    private static final String serializerClass = "serializerClass=kafka.serializer.StringEncoder";
-//    private static final String autoOffsetOption = "autoOffsetReset=smallest";
-//    private static final String groupId = "testing_camel";
-
     public ConsumerKafkaQueueCamelRoute(
             KafkaConfigurationProperties kafkaConfigurationProperties,
             CamelContext context,
@@ -51,30 +45,13 @@ public class ConsumerKafkaQueueCamelRoute extends RouteBuilder {
 
     @Override
     public void configure() throws Exception {
-        log.info("kafkaConfigurationProperties.topicName {}", kafkaConfigurationProperties.topicName);
-//        log.info("Read Kafka topic (from consumer): {}", kafkaConfigurationProperties.getTopicName());
-
-//        String kafka = new StringBuilder().append(kafkaServer).append("?").append(
-//                topicName).append("&").append(zooKeeperHost).append("&").append(
-//                serializerClass).toString();
-//        String fromKafka = new StringBuilder().append(kafka).append("&").append(
-//                autoOffsetOption).append("&").append(groupId).toString();
-//        String fromKafka = "kafka:192.168.1.20:9092?topic=camel-integration&groupId=testing_camel";
-        String fromKafka = "kafka:camel-integration?brokers=192.168.1.20:9092";
+        log.info("kafkaConfigurationProperties.topicName: {}", kafkaConfigurationProperties.topicName);
+        log.info("kafkaConfigurationProperties.broker: {}", kafkaConfigurationProperties.broker);
+        String fromKafka = "kafka:" + kafkaConfigurationProperties.getTopicName()
+                + "?brokers=" + kafkaConfigurationProperties.broker;
+        log.info("fromKafka: {}", fromKafka);
         from(fromKafka).log("Message received from Kafka : ${body}").unmarshal(JsonDataFormatter.get(MessageDTO.class))
                 .process(myMessageBodyLogger).process(myProcessor).end();
-//                .process(new Processor() {
-//            public void process(Exchange exchange) throws Exception {
-//                if (exchange.getIn() != null) {
-//                    Message message = exchange.getIn();
-//                    String data = message.getBody(String.class);
-//                    System.out.println("Data =" + data.toString());
-//                }
-//            }
-//        });
-
-//        from("kafka:" + kafkaConfigurationProperties.getTopicName()).unmarshal(JsonDataFormatter.get(MessageDTO.class))
-//                .process(myMessageBodyLogger).process(myProcessor).end();
     }
 
     @Override
