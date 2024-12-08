@@ -17,14 +17,16 @@ import static java.lang.String.format;
 public class ConsumerKafkaQueueCamelIntegrationRoute extends RouteBuilder {
 
     private KafkaConfigurationProperties kafkaConfigurationProperties;
+
+    // demo logger processor
     private MyMessageBodyLogger myMessageBodyLogger;
     private MessageDatasourceProcessor myProcessor;
 
-    private static final String kafkaServer = "192.168.1.20";
-    private static final String zooKeeperHost = "192.168.1.20";
-    private static final String serializerClass = "serializerClass=kafka.serializer.StringEncoder";
-    private static final String autoOffsetOption = "autoOffsetReset=smallest";
-    private static final String groupId = "testing_camel";
+//    private static final String kafkaServer = "192.168.1.20";
+//    private static final String zooKeeperHost = "192.168.1.20";
+//    private static final String serializerClass = "serializerClass=kafka.serializer.StringEncoder";
+//    private static final String autoOffsetOption = "autoOffsetReset=smallest";
+//    private static final String groupId = "testing_camel";
 
     public ConsumerKafkaQueueCamelIntegrationRoute(
             KafkaConfigurationProperties kafkaConfigurationProperties,
@@ -48,6 +50,7 @@ public class ConsumerKafkaQueueCamelIntegrationRoute extends RouteBuilder {
 
     @Override
     public void configure() throws Exception {
+        log.info("kafkaConfigurationProperties.topicName {}", kafkaConfigurationProperties.topicName);
 //        log.info("Read Kafka topic (from consumer): {}", kafkaConfigurationProperties.getTopicName());
 
 //        String kafka = new StringBuilder().append(kafkaServer).append("?").append(

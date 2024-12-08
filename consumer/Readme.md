@@ -1,4 +1,7 @@
-В проекте читаются сообщения из очереди Kafka "camel-integration". Название очереди задано в application.properties "ru.perm.v.kafka.topic-name=camel-integration").
+В проекте читаются сообщения из очереди Kafka "camel-integration". 
+
+Название очереди задано в application.properties "ru.perm.v.kafka.topic-name=camel-integration"), задано в [ru.perm.v.camel.simple_kafka.consumer.properties.KafkaConfigurationProperties.java](https://github.com/cherepakhin/camel_boot_kafka_read/blob/main/consumer/src/main/java/ru/perm/v/camel/simple_kafka/consumer/properties/KafkaConfigurationProperties.java).
+
 
 __Запуск проекта:__
 
