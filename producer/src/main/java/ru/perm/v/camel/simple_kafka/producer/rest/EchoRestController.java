@@ -13,6 +13,9 @@ import org.springframework.web.bind.annotation.RestController;
 public class EchoRestController {
     @PostMapping("/{message}")
     public String postMessage(@PathVariable String message) {
+        if (message == null || message.isEmpty()) {
+            throw new IllegalArgumentException("Message is empty");
+        }
         return message;
     }
 }

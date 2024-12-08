@@ -19,7 +19,7 @@ class EchoRestControllerSpringBootTest {
     private TestRestTemplate restTemplate;
 
     @Test
-    void echo() throws Exception {
+    void postMessage() throws Exception {
         String response = this.restTemplate.postForObject("http://localhost:"+port+"/api/echo/TEST_MESSAGE", null, String.class);
         assertEquals("TEST_MESSAGE", response);
     }

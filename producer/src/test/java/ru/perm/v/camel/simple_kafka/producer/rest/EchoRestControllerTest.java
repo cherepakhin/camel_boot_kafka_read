@@ -13,4 +13,25 @@ class EchoRestControllerTest {
 
         assertEquals("test", message);
     }
+
+    @Test
+    void postForEmptyMessageCheckException() {
+        EchoRestController controllerTest = new EchoRestController();
+        assertThrows(IllegalArgumentException.class, () -> controllerTest.postMessage(""));
+    }
+
+    @Test
+    void postForEmptyMessageCheckExceptionMessage() {
+        EchoRestController controllerTest = new EchoRestController();
+        boolean exception = false;
+
+        try {
+            controllerTest.postMessage("");
+        } catch (IllegalArgumentException e) {
+            assertEquals("Message is empty", e.getMessage());
+            exception = true;
+        }
+
+        assertTrue(exception);
+    }
 }
