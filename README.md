@@ -205,7 +205,7 @@ $ http DELETE :9090/api/messages/
 
 # Запуск всего комплекса
 
-В одном сеансе окне запустить producer:
+В одном терминале запустить producer:
 
 ````shell
 cd producer/
@@ -217,7 +217,7 @@ cd producer/
 INFO 29720 --- [earch-scheduler] r.p.v.c.s.p.processor.MessageBodyLogger  : Message information as MessageDTO: MessageDTO{id=5fbdac35-c46a-4c36-af5e-87c33082279a, name='2024-12-08 11:15:50', description='n: 28'}
 ````
 
-В другом окне запустить consumer:
+В другом терминале запустить consumer:
 
 ````shell
 cd consumer/
