@@ -16,6 +16,10 @@ public class EchoRestController {
         if (message == null || message.isEmpty()) {
             throw new Err502Exception("Message is empty");
         }
+        // for example length check
+        if (message.length() > 100) {
+            throw new Err502Exception("Size of message is greater than 100");
+        }
         return message;
     }
 }
