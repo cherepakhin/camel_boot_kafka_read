@@ -212,4 +212,13 @@ $ http :9090/api/messages/
 $ http DELETE :9090/api/messages/
 ````
 
+### Тестирование
 
+Подключен контроль покрытия тестами. Сделано с помощью [jacoco](https://www.jacoco.org/jacoco/). Отчет генерируется автоматически при прогоне тестов или:
+
+````shell
+./mvnw jacoco:report
+````
+
+Отчет в consumer/target/site/jacoco/index.html
+![jacoco_report.png](doc/jacoco_report.png)
