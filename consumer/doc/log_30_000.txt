@@ -1,0 +1,188 @@
+$ ./run_consumer.sh
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+ :: Spring Boot ::                (v2.6.8)
+
+18:13:04.716  INFO 27200 --- [           main] r.p.v.c.s.c.ConsumerKafkaApplication     : Starting ConsumerKafkaApplication v0.0.1 using Java 17.0.7 on vasi-note with PID 27200 (/home/vasi/prog/java/camel/camel-integration-spring-boot-kafka/consumer/target/consumer-0.0.1.jar started by vasi in /home/vasi/prog/java/camel/camel-integration-spring-boot-kafka)
+18:13:04.751  INFO 27200 --- [           main] r.p.v.c.s.c.ConsumerKafkaApplication     : No active profile set, falling back to 1 default profile: "default"
+18:13:11.185  INFO 27200 --- [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+18:13:11.589  INFO 27200 --- [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 350 ms. Found 1 JPA repository interfaces.
+18:13:15.388  INFO 27200 --- [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 9090 (http)
+18:13:15.448  INFO 27200 --- [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+18:13:15.448  INFO 27200 --- [           main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.63]
+18:13:15.770  INFO 27200 --- [           main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+18:13:15.770  INFO 27200 --- [           main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 10495 ms
+18:13:16.266  INFO 27200 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+18:13:17.272  INFO 27200 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+18:13:17.330  INFO 27200 --- [           main] o.s.b.a.h2.H2ConsoleAutoConfiguration    : H2 console available at '/h2'. Database available at 'jdbc:h2:mem:camel_integration'
+18:13:18.059  INFO 27200 --- [           main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+18:13:18.426  INFO 27200 --- [           main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 5.6.9.Final
+18:13:19.754  INFO 27200 --- [           main] o.hibernate.annotations.common.Version   : HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+18:13:20.350  INFO 27200 --- [           main] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: org.hibernate.dialect.H2Dialect
+18:13:22.776  INFO 27200 --- [           main] o.h.t.schema.internal.SchemaCreatorImpl  : HHH000476: Executing import script 'jar:file:/home/vasi/prog/java/camel/camel-integration-spring-boot-kafka/consumer/target/consumer-0.0.1.jar!/BOOT-INF/classes!/import.sql'
+18:13:22.847  INFO 27200 --- [           main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+18:13:22.878  INFO 27200 --- [           main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+18:13:23.276  WARN 27200 --- [           main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+18:13:25.420  INFO 27200 --- [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 9090 (http) with context path ''
+18:13:25.739  INFO 27200 --- [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8781 (http)
+18:13:25.742  INFO 27200 --- [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+18:13:25.742  INFO 27200 --- [           main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.63]
+18:13:25.759  INFO 27200 --- [           main] o.a.c.c.C.[Tomcat-1].[localhost].[/]     : Initializing Spring embedded WebApplicationContext
+18:13:25.759  INFO 27200 --- [           main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 309 ms
+18:13:25.992  INFO 27200 --- [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8781 (http) with context path ''
+18:13:27.038  INFO 27200 --- [           main] p.v.c.s.c.r.ConsumerKafkaQueueCamelRoute : constructor with params
+18:13:27.038  INFO 27200 --- [           main] p.v.c.s.c.r.ConsumerKafkaQueueCamelRoute : CamelContext: SpringCamelContext(camel-1) with spring id camel_integration_consumer
+18:13:27.039  INFO 27200 --- [           main] p.v.c.s.c.r.ConsumerKafkaQueueCamelRoute : context.isDevConsole() before set: false
+18:13:27.039  INFO 27200 --- [           main] p.v.c.s.c.r.ConsumerKafkaQueueCamelRoute : context.isDevConsole() after set: true
+18:13:27.039  INFO 27200 --- [           main] p.v.c.s.c.r.ConsumerKafkaQueueCamelRoute : context.getComponentNames(): [spring-event]
+18:13:27.040  INFO 27200 --- [           main] p.v.c.s.c.r.ConsumerKafkaQueueCamelRoute : myMessageBodyLogger: ru.perm.v.camel.simple_kafka.consumer.processor.MyMessageBodyLogger@22c75c01
+18:13:27.040  INFO 27200 --- [           main] p.v.c.s.c.r.ConsumerKafkaQueueCamelRoute : myProcessor: ru.perm.v.camel.simple_kafka.consumer.processor.MessageDatasourceProcessor@68565bc7
+18:13:27.041  INFO 27200 --- [           main] p.v.c.s.c.r.ConsumerKafkaQueueCamelRoute : kafkaConfigurationProperties: KafkaConfigurationProperties{ topicName='camel-integration'}
+18:13:27.251  INFO 27200 --- [           main] p.v.c.s.c.r.ConsumerKafkaQueueCamelRoute : kafkaConfigurationProperties.topicName: camel-integration
+18:13:27.253  INFO 27200 --- [           main] p.v.c.s.c.r.ConsumerKafkaQueueCamelRoute : kafkaConfigurationProperties.broker: 192.168.1.20:9092
+18:13:27.266  INFO 27200 --- [           main] p.v.c.s.c.r.ConsumerKafkaQueueCamelRoute : fromKafka: kafka:camel-integration?brokers=192.168.1.20:9092
+18:13:33.740  INFO 27200 --- [           main] o.a.c.impl.engine.AbstractCamelContext   : Apache Camel 3.20.3 (camel-1) is starting
+18:13:34.935  INFO 27200 --- [           main] o.a.camel.component.kafka.KafkaConsumer  : Starting Kafka consumer on topic: camel-integration with breakOnFirstError: false
+18:13:35.052  INFO 27200 --- [el-integration]] o.a.c.component.kafka.KafkaFetchRecords  : Connecting Kafka consumer thread ID camel-integration-Thread 0 with poll timeout of 5000 ms
+18:13:35.278  INFO 27200 --- [el-integration]] o.a.k.clients.consumer.ConsumerConfig    : ConsumerConfig values:
+	allow.auto.create.topics = true
+	auto.commit.interval.ms = 5000
+	auto.offset.reset = latest
+	bootstrap.servers = [192.168.1.20:9092]
+	check.crcs = true
+	client.dns.lookup = use_all_dns_ips
+	client.id = consumer-3f53a63b-d29f-4c41-a82a-8e76c0f6ae50-1
+	client.rack =
+	connections.max.idle.ms = 540000
+	default.api.timeout.ms = 60000
+	enable.auto.commit = true
+	exclude.internal.topics = true
+	fetch.max.bytes = 52428800
+	fetch.max.wait.ms = 500
+	fetch.min.bytes = 1
+	group.id = 3f53a63b-d29f-4c41-a82a-8e76c0f6ae50
+	group.instance.id = null
+	heartbeat.interval.ms = 3000
+	interceptor.classes = []
+	internal.leave.group.on.close = true
+	internal.throw.on.fetch.stable.offset.unsupported = false
+	isolation.level = read_uncommitted
+	key.deserializer = class org.apache.kafka.common.serialization.StringDeserializer
+	max.partition.fetch.bytes = 1048576
+	max.poll.interval.ms = 300000
+	max.poll.records = 500
+	metadata.max.age.ms = 300000
+	metric.reporters = []
+	metrics.num.samples = 2
+	metrics.recording.level = INFO
+	metrics.sample.window.ms = 30000
+	partition.assignment.strategy = [org.apache.kafka.clients.consumer.RangeAssignor]
+	receive.buffer.bytes = 65536
+	reconnect.backoff.max.ms = 1000
+	reconnect.backoff.ms = 50
+	request.timeout.ms = 40000
+	retry.backoff.ms = 100
+	sasl.client.callback.handler.class = null
+	sasl.jaas.config = null
+	sasl.kerberos.kinit.cmd = /usr/bin/kinit
+	sasl.kerberos.min.time.before.relogin = 60000
+	sasl.kerberos.service.name = null
+	sasl.kerberos.ticket.renew.jitter = 0.05
+	sasl.kerberos.ticket.renew.window.factor = 0.8
+	sasl.login.callback.handler.class = null
+	sasl.login.class = null
+	sasl.login.refresh.buffer.seconds = 300
+	sasl.login.refresh.min.period.seconds = 60
+	sasl.login.refresh.window.factor = 0.8
+	sasl.login.refresh.window.jitter = 0.05
+	sasl.mechanism = GSSAPI
+	security.protocol = PLAINTEXT
+	security.providers = null
+	send.buffer.bytes = 131072
+	session.timeout.ms = 10000
+	socket.connection.setup.timeout.max.ms = 30000
+	socket.connection.setup.timeout.ms = 10000
+	ssl.cipher.suites = null
+	ssl.enabled.protocols = [TLSv1.2, TLSv1.3]
+	ssl.endpoint.identification.algorithm = https
+	ssl.engine.factory.class = null
+	ssl.key.password = null
+	ssl.keymanager.algorithm = SunX509
+	ssl.keystore.certificate.chain = null
+	ssl.keystore.key = null
+	ssl.keystore.location = null
+	ssl.keystore.password = null
+	ssl.keystore.type = JKS
+	ssl.protocol = TLSv1.3
+	ssl.provider = null
+	ssl.secure.random.implementation = null
+	ssl.trustmanager.algorithm = PKIX
+	ssl.truststore.certificates = null
+	ssl.truststore.location = null
+	ssl.truststore.password = null
+	ssl.truststore.type = JKS
+	value.deserializer = class org.apache.kafka.common.serialization.StringDeserializer
+
+18:13:35.776  INFO 27200 --- [el-integration]] o.a.kafka.common.utils.AppInfoParser     : Kafka version: 3.0.1
+18:13:35.779  INFO 27200 --- [el-integration]] o.a.kafka.common.utils.AppInfoParser     : Kafka commitId: 8e30984f43e64d8b
+18:13:35.781  INFO 27200 --- [el-integration]] o.a.kafka.common.utils.AppInfoParser     : Kafka startTimeMs: 1733836415771
+18:13:35.801  INFO 27200 --- [el-integration]] o.a.c.c.k.c.s.ResumeStrategyFactory      : Using NO-OP resume strategy
+18:13:35.803  INFO 27200 --- [el-integration]] o.a.c.component.kafka.KafkaFetchRecords  : Subscribing camel-integration-Thread 0 to topic camel-integration
+18:13:35.806  INFO 27200 --- [el-integration]] o.a.k.clients.consumer.KafkaConsumer     : [Consumer clientId=consumer-3f53a63b-d29f-4c41-a82a-8e76c0f6ae50-1, groupId=3f53a63b-d29f-4c41-a82a-8e76c0f6ae50] Subscribed to topic(s): camel-integration
+18:13:37.702  INFO 27200 --- [el-integration]] org.apache.kafka.clients.Metadata        : [Consumer clientId=consumer-3f53a63b-d29f-4c41-a82a-8e76c0f6ae50-1, groupId=3f53a63b-d29f-4c41-a82a-8e76c0f6ae50] Resetting the last seen epoch of partition camel-integration-0 to 0 since the associated topicId changed from null to O2HAUjupSvKaQfOdcjacRg
+18:13:37.718  INFO 27200 --- [el-integration]] org.apache.kafka.clients.Metadata        : [Consumer clientId=consumer-3f53a63b-d29f-4c41-a82a-8e76c0f6ae50-1, groupId=3f53a63b-d29f-4c41-a82a-8e76c0f6ae50] Cluster ID: MtBTzSgiRO-7qzBsLIbfzQ
+18:13:37.723  INFO 27200 --- [el-integration]] o.a.k.c.c.internals.ConsumerCoordinator  : [Consumer clientId=consumer-3f53a63b-d29f-4c41-a82a-8e76c0f6ae50-1, groupId=3f53a63b-d29f-4c41-a82a-8e76c0f6ae50] Discovered group coordinator 46.146.232.50:9092 (id: 2147483647 rack: null)
+18:13:37.757  INFO 27200 --- [el-integration]] o.a.k.c.c.internals.ConsumerCoordinator  : [Consumer clientId=consumer-3f53a63b-d29f-4c41-a82a-8e76c0f6ae50-1, groupId=3f53a63b-d29f-4c41-a82a-8e76c0f6ae50] (Re-)joining group
+18:13:37.829  INFO 27200 --- [el-integration]] o.a.k.c.c.internals.ConsumerCoordinator  : [Consumer clientId=consumer-3f53a63b-d29f-4c41-a82a-8e76c0f6ae50-1, groupId=3f53a63b-d29f-4c41-a82a-8e76c0f6ae50] Request joining group due to: need to re-join with the given member-id
+18:13:37.830  INFO 27200 --- [el-integration]] o.a.k.c.c.internals.ConsumerCoordinator  : [Consumer clientId=consumer-3f53a63b-d29f-4c41-a82a-8e76c0f6ae50-1, groupId=3f53a63b-d29f-4c41-a82a-8e76c0f6ae50] (Re-)joining group
+18:13:37.834  INFO 27200 --- [el-integration]] o.a.k.c.c.internals.ConsumerCoordinator  : [Consumer clientId=consumer-3f53a63b-d29f-4c41-a82a-8e76c0f6ae50-1, groupId=3f53a63b-d29f-4c41-a82a-8e76c0f6ae50] Successfully joined group with generation Generation{generationId=1, memberId='consumer-3f53a63b-d29f-4c41-a82a-8e76c0f6ae50-1-cb9d331b-e6cd-41bc-b30b-d14d34a16e61', protocol='range'}
+18:13:37.840  INFO 27200 --- [el-integration]] o.a.k.c.c.internals.ConsumerCoordinator  : [Consumer clientId=consumer-3f53a63b-d29f-4c41-a82a-8e76c0f6ae50-1, groupId=3f53a63b-d29f-4c41-a82a-8e76c0f6ae50] Finished assignment for group at generation 1: {consumer-3f53a63b-d29f-4c41-a82a-8e76c0f6ae50-1-cb9d331b-e6cd-41bc-b30b-d14d34a16e61=Assignment(partitions=[camel-integration-0])}
+18:13:37.867  INFO 27200 --- [el-integration]] o.a.k.c.c.internals.ConsumerCoordinator  : [Consumer clientId=consumer-3f53a63b-d29f-4c41-a82a-8e76c0f6ae50-1, groupId=3f53a63b-d29f-4c41-a82a-8e76c0f6ae50] Successfully synced group in generation Generation{generationId=1, memberId='consumer-3f53a63b-d29f-4c41-a82a-8e76c0f6ae50-1-cb9d331b-e6cd-41bc-b30b-d14d34a16e61', protocol='range'}
+18:13:37.868  INFO 27200 --- [el-integration]] o.a.k.c.c.internals.ConsumerCoordinator  : [Consumer clientId=consumer-3f53a63b-d29f-4c41-a82a-8e76c0f6ae50-1, groupId=3f53a63b-d29f-4c41-a82a-8e76c0f6ae50] Notifying assignor about the new Assignment(partitions=[camel-integration-0])
+18:13:37.875  INFO 27200 --- [el-integration]] o.a.k.c.c.internals.ConsumerCoordinator  : [Consumer clientId=consumer-3f53a63b-d29f-4c41-a82a-8e76c0f6ae50-1, groupId=3f53a63b-d29f-4c41-a82a-8e76c0f6ae50] Adding newly assigned partitions: camel-integration-0
+18:13:37.937  INFO 27200 --- [el-integration]] o.a.k.c.c.internals.ConsumerCoordinator  : [Consumer clientId=consumer-3f53a63b-d29f-4c41-a82a-8e76c0f6ae50-1, groupId=3f53a63b-d29f-4c41-a82a-8e76c0f6ae50] Found no committed offset for partition camel-integration-0
+18:13:37.981  INFO 27200 --- [el-integration]] o.a.k.c.c.internals.SubscriptionState    : [Consumer clientId=consumer-3f53a63b-d29f-4c41-a82a-8e76c0f6ae50-1, groupId=3f53a63b-d29f-4c41-a82a-8e76c0f6ae50] Resetting offset for partition camel-integration-0 to position FetchPosition{offset=63313, offsetEpoch=Optional.empty, currentLeader=LeaderAndEpoch{leader=Optional[46.146.232.50:9092 (id: 0 rack: null)], epoch=0}}.
+18:13:40.174  INFO 27200 --- [           main] o.a.c.impl.engine.AbstractCamelContext   : Routes startup (started:2)
+18:13:40.174  INFO 27200 --- [           main] o.a.c.impl.engine.AbstractCamelContext   :     Started echo (direct://echo)
+18:13:40.174  INFO 27200 --- [           main] o.a.c.impl.engine.AbstractCamelContext   :     Started route1 (kafka://camel-integration)
+18:13:40.175  INFO 27200 --- [           main] o.a.c.impl.engine.AbstractCamelContext   : Apache Camel 3.20.3 (camel-1) started in 13s84ms (build:249ms init:6s402ms start:6s433ms)
+18:13:40.181  INFO 27200 --- [           main] r.p.v.c.s.c.ConsumerKafkaApplication     : Started ConsumerKafkaApplication in 37.852 seconds (JVM running for 39.38)
+
+========================== START RECEIVE ==========================
+
+18:17:11.383  INFO 27200 --- [el-integration]] route1                                   : Message received from Kafka : {"id":"542ccaee-db40-471a-b318-a657f7e2dcb2","name":"NAME1","description":"DESCRIPTION1"}
+18:17:12.011  INFO 27200 --- [el-integration]] r.p.v.c.s.c.p.MyMessageBodyLogger        : Polled RECEIVED MESSAGE information: MessageDTO{id=542ccaee-db40-471a-b318-a657f7e2dcb2, name='NAME1', description='DESCRIPTION1'}
+18:17:12.013  INFO 27200 --- [el-integration]] r.p.v.c.s.c.p.MessageDatasourceProcessor : Process body: MessageDTO{id=542ccaee-db40-471a-b318-a657f7e2dcb2, name='NAME1', description='DESCRIPTION1'}
+18:17:12.013  INFO 27200 --- [el-integration]] r.p.v.c.s.c.p.MessageDatasourceProcessor : Body: MessageDTO{id=542ccaee-db40-471a-b318-a657f7e2dcb2, name='NAME1', description='DESCRIPTION1'}
+18:17:12.013  INFO 27200 --- [el-integration]] r.p.v.c.s.c.p.MessageDatasourceProcessor : After CAST:MessageDTO{id=542ccaee-db40-471a-b318-a657f7e2dcb2, name='NAME1', description='DESCRIPTION1'}
+18:17:12.015  INFO 27200 --- [el-integration]] r.p.v.c.s.c.p.MessageDatasourceProcessor : Save entity: MessageEntity{n=542ccaee-db40-471a-b318-a657f7e2dcb2, name='NAME1', description='DESCRIPTION1'}
+18:17:13.646  INFO 27200 --- [el-integration]] route1                                   : Message received from Kafka : {"id":"d53bbdb3-e57d-46bf-b7bd-a54cb354f043","name":"NAME2","description":"DESCRIPTION2"}
+18:17:13.647  INFO 27200 --- [el-integration]] r.p.v.c.s.c.p.MyMessageBodyLogger        : Polled RECEIVED MESSAGE information: MessageDTO{id=d53bbdb3-e57d-46bf-b7bd-a54cb354f043, name='NAME2', description='DESCRIPTION2'}
+18:17:13.647  INFO 27200 --- [el-integration]] r.p.v.c.s.c.p.MessageDatasourceProcessor : Process body: MessageDTO{id=d53bbdb3-e57d-46bf-b7bd-a54cb354f043, name='NAME2', description='DESCRIPTION2'}
+18:17:13.648  INFO 27200 --- [el-integration]] r.p.v.c.s.c.p.MessageDatasourceProcessor : Body: MessageDTO{id=d53bbdb3-e57d-46bf-b7bd-a54cb354f043, name='NAME2', description='DESCRIPTION2'}
+18:17:13.648  INFO 27200 --- [el-integration]] r.p.v.c.s.c.p.MessageDatasourceProcessor : After CAST:MessageDTO{id=d53bbdb3-e57d-46bf-b7bd-a54cb354f043, name='NAME2', description='DESCRIPTION2'}
+18:17:13.648  INFO 27200 --- [el-integration]] r.p.v.c.s.c.p.MessageDatasourceProcessor : Save entity: MessageEntity{n=d53bbdb3-e57d-46bf-b7bd-a54cb354f043, name='NAME2', description='DESCRIPTION2'}
+18:17:13.654  INFO 27200 --- [el-integration]] route1                                   : Message received from Kafka : {"id":"93a9287b-b590-4e4a-babc-f327653c63f5","name":"NAME3","description":"DESCRIPTION3"}
+18:17:13.655  INFO 27200 --- [el-integration]] r.p.v.c.s.c.p.MyMessageBodyLogger        : Polled RECEIVED MESSAGE information: MessageDTO{id=93a9287b-b590-4e4a-babc-f327653c63f5, name='NAME3', description='DESCRIPTION3'}
+18:17:13.656  INFO 27200 --- [el-integration]] r.p.v.c.s.c.p.MessageDatasourceProcessor : Process body: MessageDTO{id=93a9287b-b590-4e4a-babc-f327653c63f5, name='NAME3', description='DESCRIPTION3'}
+18:17:13.656  INFO 27200 --- [el-integration]] r.p.v.c.s.c.p.MessageDatasourceProcessor : Body: MessageDTO{id=93a9287b-b590-4e4a-babc-f327653c63f5, name='NAME3', description='DESCRIPTION3'}
+18:17:13.656  INFO 27200 --- [el-integration]] r.p.v.c.s.c.p.MessageDatasourceProcessor : After CAST:MessageDTO{id=93a9287b-b590-4e4a-babc-f327653c63f5, name='NAME3', description='DESCRIPTION3'}
+18:17:13.656  INFO 27200 --- [el-integration]] r.p.v.c.s.c.p.MessageDatasourceProcessor : Save entity: MessageEntity{n=93a9287b-b590-4e4a-babc-f327653c63f5, name='NAME3', description='DESCRIPTION3'}
+18:17:13.662  INFO 27200 --- [el-integration]] route1                                   : Message received from Kafka : {"id":"de6bc9cb-1f97-49d2-a4fb-9025471674b2","name":"NAME4","description":"DESCRIPTION4"}
+
+==========================
+тут вырезано
+==========================
+
+18:18:10.141  INFO 27200 --- [el-integration]] route1                                   : Message received from Kafka : {"id":"3f11142a-a4c8-4ec9-bc88-0a76efecbf6b","name":"NAME30000","description":"DESCRIPTION30000"}
+18:18:10.142  INFO 27200 --- [el-integration]] r.p.v.c.s.c.p.MyMessageBodyLogger        : Polled RECEIVED MESSAGE information: MessageDTO{id=3f11142a-a4c8-4ec9-bc88-0a76efecbf6b, name='NAME30000', description='DESCRIPTION30000'}
+18:18:10.142  INFO 27200 --- [el-integration]] r.p.v.c.s.c.p.MessageDatasourceProcessor : Process body: MessageDTO{id=3f11142a-a4c8-4ec9-bc88-0a76efecbf6b, name='NAME30000', description='DESCRIPTION30000'}
+18:18:10.142  INFO 27200 --- [el-integration]] r.p.v.c.s.c.p.MessageDatasourceProcessor : Body: MessageDTO{id=3f11142a-a4c8-4ec9-bc88-0a76efecbf6b, name='NAME30000', description='DESCRIPTION30000'}
+18:18:10.142  INFO 27200 --- [el-integration]] r.p.v.c.s.c.p.MessageDatasourceProcessor : After CAST:MessageDTO{id=3f11142a-a4c8-4ec9-bc88-0a76efecbf6b, name='NAME30000', description='DESCRIPTION30000'}
+18:18:10.142  INFO 27200 --- [el-integration]] r.p.v.c.s.c.p.MessageDatasourceProcessor : Save entity: MessageEntity{n=3f11142a-a4c8-4ec9-bc88-0a76efecbf6b, name='NAME30000', description='DESCRIPTION30000'}
+
