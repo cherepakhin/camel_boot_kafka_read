@@ -268,7 +268,8 @@ INFO 10381 --- [el-integration]] o.a.k.c.c.internals.SubscriptionState    : [Con
 ````shell
 $ producer/doc/send_many_messages.sh 30000
 ````
-с тремя consumers прием и сохранение сообщений заняло около минуты.
+
+С тремя consumers прием и сохранение сообщений заняло около минуты. (Kafka и consumers были расположены на разных машинах, соединенных черех wifi)
 
 
 Полность протокол загрузки в [doc/log_30_000.txt.txt](doc/log_30_000.txt.txt)
