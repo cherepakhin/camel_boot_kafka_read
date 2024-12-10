@@ -15,8 +15,9 @@ public class KafkaConfigurationProperties {
 
 	@Override
 	public String toString() {
-		return "KafkaConfigurationProperties{ " +
-				"topicName='" + topicName + "'}";
-
+		return "KafkaConfigurationProperties{" +
+				"topicName='" + topicName + '\'' +
+				", broker='" + broker + '\'' +
+				'}';
 	}
 }
