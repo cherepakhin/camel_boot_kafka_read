@@ -51,6 +51,8 @@ cd producer
 /usr/lib/jvm/java-17-openjdk-amd64/bin/java -jar target/producer-0.0.1.jar
 ````
 
+Настроено в [run_producer.sh](../run_producer.sh)
+
 ### Тестирование
 
 Подключен контроль покрытия тестами. Сделано с помощью [jacoco](https://www.jacoco.org/jacoco/). Отчет генерируется автоматически при прогоне тестов или:

@@ -47,11 +47,15 @@ public class ConsumerKafkaQueueCamelRoute extends RouteBuilder {
     public void configure() throws Exception {
         log.info("kafkaConfigurationProperties.topicName: {}", kafkaConfigurationProperties.topicName);
         log.info("kafkaConfigurationProperties.broker: {}", kafkaConfigurationProperties.broker);
-        String fromKafka = "kafka:" + kafkaConfigurationProperties.getTopicName()
-                + "?brokers=" + kafkaConfigurationProperties.broker;
+        String fromKafka = getRoute(kafkaConfigurationProperties);
         log.info("fromKafka: {}", fromKafka);
         from(fromKafka).log("Message received from Kafka : ${body}").unmarshal(JsonDataFormatter.get(MessageDTO.class))
                 .process(myMessageBodyLogger).process(messageDatasourceProcessor).end();
+    }
+
+    public String getRoute(KafkaConfigurationProperties kafkaConfigurationProperties) {
+        return  "kafka:" + kafkaConfigurationProperties.getTopicName()
+                + "?brokers=" + kafkaConfigurationProperties.broker;
     }
 
     @Override

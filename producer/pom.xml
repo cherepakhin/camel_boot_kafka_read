@@ -93,15 +93,11 @@
 			</plugin>
 			<!-- fat jar -->
 			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-jar-plugin</artifactId>
-				<version>3.2.0</version>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
 				<configuration>
-					<archive>
-						<manifest>
-							<mainClass>ru.perm.v.camel.simple_kafka.producer.CamelProducerApplication</mainClass>
-						</manifest>
-					</archive>
+					<mainClass>ru.perm.v.camel.simple_kafka.producer.CamelProducerApplication</mainClass>
+					<layout>JAR</layout>
 				</configuration>
 			</plugin>
 			<plugin>

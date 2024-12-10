@@ -195,7 +195,7 @@ INFO 29650 --- [el-integration]] r.p.v.c.s.c.p.MessageDatasourceProcessor : Save
 Если запустить проект __consumer__  на ноуте:
 
 ````shell
-camel-integration-spring-boot-kafka$ ./run_consumer.sh
+camel-integration-spring-boot-kafka$ ./run_consumer_jar.sh
 ````
 __И__ на ноуте клиент из дистрибутива Kafka:
 
@@ -216,20 +216,36 @@ vasi@v:~/tools/kafka$ bin/kafka-console-consumer.sh --bootstrap-server 192.168.1
 INFO 10381 --- [el-integration]] o.a.k.c.c.internals.SubscriptionState    : [Consumer clientId=consumer-fd34994d-4c49-4221-bf1a-1b32a645226e-1, groupId=fd34994d-4c49-4221-bf1a-1b32a645226e] Resetting offset for partition camel-integration-0 to position FetchPosition{offset=33313, offsetEpoch=Optional.empty, currentLeader=LeaderAndEpoch{leader=Optional[46.146.232.50:9092 (id: 0 rack: null)], epoch=0}}.
 ````
 
-### Создание FAT jar файла
+### Создание FAT jar файла для consumer
 
 ````shell
 cd consumer
 ./mvnv package
 ````
 
-запуск:
+запуск :
 
 ````shell
 $ echo $JAVA_HOME
 /usr/lib/jvm/java-17-openjdk-amd64
 
 /usr/lib/jvm/java-17-openjdk-amd64/bin/java -jar target/consumer-0.0.1.jar
+````
+
+### Создание FAT jar файла для producer
+
+````shell
+cd producer
+./mvnv package
+````
+
+запуск :
+
+````shell
+producer$ echo $JAVA_HOME
+/usr/lib/jvm/java-17-openjdk-amd64
+
+producer$ /usr/lib/jvm/java-17-openjdk-amd64/bin/java -jar target/producer-0.0.1.jar
 ````
 
 ### При отправке 30 000 сообщений
