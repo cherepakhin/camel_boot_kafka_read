@@ -237,6 +237,34 @@ INFO 29650 --- [el-integration]] r.p.v.c.s.c.p.MessageDatasourceProcessor : Save
 
 ````
 
+При появлении новых сообщений в topic, они автоматически будут приняты consumer и отображены в log. 
+
+Если запустить проект __consumer__  на ноуте:
+
+````shell
+camel-integration-spring-boot-kafka$ ./run_consumer.sh
+````
+__И__ на ноуте клиент из дистрибутива Kafka:
+
+````shell
+vasi@vasi-note:~/tools$ ~/tools/kafka/bin/kafka-console-consumer.sh --bootstrap-server 192.168.1.20:9092 --topic camel-camel-integration
+````
+
+на сервере клиент из дистрибутива Kafka:
+
+````shell
+vasi@v:~/tools/kafka$ bin/kafka-console-consumer.sh --bootstrap-server 192.168.1.20:9092 --topic camel-integration
+````
+то сообщения будут приняты __ВСЕМИ__ клиентами. Но старые, уже прочитанные сообщения, на каком нибудь другом клиенте (при запуске этого нового клиента) на этом новом клиенте уже не принимаются.  Нагрузка на сам брокер при обмене копеечная, около 0 (проверено на 10000 сообщениях с 3 consumer).
+
+При отправке 30 000 сообщений с тремя consumers прием и сохранение сообщений заняло около минуты. При перезапуске consumer в логе появилось сообщение с указанием __offset__:
+
+````shell
+INFO 10381 --- [el-integration]] o.a.k.c.c.internals.SubscriptionState    : [Consumer clientId=consumer-fd34994d-4c49-4221-bf1a-1b32a645226e-1, groupId=fd34994d-4c49-4221-bf1a-1b32a645226e] Resetting offset for partition camel-integration-0 to position FetchPosition{offset=33313, offsetEpoch=Optional.empty, currentLeader=LeaderAndEpoch{leader=Optional[46.146.232.50:9092 (id: 0 rack: null)], epoch=0}}.
+````
+
+Полность протокол загрузки в [doc/log_consumer_start.txt](doc/log_consumer_start.txt)
+
 ### Создание FAT jar файла
 
 ````shell

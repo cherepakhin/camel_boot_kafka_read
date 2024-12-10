@@ -1,0 +1,154 @@
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+ :: Spring Boot ::                (v2.6.8)
+
+INFO 10381 --- [           main] r.p.v.c.s.c.ConsumerKafkaApplication     : Starting ConsumerKafkaApplication v0.0.1 using Java 17.0.7 on vasi-note with PID 10381 (/home/vasi/prog/java/camel/camel-integration-spring-boot-kafka/consumer/target/consumer-0.0.1.jar started by vasi in /home/vasi/prog/java/camel/camel-integration-spring-boot-kafka)
+INFO 10381 --- [           main] r.p.v.c.s.c.ConsumerKafkaApplication     : No active profile set, falling back to 1 default profile: "default"
+INFO 10381 --- [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+INFO 10381 --- [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 666 ms. Found 1 JPA repository interfaces.
+INFO 10381 --- [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 9090 (http)
+INFO 10381 --- [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+28.379  INFO 10381 --- [           main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.63]
+INFO 10381 --- [           main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+INFO 10381 --- [           main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 24558 ms
+INFO 10381 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+INFO 10381 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+INFO 10381 --- [           main] o.s.b.a.h2.H2ConsoleAutoConfiguration    : H2 console available at '/h2'. Database available at 'jdbc:h2:mem:camel_integration'
+INFO 10381 --- [           main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+INFO 10381 --- [           main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 5.6.9.Final
+INFO 10381 --- [           main] o.hibernate.annotations.common.Version   : HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+INFO 10381 --- [           main] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: org.hibernate.dialect.H2Dialect
+INFO 10381 --- [           main] o.h.t.schema.internal.SchemaCreatorImpl  : HHH000476: Executing import script 'jar:file:/home/vasi/prog/java/camel/camel-integration-spring-boot-kafka/consumer/target/consumer-0.0.1.jar!/BOOT-INF/classes!/import.sql'
+INFO 10381 --- [           main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+INFO 10381 --- [           main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+52.022  WARN 10381 --- [           main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+59.680  INFO 10381 --- [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 9090 (http) with context path ''
+17:41:01.018  INFO 10381 --- [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8781 (http)
+17:41:01.035  INFO 10381 --- [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+17:41:01.038  INFO 10381 --- [           main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.63]
+17:41:01.150  INFO 10381 --- [           main] o.a.c.c.C.[Tomcat-1].[localhost].[/]     : Initializing Spring embedded WebApplicationContext
+17:41:01.152  INFO 10381 --- [           main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1358 ms
+17:41:01.750  INFO 10381 --- [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8781 (http) with context path ''
+17:41:05.992  INFO 10381 --- [           main] p.v.c.s.c.r.ConsumerKafkaQueueCamelRoute : constructor with params
+17:41:05.993  INFO 10381 --- [           main] p.v.c.s.c.r.ConsumerKafkaQueueCamelRoute : CamelContext: SpringCamelContext(camel-1) with spring id camel_integration_consumer
+17:41:05.993  INFO 10381 --- [           main] p.v.c.s.c.r.ConsumerKafkaQueueCamelRoute : context.isDevConsole() before set: false
+17:41:05.993  INFO 10381 --- [           main] p.v.c.s.c.r.ConsumerKafkaQueueCamelRoute : context.isDevConsole() after set: true
+17:41:05.999  INFO 10381 --- [           main] p.v.c.s.c.r.ConsumerKafkaQueueCamelRoute : context.getComponentNames(): [spring-event]
+17:41:05.999  INFO 10381 --- [           main] p.v.c.s.c.r.ConsumerKafkaQueueCamelRoute : myMessageBodyLogger: ru.perm.v.camel.simple_kafka.consumer.processor.MyMessageBodyLogger@6d074b14
+17:41:05.999  INFO 10381 --- [           main] p.v.c.s.c.r.ConsumerKafkaQueueCamelRoute : myProcessor: ru.perm.v.camel.simple_kafka.consumer.processor.MessageDatasourceProcessor@485e13d7
+17:41:06.000  INFO 10381 --- [           main] p.v.c.s.c.r.ConsumerKafkaQueueCamelRoute : kafkaConfigurationProperties: KafkaConfigurationProperties{ topicName='camel-integration'}
+17:41:06.071  INFO 10381 --- [           main] p.v.c.s.c.r.ConsumerKafkaQueueCamelRoute : kafkaConfigurationProperties.topicName: camel-integration
+17:41:06.072  INFO 10381 --- [           main] p.v.c.s.c.r.ConsumerKafkaQueueCamelRoute : kafkaConfigurationProperties.broker: 192.168.1.20:9092
+17:41:06.094  INFO 10381 --- [           main] p.v.c.s.c.r.ConsumerKafkaQueueCamelRoute : fromKafka: kafka:camel-integration?brokers=192.168.1.20:9092
+17:41:23.061  INFO 10381 --- [           main] o.a.c.impl.engine.AbstractCamelContext   : Apache Camel 3.20.3 (camel-1) is starting
+17:41:24.467  INFO 10381 --- [           main] o.a.camel.component.kafka.KafkaConsumer  : Starting Kafka consumer on topic: camel-integration with breakOnFirstError: false
+17:41:24.829  INFO 10381 --- [el-integration]] o.a.c.component.kafka.KafkaFetchRecords  : Connecting Kafka consumer thread ID camel-integration-Thread 0 with poll timeout of 5000 ms
+17:41:25.066  INFO 10381 --- [el-integration]] o.a.k.clients.consumer.ConsumerConfig    : ConsumerConfig values:
+	allow.auto.create.topics = true
+	auto.commit.interval.ms = 5000
+	auto.offset.reset = latest
+	bootstrap.servers = [192.168.1.20:9092]
+	check.crcs = true
+	client.dns.lookup = use_all_dns_ips
+	client.id = consumer-fd34994d-4c49-4221-bf1a-1b32a645226e-1
+	client.rack =
+	connections.max.idle.ms = 540000
+	default.api.timeout.ms = 60000
+	enable.auto.commit = true
+	exclude.internal.topics = true
+	fetch.max.bytes = 52428800
+	fetch.max.wait.ms = 500
+	fetch.min.bytes = 1
+	group.id = fd34994d-4c49-4221-bf1a-1b32a645226e
+	group.instance.id = null
+	heartbeat.interval.ms = 3000
+	interceptor.classes = []
+	internal.leave.group.on.close = true
+	internal.throw.on.fetch.stable.offset.unsupported = false
+	isolation.level = read_uncommitted
+	key.deserializer = class org.apache.kafka.common.serialization.StringDeserializer
+	max.partition.fetch.bytes = 1048576
+	max.poll.interval.ms = 300000
+	max.poll.records = 500
+	metadata.max.age.ms = 300000
+	metric.reporters = []
+	metrics.num.samples = 2
+	metrics.recording.level = INFO
+	metrics.sample.window.ms = 30000
+	partition.assignment.strategy = [org.apache.kafka.clients.consumer.RangeAssignor]
+	receive.buffer.bytes = 65536
+	reconnect.backoff.max.ms = 1000
+	reconnect.backoff.ms = 50
+	request.timeout.ms = 40000
+	retry.backoff.ms = 100
+	sasl.client.callback.handler.class = null
+	sasl.jaas.config = null
+	sasl.kerberos.kinit.cmd = /usr/bin/kinit
+	sasl.kerberos.min.time.before.relogin = 60000
+	sasl.kerberos.service.name = null
+	sasl.kerberos.ticket.renew.jitter = 0.05
+	sasl.kerberos.ticket.renew.window.factor = 0.8
+	sasl.login.callback.handler.class = null
+	sasl.login.class = null
+	sasl.login.refresh.buffer.seconds = 300
+	sasl.login.refresh.min.period.seconds = 60
+	sasl.login.refresh.window.factor = 0.8
+	sasl.login.refresh.window.jitter = 0.05
+	sasl.mechanism = GSSAPI
+	security.protocol = PLAINTEXT
+	security.providers = null
+	send.buffer.bytes = 131072
+	session.timeout.ms = 10000
+	socket.connection.setup.timeout.max.ms = 30000
+	socket.connection.setup.timeout.ms = 10000
+	ssl.cipher.suites = null
+	ssl.enabled.protocols = [TLSv1.2, TLSv1.3]
+	ssl.endpoint.identification.algorithm = https
+	ssl.engine.factory.class = null
+	ssl.key.password = null
+	ssl.keymanager.algorithm = SunX509
+	ssl.keystore.certificate.chain = null
+	ssl.keystore.key = null
+	ssl.keystore.location = null
+	ssl.keystore.password = null
+	ssl.keystore.type = JKS
+	ssl.protocol = TLSv1.3
+	ssl.provider = null
+	ssl.secure.random.implementation = null
+	ssl.trustmanager.algorithm = PKIX
+	ssl.truststore.certificates = null
+	ssl.truststore.location = null
+	ssl.truststore.password = null
+	ssl.truststore.type = JKS
+	value.deserializer = class org.apache.kafka.common.serialization.StringDeserializer
+
+17:41:26.325  INFO 10381 --- [el-integration]] o.a.kafka.common.utils.AppInfoParser     : Kafka version: 3.0.1
+17:41:26.325  INFO 10381 --- [el-integration]] o.a.kafka.common.utils.AppInfoParser     : Kafka commitId: 8e30984f43e64d8b
+17:41:26.325  INFO 10381 --- [el-integration]] o.a.kafka.common.utils.AppInfoParser     : Kafka startTimeMs: 1733834486304
+17:41:26.463  INFO 10381 --- [el-integration]] o.a.c.c.k.c.s.ResumeStrategyFactory      : Using NO-OP resume strategy
+17:41:26.480  INFO 10381 --- [el-integration]] o.a.c.component.kafka.KafkaFetchRecords  : Subscribing camel-integration-Thread 0 to topic camel-integration
+17:41:26.483  INFO 10381 --- [el-integration]] o.a.k.clients.consumer.KafkaConsumer     : [Consumer clientId=consumer-fd34994d-4c49-4221-bf1a-1b32a645226e-1, groupId=fd34994d-4c49-4221-bf1a-1b32a645226e] Subscribed to topic(s): camel-integration
+17:41:30.434  INFO 10381 --- [el-integration]] org.apache.kafka.clients.Metadata        : [Consumer clientId=consumer-fd34994d-4c49-4221-bf1a-1b32a645226e-1, groupId=fd34994d-4c49-4221-bf1a-1b32a645226e] Resetting the last seen epoch of partition camel-integration-0 to 0 since the associated topicId changed from null to O2HAUjupSvKaQfOdcjacRg
+17:41:30.453  INFO 10381 --- [el-integration]] org.apache.kafka.clients.Metadata        : [Consumer clientId=consumer-fd34994d-4c49-4221-bf1a-1b32a645226e-1, groupId=fd34994d-4c49-4221-bf1a-1b32a645226e] Cluster ID: MtBTzSgiRO-7qzBsLIbfzQ
+17:41:30.500  INFO 10381 --- [el-integration]] o.a.k.c.c.internals.ConsumerCoordinator  : [Consumer clientId=consumer-fd34994d-4c49-4221-bf1a-1b32a645226e-1, groupId=fd34994d-4c49-4221-bf1a-1b32a645226e] Discovered group coordinator 46.146.232.50:9092 (id: 2147483647 rack: null)
+17:41:30.530  INFO 10381 --- [el-integration]] o.a.k.c.c.internals.ConsumerCoordinator  : [Consumer clientId=consumer-fd34994d-4c49-4221-bf1a-1b32a645226e-1, groupId=fd34994d-4c49-4221-bf1a-1b32a645226e] (Re-)joining group
+17:41:30.631  INFO 10381 --- [el-integration]] o.a.k.c.c.internals.ConsumerCoordinator  : [Consumer clientId=consumer-fd34994d-4c49-4221-bf1a-1b32a645226e-1, groupId=fd34994d-4c49-4221-bf1a-1b32a645226e] Request joining group due to: need to re-join with the given member-id
+17:41:30.632  INFO 10381 --- [el-integration]] o.a.k.c.c.internals.ConsumerCoordinator  : [Consumer clientId=consumer-fd34994d-4c49-4221-bf1a-1b32a645226e-1, groupId=fd34994d-4c49-4221-bf1a-1b32a645226e] (Re-)joining group
+17:41:30.647  INFO 10381 --- [el-integration]] o.a.k.c.c.internals.ConsumerCoordinator  : [Consumer clientId=consumer-fd34994d-4c49-4221-bf1a-1b32a645226e-1, groupId=fd34994d-4c49-4221-bf1a-1b32a645226e] Successfully joined group with generation Generation{generationId=1, memberId='consumer-fd34994d-4c49-4221-bf1a-1b32a645226e-1-a505fffa-f922-4f69-92ee-1af6e321bc28', protocol='range'}
+17:41:30.683  INFO 10381 --- [el-integration]] o.a.k.c.c.internals.ConsumerCoordinator  : [Consumer clientId=consumer-fd34994d-4c49-4221-bf1a-1b32a645226e-1, groupId=fd34994d-4c49-4221-bf1a-1b32a645226e] Finished assignment for group at generation 1: {consumer-fd34994d-4c49-4221-bf1a-1b32a645226e-1-a505fffa-f922-4f69-92ee-1af6e321bc28=Assignment(partitions=[camel-integration-0])}
+17:41:30.774  INFO 10381 --- [el-integration]] o.a.k.c.c.internals.ConsumerCoordinator  : [Consumer clientId=consumer-fd34994d-4c49-4221-bf1a-1b32a645226e-1, groupId=fd34994d-4c49-4221-bf1a-1b32a645226e] Successfully synced group in generation Generation{generationId=1, memberId='consumer-fd34994d-4c49-4221-bf1a-1b32a645226e-1-a505fffa-f922-4f69-92ee-1af6e321bc28', protocol='range'}
+17:41:30.784  INFO 10381 --- [el-integration]] o.a.k.c.c.internals.ConsumerCoordinator  : [Consumer clientId=consumer-fd34994d-4c49-4221-bf1a-1b32a645226e-1, groupId=fd34994d-4c49-4221-bf1a-1b32a645226e] Notifying assignor about the new Assignment(partitions=[camel-integration-0])
+17:41:30.828  INFO 10381 --- [el-integration]] o.a.k.c.c.internals.ConsumerCoordinator  : [Consumer clientId=consumer-fd34994d-4c49-4221-bf1a-1b32a645226e-1, groupId=fd34994d-4c49-4221-bf1a-1b32a645226e] Adding newly assigned partitions: camel-integration-0
+17:41:30.939  INFO 10381 --- [el-integration]] o.a.k.c.c.internals.ConsumerCoordinator  : [Consumer clientId=consumer-fd34994d-4c49-4221-bf1a-1b32a645226e-1, groupId=fd34994d-4c49-4221-bf1a-1b32a645226e] Found no committed offset for partition camel-integration-0
+17:41:31.058  INFO 10381 --- [el-integration]] o.a.k.c.c.internals.SubscriptionState    : [Consumer clientId=consumer-fd34994d-4c49-4221-bf1a-1b32a645226e-1, groupId=fd34994d-4c49-4221-bf1a-1b32a645226e] Resetting offset for partition camel-integration-0 to position FetchPosition{offset=33313, offsetEpoch=Optional.empty, currentLeader=LeaderAndEpoch{leader=Optional[46.146.232.50:9092 (id: 0 rack: null)], epoch=0}}.
+17:41:33.539  INFO 10381 --- [           main] o.a.c.impl.engine.AbstractCamelContext   : Routes startup (started:2)
+17:41:33.543  INFO 10381 --- [           main] o.a.c.impl.engine.AbstractCamelContext   :     Started route1 (kafka://camel-integration)
+17:41:33.552  INFO 10381 --- [           main] o.a.c.impl.engine.AbstractCamelContext   :     Started echo (direct://echo)
+17:41:33.552  INFO 10381 --- [           main] o.a.c.impl.engine.AbstractCamelContext   : Apache Camel 3.20.3 (camel-1) started in 27s251ms (build:1s27ms init:15s734ms start:10s490ms)
+17:41:33.559  INFO 10381 --- [           main] r.p.v.c.s.c.ConsumerKafkaApplication     : Started ConsumerKafkaApplication in 94.578 seconds (JVM running for 96.981)
+

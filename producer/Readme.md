@@ -56,6 +56,7 @@ cd producer
 Подключен контроль покрытия тестами. Сделано с помощью [jacoco](https://www.jacoco.org/jacoco/). Отчет генерируется автоматически при прогоне тестов или:
 
 ````shell
+./mvnw test
 ./mvnw jacoco:report
 ````
 
