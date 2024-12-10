@@ -263,7 +263,13 @@ vasi@v:~/tools/kafka$ bin/kafka-console-consumer.sh --bootstrap-server 192.168.1
 INFO 10381 --- [el-integration]] o.a.k.c.c.internals.SubscriptionState    : [Consumer clientId=consumer-fd34994d-4c49-4221-bf1a-1b32a645226e-1, groupId=fd34994d-4c49-4221-bf1a-1b32a645226e] Resetting offset for partition camel-integration-0 to position FetchPosition{offset=33313, offsetEpoch=Optional.empty, currentLeader=LeaderAndEpoch{leader=Optional[46.146.232.50:9092 (id: 0 rack: null)], epoch=0}}.
 ````
 
-При отправке 30 000 сообщений с тремя consumers прием и сохранение сообщений заняло около минуты.
+При отправке 30 000 сообщений 
+
+````shell
+$ producer/doc/send_many_messages.sh 30000
+````
+с тремя consumers прием и сохранение сообщений заняло около минуты.
+
 
 Полность протокол загрузки в [doc/log_30_000.txt.txt](doc/log_30_000.txt.txt)
 
