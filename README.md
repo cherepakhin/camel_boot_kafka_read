@@ -257,27 +257,26 @@ vasi@v:~/tools/kafka$ bin/kafka-console-consumer.sh --bootstrap-server 192.168.1
 ````
 то сообщения будут приняты __ВСЕМИ__ клиентами. Но старые, уже прочитанные сообщения, на каком нибудь другом клиенте (при запуске этого нового клиента) на этом новом клиенте уже не принимаются.  Нагрузка на сам брокер при обмене копеечная, около 0 (проверено на 10000 сообщениях с 3 consumer).
 
-При отправке 30 000 сообщений с тремя consumers прием и сохранение сообщений заняло около минуты. 
-
 При перезапуске consumer в логе появилось сообщение с указанием __offset__:
 
 ````shell
 INFO 10381 --- [el-integration]] o.a.k.c.c.internals.SubscriptionState    : [Consumer clientId=consumer-fd34994d-4c49-4221-bf1a-1b32a645226e-1, groupId=fd34994d-4c49-4221-bf1a-1b32a645226e] Resetting offset for partition camel-integration-0 to position FetchPosition{offset=33313, offsetEpoch=Optional.empty, currentLeader=LeaderAndEpoch{leader=Optional[46.146.232.50:9092 (id: 0 rack: null)], epoch=0}}.
 ````
 
-Полность протокол загрузки в [doc/log_consumer_start.txt](doc/log_consumer_start.txt)
+При отправке 30 000 сообщений с тремя consumers прием и сохранение сообщений заняло около минуты.
+
+Полность протокол загрузки в [doc/log_30_000.txt.txt](doc/log_30_000.txt.txt)
 
 Начало приема сообщений:
 
 ````shell
 18:17:11.383  INFO 27200 --- [el-integration]] route1                                   : Message received from Kafka : {"id":"542ccaee-db40-471a-b318-a657f7e2dcb2","name":"NAME1","description":"DESCRIPTION1"}
-
+18:17:12.011  INFO 27200 --- [el-integration]] r.p.v.c.s.c.p.MyMessageBodyLogger        : Polled RECEIVED MESSAGE information: MessageDTO{id=542ccaee-db40-471a-b318-a657f7e2dcb2, name='NAME1', description='DESCRIPTION1'}
 ````
 
 Конец приема:
 
 ````shell
-18:18:10.142  INFO 27200 --- [el-integration]] r.p.v.c.s.c.p.MessageDatasourceProcessor : Body: MessageDTO{id=3f11142a-a4c8-4ec9-bc88-0a76efecbf6b, name='NAME30000', description='DESCRIPTION30000'}
 18:18:10.142  INFO 27200 --- [el-integration]] r.p.v.c.s.c.p.MessageDatasourceProcessor : After CAST:MessageDTO{id=3f11142a-a4c8-4ec9-bc88-0a76efecbf6b, name='NAME30000', description='DESCRIPTION30000'}
 18:18:10.142  INFO 27200 --- [el-integration]] r.p.v.c.s.c.p.MessageDatasourceProcessor : Save entity: MessageEntity{n=3f11142a-a4c8-4ec9-bc88-0a76efecbf6b, name='NAME30000', description='DESCRIPTION30000'}
 ````
