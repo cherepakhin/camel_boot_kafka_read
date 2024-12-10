@@ -2,7 +2,7 @@
 
 # О чем это?
 
-Демонстрация работы Camel с Kafka.<br/>
+Демонстрация работы Camel с Kafka. А также немного нагрузочных испытаний.<br/>
 
 Два проекта __producer__ и __consumer__ .<br/>
 [producer](https://github.com/cherepakhin/camel_boot_kafka_read/tree/main/producer) - генерирует сообщения и отправляет в очередь Kafka.<br/>
@@ -13,17 +13,19 @@
 Проекты запускаются раздельно скриптами run.sh в каталоге проектов.
 
 ## Проект __producer__.
-Генерирует сообщения по таймеру и отправляет их в очередь Kafka "camel-integration":
+Генерирует сообщения каждые 2 сек. и отправляет их в очередь Kafka "camel-integration":
 
 ````java
 public class MessageScheduler extends RouteBuilder {
     ....
-		from("timer:v-search-scheduler?period=5000").bean(messageBuilder).process(messageBodyLogger)
+		from("timer:v-search-scheduler?period=2000").bean(messageBuilder).process(messageBodyLogger)
 				.marshal(JsonDataFormatter.get(MessageDTO.class))
 				.process(messageBodyLoggerSecond)
 				.to("kafka:" + kafkaConfigurationProperties.getTopicName());
     ....
 ````
+
+messageBodyLogger, messageBodyLoggerSecond - примеры логгеров.
 
 Использован Camel.
 
@@ -39,10 +41,10 @@ com.behl.kafka.topic-name=camel-integration
 ....
 ````
 
-Чтение последнего принятого сообщения:
+Для consumer есть REST интерфейс для работы с принятыми сообщениями. Чтение всех принятых сообщений:
 
 ````shell
-$ http :9090/api/messages/ 
+$ http :8082/api/messages/ 
 ````
 
 # Отправка сообщений вручную.

@@ -23,11 +23,9 @@ public class MessageScheduler extends RouteBuilder {
 
     @Override
     public void configure() {
-//TODO: Убрать кооментарий
-//        from("timer:v-producer-scheduler?period=2000").bean(messageBuilder).process(messageBodyLogger)
-//                .marshal(JsonDataFormatter.get(MessageDTO.class))
-//                .process(messageBodyLoggerSecond)
-//                .to("kafka:" + kafkaConfigurationProperties.getTopicName());
+        from("timer:v-producer-scheduler?period=2000").bean(messageBuilder).process(messageBodyLogger)
+                .marshal(JsonDataFormatter.get(MessageDTO.class))
+                .process(messageBodyLoggerSecond)
+                .to("kafka:" + kafkaConfigurationProperties.getTopicName());
     }
-
 }
