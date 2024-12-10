@@ -33,6 +33,12 @@ public class MessageEntity {
         this.description = description;
     }
 
+    public MessageEntity(String n, String name, String description) {
+        this.n = UUID.fromString(n);
+        this.name = name;
+        this.description = description;
+    }
+
     public static int getCounter() {
         return counter;
     }
