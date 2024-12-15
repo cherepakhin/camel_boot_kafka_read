@@ -23,6 +23,7 @@ public class CamelEchoController {
     @GetMapping("/echo/{param}")
     public String getParam(@PathVariable String param) {
         logger.info(format("Get param: %s", param));
+        logger.info(format("Context: %s", context));
         ProducerTemplate template = context.getBean(ProducerTemplate.class);
 
         // send to ru.perm.v.camel.simple_kafka.consumer.route.EchoRoute.java
