@@ -2,7 +2,7 @@
 (см. application.properties "ru.perm.v.kafka.topic-name=camel-integration")
 
 сообщения читает другой сервис ~/prog/java/camel/camel-integration-spring-boot-kafka/consumer
-Простая проверка, что сервис запущен:
+Простая проверка, что сервис PRODUCER запущен:
 
 ````shell
 $ http :8081/api/echo/ANY_MESSAGE
@@ -26,7 +26,7 @@ cd producer
 Producer отправляет сообщения в Kafka каждые 5 сек. Consumer их принимает и сохраняет в базу данных. Проверить сохраненные сообщения запросом:
 
 ````shell
-http :9090/api/messages/
+http http://192.168.1.20:8082/api/messages
 
 [
     {

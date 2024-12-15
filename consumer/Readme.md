@@ -44,7 +44,7 @@ export BOOTSTRAP_SERVERS=http://192.168.1.20:9092
 
 BOOTSTRAP_SERVERS - адрес Kafka
 
-__Проверка через echo контроллер__:
+__Проверка CONSUMER через echo контроллер__:
 
 ````shell
 http http://127.0.0.1:8082/api/fortest/echo/aaaa
