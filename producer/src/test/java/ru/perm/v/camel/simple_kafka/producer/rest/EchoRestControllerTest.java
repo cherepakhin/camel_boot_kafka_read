@@ -11,26 +11,26 @@ import static org.junit.jupiter.api.Assertions.*;
 class EchoRestControllerTest {
 
     @Test
-    void postMessage() {
+    void getMessage() {
         EchoRestController controllerTest = new EchoRestController();
-        String message = controllerTest.postMessage("test");
+        String message = controllerTest.getMessage("test");
 
         assertEquals("test", message);
     }
 
     @Test
-    void postForEmptyMessageCheckClassException() {
+    void getForEmptyMessageCheckClassException() {
         EchoRestController controllerTest = new EchoRestController();
-        assertThrows(Err502Exception.class, () -> controllerTest.postMessage(""));
+        assertThrows(Err502Exception.class, () -> controllerTest.getMessage(""));
     }
 
     @Test
-    void postForEmptyMessageCheckExceptionMessage() {
+    void getForEmptyMessageCheckExceptionMessage() {
         EchoRestController controllerTest = new EchoRestController();
         boolean exception = false;
 
         try {
-            controllerTest.postMessage("");
+            controllerTest.getMessage("");
         } catch (Exception e) {
             assertEquals(Err502Exception.class, e.getClass());
             assertEquals("Message is empty", e.getMessage());
@@ -41,7 +41,7 @@ class EchoRestControllerTest {
     }
 
     @Test
-    void postForLongMessageCheckExceptionMessage() {
+    void getForLongMessageCheckExceptionMessage() {
         EchoRestController controllerTest = new EchoRestController();
         boolean exception = false;
         // build long message
@@ -49,7 +49,7 @@ class EchoRestControllerTest {
         String longString = Stream.generate(() -> String.valueOf(current.getAndIncrement())).limit(101).collect(Collectors.joining());
 
         try {
-            controllerTest.postMessage(longString);
+            controllerTest.getMessage(longString);
         } catch (Exception e) {
             assertEquals(Err502Exception.class, e.getClass());
             assertEquals("Size of message is greater than 100", e.getMessage());

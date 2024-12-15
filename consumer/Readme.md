@@ -42,22 +42,22 @@ export BOOTSTRAP_SERVERS=http://192.168.1.20:9092
 ````
 (consumer/run.sh)
 
+BOOTSTRAP_SERVERS - адрес Kafka
+
 __Проверка через echo контроллер__:
 
 ````shell
-http http://127.0.0.1:9090/api/fortest/echo/aaa
+http http://127.0.0.1:8082/api/fortest/echo/aaaa
 
 aaa
 ````
 
-__Показать последнее принятое сообщение:__
+__Показать принятые сообщения:__
 
 ````shell
-http :9090/api/messages/ 
+http :8082/api/messages/ 
 ````
 (внимание на последний "/")
-
-
 
 Сообщения можно отправлять вручную (описано ниже) или генерировать другой программой 
 (см. vasi@vasi-note:~/prog/java/camel/camel-integration-spring-boot-kafka/producer)
@@ -85,7 +85,7 @@ cat example_message1.json
 __Отправка в топик средствами Kafka:__
 
 ````shell
-jq -rc . example1.json | ./kafka/bin/kafka-console-producer.sh --broker-list 192.168.1.20:9092 --topic camel-integration
+consumer$  jq -rc . doc/example1.json | ~/tools/kafka/bin/kafka-console-producer.sh --broker-list 192.168.1.20:9092 --topic camel-integration
 ````
 
 Другие тестовые сообщения:
@@ -104,7 +104,7 @@ jq -rc . example1.json | ./kafka/bin/kafka-console-producer.sh --broker-list 192
 ````
 
 Сообщения логируются:
-
+    
 ````text
 2024-11-18 13:30:38.164  INFO 17625 --- [camel-integration] c.b.r.processor.MessageBodyLogger        : Polled camel-integration: MessageDTO(id=f10e37fa-0da7-4854-a292-33948f2ce331, name=Name2, descriptor=Description2)
 ````
@@ -114,7 +114,7 @@ jq -rc . example1.json | ./kafka/bin/kafka-console-producer.sh --broker-list 192
 __Прочитать сохраненные сообщения через REST:__ 
 
 ````shell
-http :9090/api/messages
+http :8082/api/messages/
 [
     {
         "id": "f10e37fa-0da7-4854-a292-33948f2ce330",
@@ -195,21 +195,21 @@ consumer$ ./run.sh
 Отправить сообщения скриптом:
 
 ````shell
-$ producer/doc/send_many_messages.sh 100
+$ producer/doc/send_many_messages.sh 10
 ````
 
-"100" - количество отправляемых сообщений.
+"10" - количество отправляемых сообщений.
 
 Consumer примет сообщения. Прочитать принятые сообщения командой:
 
 ````shell
-$ http :9090/api/messages/
+$ http :8082/api/messages/
 ````
 
 Удалить все сообщения в базе данных:
 
 ````shell
-$ http DELETE :9090/api/messages/
+$ http DELETE :8082/api/messages/
 ````
 
 ### Тестирование

@@ -2,8 +2,14 @@
 (см. application.properties "ru.perm.v.kafka.topic-name=camel-integration")
 
 сообщения читает другой сервис ~/prog/java/camel/camel-integration-spring-boot-kafka/consumer
+Простая проверка, что сервис запущен:
 
-Для проверки работы запустить consumer
+````shell
+$ http :8081/api/echo/ANY_MESSAGE
+ANY_MESSAGE
+````
+
+Для проверки работы с Kafka всего комплекса запустить consumer
 
 ````shell
 cd consumer

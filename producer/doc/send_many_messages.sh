@@ -1,8 +1,9 @@
 # send by one message at a time
 
-# run from ./shop_kafka_producer directory
-# Example:
-# /shop_kafka_producer$ ./doc/send_many_messages.sh
+# run from ./producer directory
+# Example send 10 messages:
+# producer$ ./doc/send_many_messages.sh 10
+#
 
 max=$1
 rm -f many.json
