@@ -48,7 +48,7 @@ http :9090/api/messages/
 
 ````shell
 cd producer
-./mvnv package
+./mvnv -Dmaven.test.skip=true package
 ````
 
 запуск:

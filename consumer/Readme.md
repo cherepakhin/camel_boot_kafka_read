@@ -222,3 +222,17 @@ $ http DELETE :8082/api/messages/
 
 Отчет в consumer/target/site/jacoco/index.html
 ![jacoco_report.png](doc/jacoco_report.png)
+
+### Создание запускаемого jar файла и его запуск
+
+Создание:
+
+````shell
+consumer$ ./mvnw -Dmaven.test.skip=true package
+````
+
+Запуск:
+
+````shell
+consumer$ /usr/lib/jvm/openjdk-17/bin/java -jar target/consumer-0.0.1.jar
+````
