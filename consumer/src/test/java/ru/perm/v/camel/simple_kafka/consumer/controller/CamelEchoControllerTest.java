@@ -62,19 +62,6 @@ class CamelEchoControllerTest {
         }
         assertTrue(testOk);
     }
-// generated ChatGPT
-//    @Test
-//    void getParam_ShouldHandleSpecialCharacters() {
-//        // Arrange
-//        String testParam = "test@#$%^&*()";
-//
-//        // Act
-//        String result = controller.getParam(testParam);
-//
-//        // Assert
-//        assertEquals(testParam, result);
-//        verify(producerTemplate).sendBody("direct:echo", testParam);
-//    }
 
     @Test
     void shouldExceptionForNullParameter() {
