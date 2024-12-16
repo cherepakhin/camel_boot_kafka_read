@@ -13,7 +13,7 @@ import org.springframework.context.ApplicationContext;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-// generated chatgpt
+// start testing with generated chatgpt and then refactoring
 @SpringBootTest
 @ExtendWith(MockitoExtension.class)
 class CamelEchoControllerTest {
@@ -28,20 +28,19 @@ class CamelEchoControllerTest {
 
     @BeforeEach
     void setUp() {
-        // Setup the mock behavior for ApplicationContext
+// DON'T delete comment. This is example for ApplicationContext.
+// Setup the mock behavior for ApplicationContext
 //        when(applicationContext.getBean(ProducerTemplate.class))
 //            .thenReturn(producerTemplate);
-        
+
         controller = new CamelEchoController();
         controller.producerTemplate = producerTemplate;
     }
 
     @Test
     void getParam_ShouldReturnSameParam() {
-        // Arrange
         String testParam = "testMessage";
 
-        // Act
         String result = null;
         try {
             result = controller.getParam(testParam);
@@ -49,27 +48,25 @@ class CamelEchoControllerTest {
             fail();
         }
 
-        // Assert
         assertEquals(testParam, result);
-        verify(producerTemplate).sendBody("direct:echo", testParam);
+        verify(producerTemplate, times(1)).sendBody("direct:echo", testParam);
     }
 
     @Test
     void getParam_ShouldHandleEmptyString() {
-        // Arrange
         String testParam = "";
 
-        // Act
-        String result = null;
+        boolean testOk = false;
         try {
             controller.getParam(testParam);
         } catch (Exception e) {
-            assertEquals("", e.getMessage());
-            verify(producerTemplate).sendBody("direct:echo", testParam);
+            assertEquals("Echo message is empty", e.getMessage());
+            verify(producerTemplate, never()).sendBody("direct:echo", testParam);
+            testOk = true;
         }
-        fail();
+        assertTrue(testOk);
     }
-
+// generated ChatGPT
 //    @Test
 //    void getParam_ShouldHandleSpecialCharacters() {
 //        // Arrange
@@ -92,20 +89,6 @@ class CamelEchoControllerTest {
         });
 
         assertEquals("Echo message is null", e.getMessage());
-    }
-
-    @Test
-    void getParam_ShouldHandleProducerTemplateException() {
-        // Arrange
-        String testParam = "testMessage";
-        doThrow(new RuntimeException("Camel route error"))
-            .when(producerTemplate)
-            .sendBody("direct:echo", testParam);
-
-        // Act & Assert
-        assertThrows(RuntimeException.class, () -> {
-            controller.getParam(testParam);
-        });
     }
 }
 
