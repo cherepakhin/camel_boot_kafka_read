@@ -33,3 +33,5 @@ build/
 .vscode/
 
 logs/
+
+doc/example1.json
