@@ -81,7 +81,7 @@ class CamelEchoControllerTest {
 //    }
 
     @Test
-    void shouldBxceptionForNullParameter() {
+    void shouldExceptionForNullParameter() {
         String testParam = null;
 
         Exception e = assertThrows(Exception.class, () -> {
