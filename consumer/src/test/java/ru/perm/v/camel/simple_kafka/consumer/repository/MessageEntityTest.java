@@ -12,7 +12,7 @@ class MessageEntityTest {
     void messageEntityConstructor() {
         MessageEntity messageEntity = new MessageEntity("9501f96f-29ba-40e4-9b08-d3db418d96dc", "NAME2", "DESCRIPTION2");
 
-        assertEquals(UUID.fromString("9501f96f-29ba-40e4-9b08-d3db418d96dc"), messageEntity.getId());
+        assertEquals(UUID.fromString("9501f96f-29ba-40e4-9b08-d3db418d96dc"), messageEntity.getN());
         assertEquals("NAME2", messageEntity.getName());
         assertEquals("DESCRIPTION2", messageEntity.getDescription());
     }

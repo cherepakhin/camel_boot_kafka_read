@@ -1,5 +1,8 @@
 package ru.perm.v.camel.simple_kafka.consumer.repository;
 
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.Column;
@@ -10,10 +13,13 @@ import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 import java.util.UUID;
 
+@Setter
+@Getter
 @Entity
 @Table(name = "messages")
 public class MessageEntity {
-    private static int counter = 0;
+    @EqualsAndHashCode.Exclude
+    public static int counter = 0;
     @Id
     @Type(type="uuid-char")
     @Column(name = "n")
@@ -22,7 +28,6 @@ public class MessageEntity {
     private String name = "";
     @Column(name = "description")
     private String description = "";
-    private static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
     public MessageEntity() {
     }
@@ -36,38 +41,6 @@ public class MessageEntity {
     public MessageEntity(String n, String name, String description) {
         this.n = UUID.fromString(n);
         this.name = name;
-        this.description = description;
-    }
-
-    public static int getCounter() {
-        return counter;
-    }
-
-    public static void setCounter(int counter) {
-        MessageEntity.counter = counter;
-    }
-
-    public UUID getId() {
-        return n;
-    }
-
-    public void setId(UUID n) {
-        this.n = n;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
         this.description = description;
     }
 

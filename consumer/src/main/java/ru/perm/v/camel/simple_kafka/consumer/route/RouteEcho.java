@@ -7,8 +7,8 @@ import org.springframework.stereotype.Component;
 public class RouteEcho extends RouteBuilder {
     @Override
     public void configure() throws Exception {
-// for send message to other route. DON'T delete comment!
-//        from("direct:echo").routeId("echo").log(format("Message: %s", param)).to(otherRoute);
+// example for send message to other route. DON'T delete comment!
+// from("direct:echo").routeId("echo").log(format("Message: %s", param)).to(otherRoute);
         from("direct:echo").routeId("echo").log("Body:${body}");
     }
 }

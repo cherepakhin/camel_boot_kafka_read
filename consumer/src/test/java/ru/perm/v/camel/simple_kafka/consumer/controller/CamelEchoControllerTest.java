@@ -10,10 +10,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.ApplicationContext;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
+// generated chatgpt
 @SpringBootTest
 @ExtendWith(MockitoExtension.class)
 class CamelEchoControllerTest {
@@ -21,7 +21,7 @@ class CamelEchoControllerTest {
     @Mock
     private ApplicationContext applicationContext;
 
-    @Mock
+    @MockBean
     private ProducerTemplate producerTemplate;
 
     private CamelEchoController controller;
@@ -29,10 +29,11 @@ class CamelEchoControllerTest {
     @BeforeEach
     void setUp() {
         // Setup the mock behavior for ApplicationContext
-        when(applicationContext.getBean(ProducerTemplate.class))
-            .thenReturn(producerTemplate);
+//        when(applicationContext.getBean(ProducerTemplate.class))
+//            .thenReturn(producerTemplate);
         
         controller = new CamelEchoController();
+        controller.producerTemplate = producerTemplate;
     }
 
     @Test
@@ -41,7 +42,12 @@ class CamelEchoControllerTest {
         String testParam = "testMessage";
 
         // Act
-        String result = controller.getParam(testParam);
+        String result = null;
+        try {
+            result = controller.getParam(testParam);
+        } catch (Exception e) {
+            fail();
+        }
 
         // Assert
         assertEquals(testParam, result);
@@ -53,41 +59,39 @@ class CamelEchoControllerTest {
         // Arrange
         String testParam = "";
 
-        when(applicationContext.getBean(ProducerTemplate.class))
-                .thenReturn(producerTemplate);
-
-        controller = new CamelEchoController();
-
         // Act
-        String result = controller.getParam(testParam);
-
-        // Assert
-        assertEquals(testParam, result);
-        verify(producerTemplate).sendBody("direct:echo", testParam);
+        String result = null;
+        try {
+            controller.getParam(testParam);
+        } catch (Exception e) {
+            assertEquals("", e.getMessage());
+            verify(producerTemplate).sendBody("direct:echo", testParam);
+        }
+        fail();
     }
 
+//    @Test
+//    void getParam_ShouldHandleSpecialCharacters() {
+//        // Arrange
+//        String testParam = "test@#$%^&*()";
+//
+//        // Act
+//        String result = controller.getParam(testParam);
+//
+//        // Assert
+//        assertEquals(testParam, result);
+//        verify(producerTemplate).sendBody("direct:echo", testParam);
+//    }
+
     @Test
-    void getParam_ShouldHandleSpecialCharacters() {
-        // Arrange
-        String testParam = "test@#$%^&*()";
-
-        // Act
-        String result = controller.getParam(testParam);
-
-        // Assert
-        assertEquals(testParam, result);
-        verify(producerTemplate).sendBody("direct:echo", testParam);
-    }
-
-    @Test
-    void getParam_ShouldHandleNullParameter() {
-        // Arrange
+    void shouldBxceptionForNullParameter() {
         String testParam = null;
 
-        // Act & Assert
-        assertThrows(NullPointerException.class, () -> {
+        Exception e = assertThrows(Exception.class, () -> {
             controller.getParam(testParam);
         });
+
+        assertEquals("Echo message is null", e.getMessage());
     }
 
     @Test

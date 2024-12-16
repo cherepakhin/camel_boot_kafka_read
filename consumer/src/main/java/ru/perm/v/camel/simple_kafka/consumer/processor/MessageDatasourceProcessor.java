@@ -29,7 +29,7 @@ public class MessageDatasourceProcessor implements Processor {
             MessageDTO dto = (MessageDTO) body;
             logger.info("After CAST:" + body );
             MessageEntity entity = new MessageEntity();
-            entity.setId(dto.getId());
+            entity.setN(dto.getId());
             entity.setName(dto.getName());
             entity.setDescription(dto.getDescription());
             logger.info(format("Save entity: %s", entity));

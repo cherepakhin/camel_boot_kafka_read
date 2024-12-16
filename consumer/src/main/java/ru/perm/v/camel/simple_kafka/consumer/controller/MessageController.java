@@ -56,7 +56,7 @@ class MessageController {
         List<MessageEntity> entities = Lists.newArrayList(iterable);
 
         return entities.stream().map(e ->
-                new MessageDTO(e.getId(), e.getName(), e.getDescription())).toList();
+                new MessageDTO(e.getN(), e.getName(), e.getDescription())).toList();
     }
 
 
@@ -71,7 +71,7 @@ class MessageController {
             MessageEntity messageEntity = optionalMessage.get();
             return ResponseEntity.ok(
                     new MessageDTO(
-                            messageEntity.getId(),
+                            messageEntity.getN(),
                             messageEntity.getName(),
                             messageEntity.getDescription()
                     )
@@ -95,7 +95,7 @@ class MessageController {
 
         MessageEntity messageEntity = new MessageEntity(UUID.randomUUID(), messageDTO.getName(), messageDTO.getDescription());
         MessageEntity savedEntity = messageEntityRepository.save(messageEntity);
-        MessageDTO dto = new MessageDTO(savedEntity.getId(), savedEntity.getName(), savedEntity.getDescription());
+        MessageDTO dto = new MessageDTO(savedEntity.getN(), savedEntity.getName(), savedEntity.getDescription());
         return new ResponseEntity<>(dto, HttpStatus.OK);
     }
 
