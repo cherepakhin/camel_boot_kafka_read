@@ -5,13 +5,11 @@ import org.apache.camel.Produce;
 import org.apache.camel.ProducerTemplate;
 import org.apache.camel.builder.RouteBuilder;
 import org.springframework.stereotype.Component;
-import ru.perm.v.camel.simple_kafka.producer.dto.MessageDTO;
 import ru.perm.v.camel.simple_kafka.producer.processor.MessageBodyLogger;
-import ru.perm.v.camel.simple_kafka.producer.utility.JsonDataFormatter;
 
 @Component
 @RequiredArgsConstructor
-public class EchoRoute extends RouteBuilder {
+public class RouteEcho extends RouteBuilder {
     @Produce(uri = "direct:echo")
     private ProducerTemplate producer;
 
