@@ -16,8 +16,13 @@ public class HttpRequestEchoCtrlTest {
     private TestRestTemplate restTemplate;
 
     @Test
-    void echoRestShouldReturnSendedMessage() throws Exception {
+    void echoRestShouldReturnSended_CONTAINS_Message() throws Exception {
         assertThat(this.restTemplate.getForObject("http://localhost:" + port + "/api/fortest/echo/MESSAGE",
                 String.class)).contains("MESSAGE");
+    }
+    @Test
+    void echoRestShouldReturnSended_EQUAL_Message() throws Exception {
+        assertThat(this.restTemplate.getForObject("http://localhost:" + port + "/api/fortest/echo/MESSAGE",
+                String.class)).isEqualTo("MESSAGE");
     }
 }
