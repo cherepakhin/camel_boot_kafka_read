@@ -2,6 +2,8 @@ package ru.perm.v.camel.simple_kafka.consumer.controller;
 
 
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import ru.perm.v.camel.simple_kafka.consumer.dto.MessageDTO;
@@ -18,7 +20,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
-class MessageControllerTest {
+class MessageControllerMockTest {
 
     @Test
     void getAllMessages() {

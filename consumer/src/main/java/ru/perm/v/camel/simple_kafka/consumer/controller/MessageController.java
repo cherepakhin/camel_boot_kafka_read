@@ -123,6 +123,7 @@ class MessageController {
         messageEntityRepository.deleteMessages();
     }
 
+    //TODO: validate
     @PostMapping("/")
     @Operation(summary = "Update a message", description = "Update a message")
     @ApiResponse(responseCode = "204", description = "Message updated successfully")

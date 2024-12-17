@@ -14,7 +14,7 @@ import static org.mockito.Mockito.*;
 // start testing with generated chatgpt and then refactoring
 @SpringBootTest
 @ExtendWith(MockitoExtension.class)
-class CamelEchoControllerTest {
+class CamelEchoControllerSpringbootTest {
 
     @MockBean
     private ProducerTemplate producerTemplate;
