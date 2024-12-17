@@ -24,6 +24,7 @@ public class RouteMessageScheduler extends RouteBuilder {
 
     /**
      * period=2000 - каждые 2 сек. messageBuilder генерирует сообщение
+     * period=0 - sheduler отключен
      * сообщение логируется messageBodyLogger
      * сообщение логируется вторым логером messageBodyLoggerSecond (для интереса)
      * JsonDataFormatter спец.средство Camel для перевода объекта в json (типа ObjectMapper).
@@ -31,7 +32,7 @@ public class RouteMessageScheduler extends RouteBuilder {
      */
     @Override
     public void configure() {
-        from("timer:v-producer-scheduler?period=0").bean(messageBuilder).process(messageBodyLogger)
+        from("timer:v-producer-scheduler?period=2000").bean(messageBuilder).process(messageBodyLogger)
                 .marshal(JsonDataFormatter.get(MessageDTO.class))
                 .process(messageBodyLoggerSecond)
                 .to("kafka:" + kafkaConfigurationProperties.getTopicName());
