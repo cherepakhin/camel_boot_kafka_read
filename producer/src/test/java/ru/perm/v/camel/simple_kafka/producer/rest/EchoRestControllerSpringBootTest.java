@@ -26,7 +26,7 @@ class EchoRestControllerSpringBootTest {
         assertEquals("TEST_MESSAGE", response);
     }
 
-    @Test
+   @Test
     void getMessageForEmptyMessage() {
         ResponseEntity<String> responseEntity = this.restTemplate.getForEntity(
                 "http://localhost:" + port + "/api/echo/", String.class, String.class);

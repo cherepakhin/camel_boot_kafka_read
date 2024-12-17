@@ -44,9 +44,10 @@ class EchoRestControllerMockMvcTest {
         String TEST_MESSAGE = "TEST_MESSAGE";
 
         MvcResult mvcResult = this.mockMvc.perform(get("/api/echo/" + TEST_MESSAGE)).andReturn();
-        String result = mvcResult.getResponse().getContentAsString();
 
         assertEquals(HttpStatus.OK.value(), mvcResult.getResponse().getStatus());
+
+        String result = mvcResult.getResponse().getContentAsString();
         assertEquals(TEST_MESSAGE, result);
     }
 }
