@@ -34,15 +34,19 @@ public class ConsumerKafkaQueueCamelIntegrationRoute extends RouteBuilder {
 ....
 ````
 
-Кроме того, некоторые параметры __consumer__ прописаны в самом коде ("&pollTimeoutMs=1000&maxPollRecords=10&autoOffsetReset=earliest"): 
+Кроме того, некоторые параметры __consumer__ прописаны в самом коде ("&groupId=vasiGroup&pollTimeoutMs=1000&maxPollRecords=10&autoOffsetReset=earliest"): 
 
 ````java
     public String getRoute(KafkaConfigurationProperties kafkaConfigurationProperties) {
-        return  "kafka:" + kafkaConfigurationProperties.getTopicName()
-                + "?brokers=" + kafkaConfigurationProperties.broker 
-                + "&pollTimeoutMs=1000&maxPollRecords=10&autoOffsetReset=earliest";
-    }
+    return  "kafka:" + kafkaConfigurationProperties.getTopicName()
+            + "?brokers=" + kafkaConfigurationProperties.broker + "&groupId=vasiGroup&pollTimeoutMs=1000&maxPollRecords=10&autoOffsetReset=earliest";
+}
 ````
+
+groupId - группа consumer. Указать обязательно, иначе имя группы будет сгенерировано автоматически и еще неудаленные сообщения, при ПЕРЕЗАПУСКЕ ПРИЛОЖЕНИЯ, будут прочитаны снова.
+autoOffsetReset=earliest - указан порядок чтения сообщения (с самых ранних)
+maxPollRecords=10 - читать по 10 сообщений
+pollTimeoutMs=1000 - время ожидания готовности Kafka
 
 __Запуск проекта:__
 
