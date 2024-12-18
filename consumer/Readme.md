@@ -34,6 +34,16 @@ public class ConsumerKafkaQueueCamelIntegrationRoute extends RouteBuilder {
 ....
 ````
 
+Кроме того, некоторые параметры __consumer__ прописаны в самом коде ("&pollTimeoutMs=1000&maxPollRecords=10&autoOffsetReset=earliest"): 
+
+````java
+    public String getRoute(KafkaConfigurationProperties kafkaConfigurationProperties) {
+        return  "kafka:" + kafkaConfigurationProperties.getTopicName()
+                + "?brokers=" + kafkaConfigurationProperties.broker 
+                + "&pollTimeoutMs=1000&maxPollRecords=10&autoOffsetReset=earliest";
+    }
+````
+
 __Запуск проекта:__
 
 ````shell

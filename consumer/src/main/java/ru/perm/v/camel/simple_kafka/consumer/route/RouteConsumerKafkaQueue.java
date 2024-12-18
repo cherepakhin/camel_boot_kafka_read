@@ -55,7 +55,7 @@ public class RouteConsumerKafkaQueue extends RouteBuilder {
 
     public String getRoute(KafkaConfigurationProperties kafkaConfigurationProperties) {
         return  "kafka:" + kafkaConfigurationProperties.getTopicName()
-                + "?brokers=" + kafkaConfigurationProperties.broker;
+                + "?brokers=" + kafkaConfigurationProperties.broker + "&pollTimeoutMs=1000&maxPollRecords=10&autoOffsetReset=earliest";
     }
 
     @Override
