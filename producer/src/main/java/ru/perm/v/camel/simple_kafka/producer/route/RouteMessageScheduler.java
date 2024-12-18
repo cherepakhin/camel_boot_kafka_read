@@ -4,7 +4,6 @@ import lombok.RequiredArgsConstructor;
 import org.apache.camel.builder.RouteBuilder;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.stereotype.Component;
-
 import ru.perm.v.camel.simple_kafka.producer.dto.MessageDTO;
 import ru.perm.v.camel.simple_kafka.producer.processor.MessageBodyLogger;
 import ru.perm.v.camel.simple_kafka.producer.processor.MessageBodyLoggerSecond;
@@ -23,8 +22,9 @@ public class RouteMessageScheduler extends RouteBuilder {
     private final KafkaConfigurationProperties kafkaConfigurationProperties;
 
     /**
-     * period=2000 - каждые 2 сек. messageBuilder генерирует сообщение
-     * period=0 - sheduler отключен
+     * messageBuilder - bean messageBuilder генерирует сообщение и отправляет в очередь Kafka
+     * period=1000 - каждую 1 сек. Задано в application.yaml через KafkaConfigurationProperties
+     * если period=0 - sheduler отключен
      * сообщение логируется messageBodyLogger
      * сообщение логируется вторым логером messageBodyLoggerSecond (для интереса)
      * JsonDataFormatter спец.средство Camel для перевода объекта в json (типа ObjectMapper).
@@ -32,7 +32,9 @@ public class RouteMessageScheduler extends RouteBuilder {
      */
     @Override
     public void configure() {
-        from("timer:v-producer-scheduler?period=2000").bean(messageBuilder).process(messageBodyLogger)
+        from("timer:v-producer-scheduler?period=" + kafkaConfigurationProperties.getShedulePeriod())
+                .bean(messageBuilder)
+                .process(messageBodyLogger)
                 .marshal(JsonDataFormatter.get(MessageDTO.class))
                 .process(messageBodyLoggerSecond)
                 .to("kafka:" + kafkaConfigurationProperties.getTopicName());

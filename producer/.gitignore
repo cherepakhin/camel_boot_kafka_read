@@ -35,3 +35,5 @@ build/
 logs/
 
 doc/many.json
+consumer/dependencies
+producer/dependencies
