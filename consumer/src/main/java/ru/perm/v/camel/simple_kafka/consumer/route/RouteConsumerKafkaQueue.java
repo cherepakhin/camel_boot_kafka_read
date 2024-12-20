@@ -29,8 +29,8 @@ public class RouteConsumerKafkaQueue extends RouteBuilder {
             MessageDatasourceProcessor messageDatasourceProcessor) {
         super(context);
         log.info("constructor with params");
-        log.info(format("CamelContext: %s", context));
-        log.info(format("context.isDevConsole() before set: %s", context.isDevConsole()));
+        log.info(format("CamelContext: %s", context)); // CamelContext: SpringCamelContext(camel-1) with spring id camel_integration_consumer
+        log.info(format("context.isDevConsole() before set: %s", context.isDevConsole())); // context.isDevConsole() before set: false
         context.setDevConsole(true);
         log.info(format("context.isDevConsole() after set: %s", context.isDevConsole()));
         log.info(format("context.getComponentNames(): %s", context.getComponentNames()));
