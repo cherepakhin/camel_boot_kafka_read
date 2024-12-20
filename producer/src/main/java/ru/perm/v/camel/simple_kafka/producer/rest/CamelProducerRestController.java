@@ -15,12 +15,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import ru.perm.v.camel.simple_kafka.producer.dto.MessageDTO;
 import ru.perm.v.camel.simple_kafka.producer.route.RouteMessagesToKafka;
 
-import javax.validation.constraints.Min;
-import javax.validation.constraints.PositiveOrZero;
 import java.util.concurrent.ExecutionException;
 
 @RestController
@@ -65,12 +66,12 @@ public class CamelProducerRestController {
         logger.info("=======================================");
         logger.info(body.toString());
         MessageDTO receivedDto = mapper.readValue(body.toString(), MessageDTO.class);
-        return new ResponseEntity<MessageDTO>(receivedDto, HttpStatus.OK);
+    return new ResponseEntity<>(receivedDto, HttpStatus.OK);
     }
 
     // For send: "http :8081/api/producer/sendMessageDto_route"
     @GetMapping("/sendMessageDto_route")
-    public String sendMessageDto() throws ExecutionException, InterruptedException {
+    public String sendMessageDto() {
         MessageDTO dto = new MessageDTO();
         routeMessagesToKafka.sendDto(dto);
         return dto.toString();
@@ -79,7 +80,7 @@ public class CamelProducerRestController {
     // For send: "http :8081/api/producer/sendManyMessageDto/12"
     @GetMapping("/sendManyMessageDto/{count}")
     public ResponseEntity<?> sendMessageManyDto(@PathVariable("count") Integer count) {
-        if(count< 1) {
+        if (count < 1) {
             return new ResponseEntity<>("The \"count\" must be more than 0", HttpStatus.BAD_GATEWAY);
         }
         for (int i = 0; i < count; i++) {
