@@ -32,12 +32,11 @@ public class RouteMessageScheduler extends RouteBuilder {
      */
     @Override
     public void configure() {
-//TODO: UNCOMMENT
-//        from("timer:v-producer-scheduler?period=" + kafkaConfigurationProperties.getShedulePeriod())
-//                .bean(messageBuilder)
-//                .process(messageBodyLogger)
-//                .marshal(JsonDataFormatter.get(MessageDTO.class))
-//                .process(messageBodyLoggerSecond)
-//                .to("kafka:" + kafkaConfigurationProperties.getTopicName());
+        from("timer:v-producer-scheduler?period=" + kafkaConfigurationProperties.getShedulePeriod())
+                .bean(messageBuilder)
+                .process(messageBodyLogger)
+                .marshal(JsonDataFormatter.get(MessageDTO.class))
+                .process(messageBodyLoggerSecond)
+                .to("kafka:" + kafkaConfigurationProperties.getTopicName());
     }
 }
