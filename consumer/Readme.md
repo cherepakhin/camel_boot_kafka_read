@@ -259,3 +259,9 @@ Deploy to local Nexus repsitory:
 ````
 
 ![nexus](doc/nexus.png)
+
+Запуск fat jar файла:
+
+````shell
+/usr/lib/jvm/openjdk-17/bin/java -jar consumer/target/consumer-0.0.1.jar
+````

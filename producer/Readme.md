@@ -57,7 +57,7 @@ cd producer
 /usr/lib/jvm/java-17-openjdk-amd64/bin/java -jar target/producer-0.0.1.jar
 ````
 
-Настроено в [run_producer.sh](../run_producer.sh)
+Настроено в [run.sh](../run.sh)
 
 ### Тестирование
 
