@@ -71,7 +71,7 @@ cd producer
 Отчет в producer/target/site/jacoco/index.html
 ![jacoco_report.png](doc/jacoco_report.png)
 
-Deploy to local Nexus repsitory:
+Deploy to local Nexus repository:
 
 ````shell
 ./mvnw deploy
