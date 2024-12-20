@@ -92,20 +92,20 @@ public class CamelProducerRestController {
     }
 
     @GetMapping("/stopSheduler")
-    public String stopSheduler() {
+    public ResponseEntity<String> stopSheduler() {
         logger.info("=======================================");
         logger.info("Stop sheduler");
         if (exchange != null) {
             logger.info("Exchange not null");
             if (!exchange.getContext().isStopped()) {
                 exchange.getContext().start();
-                return "Exchange stopped";
+                return new ResponseEntity<>("Exchange stopped", HttpStatus.OK);
             } else {
-                return "Exchange NOT started";
+                return new ResponseEntity<>("Exchange NOT started", HttpStatus.BAD_GATEWAY);
             }
         } else {
             logger.info("Exchange is NULL");
-            return "Exchange is NULL";
+            return new ResponseEntity<>("Exchange is NULL", HttpStatus.BAD_GATEWAY);
         }
     }
 
