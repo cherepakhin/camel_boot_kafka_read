@@ -46,7 +46,7 @@ public class ConsumerKafkaQueueCamelIntegrationRoute extends RouteBuilder {
 groupId - группа consumer. Указать обязательно, иначе имя группы будет сгенерировано автоматически и еще неудаленные сообщения, при ПЕРЕЗАПУСКЕ ПРИЛОЖЕНИЯ, будут прочитаны снова.
 autoOffsetReset=earliest - указан порядок чтения сообщения (с самых ранних)
 maxPollRecords=10 - читать по 10 сообщений
-pollTimeoutMs=1000 - время ожидания готовности Kafka
+pollTimeoutMs=1000 - мсек, время ожидания готовности Kafka
 
 __Запуск проекта:__
 
@@ -70,6 +70,7 @@ __Показать принятые сообщения:__
 
 ````shell
 http :8082/api/messages/ 
+http http://192.168.1.57:8082/api/messages/
 ````
 (внимание на последний "/")
 
@@ -214,13 +215,13 @@ $ producer/doc/send_many_messages.sh 10
 
 "10" - количество отправляемых сообщений.
 
-Consumer примет сообщения. Прочитать принятые сообщения командой:
+Consumer примет сообщения. Прочитать принятые сообщения командой (consumer):
 
 ````shell
 $ http :8082/api/messages/
 ````
 
-Удалить все сообщения в базе данных:
+Удалить все сообщения в базе данных (consumer):
 
 ````shell
 $ http DELETE :8082/api/messages/
@@ -250,3 +251,11 @@ consumer$ ./mvnw -Dmaven.test.skip=true package
 ````shell
 consumer$ /usr/lib/jvm/openjdk-17/bin/java -jar target/consumer-0.0.1.jar
 ````
+
+Deploy to local Nexus repsitory:
+
+````shell
+./mvnw deploy
+````
+
+![nexus](doc/nexus.png)
