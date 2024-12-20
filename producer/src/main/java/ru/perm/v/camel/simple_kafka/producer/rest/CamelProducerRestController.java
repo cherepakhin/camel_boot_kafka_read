@@ -29,7 +29,7 @@ import java.util.concurrent.ExecutionException;
 @Validated
 public class CamelProducerRestController {
 
-    @Produce(uri = "direct:echo")
+    @Produce("direct:echo")
     private ProducerTemplate template;
 
     @Autowired
