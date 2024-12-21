@@ -306,3 +306,15 @@ $ jq -C . producer/doc/example_message1.json
   "description": "DESCRIPTION1"
 }
 ````
+
+### Отправка большого количества сообщений
+
+Kafka и producer соединены через wifi
+
+````shell
+producer/doc$ ./send_many_messages.sh 10000
+````
+
+start   11:08:42
+end     11:10:39
+

@@ -265,3 +265,12 @@ Deploy to local Nexus repsitory:
 ````shell
 /usr/lib/jvm/openjdk-17/bin/java -jar consumer/target/consumer-0.0.1.jar
 ````
+
+### Actuator, Prometheus
+
+Actuator: http://127.0.0.1:8781/consumer/actuator
+Prometheus: http://127.0.0.1:8781/consumer/actuator/prometheus
+
+Так выглядит потребление CPU в Grafana при приеме 10 000 сообщений:
+
+![grafana_receive_10000msg.png](doc/grafana_receive_10000msg.png)
