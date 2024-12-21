@@ -29,6 +29,11 @@ public class RouteMessagesToKafka extends RouteBuilder {
 //        template.send("direct:start", dto)
 
 //        template.sendBody("direct:start", dto);
-        producerTemplate.sendBody(dto);
+        try {
+            producerTemplate.sendBody(dto);
+        } catch (Exception e) {
+            e.printStackTrace();
+            log.error(e.getMessage());
+        }
     }
 }
