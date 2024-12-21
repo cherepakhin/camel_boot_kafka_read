@@ -315,6 +315,6 @@ Kafka и producer соединены через wifi
 producer/doc$ ./send_many_messages.sh 10000
 ````
 
-start   11:08:42
-end     11:10:39
+Так выглядит потребление CPU в Grafana при приеме 10 000 сообщений:
 
+![grafana_receive_10000msg.png](consumer/doc/grafana_receive_10000msg.png)
