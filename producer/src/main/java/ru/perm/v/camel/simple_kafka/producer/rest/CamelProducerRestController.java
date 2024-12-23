@@ -2,8 +2,10 @@ package ru.perm.v.camel.simple_kafka.producer.rest;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.swagger.annotations.ApiOperation;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.apache.camel.CamelContext;
 import org.apache.camel.Exchange;
 import org.apache.camel.Produce;
@@ -15,10 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import ru.perm.v.camel.simple_kafka.producer.dto.MessageDTO;
 import ru.perm.v.camel.simple_kafka.producer.route.RouteMessagesToKafka;
 
@@ -41,19 +40,28 @@ public class CamelProducerRestController {
     Exchange exchange;
 
     @GetMapping("/send")
-    @Operation(summary = "Send a 'Hello' message", description = "Send a simple 'Hello' message")
+    @Operation(summary = "Send a 'Hello' message to camel", description = "Send a simple 'Hello' message to route  \"direct:echo\"")
     @ApiResponse(responseCode = "200", description = "Message sent successfully")
     public String send() throws ExecutionException, InterruptedException {
         CamelContext context = template.getCamelContext();
         exchange = new DefaultExchange(context);
         exchange.getIn().setBody("Hello");
-        return template.send("direct:echo", exchange).getMessage().getBody(String.class);
+        return template.send("direct:echo", exchange)
+                .getMessage().getBody(String.class);
     }
 
     //TODO: validate
-    @GetMapping("/sendMessageDto_template")
-    public ResponseEntity<MessageDTO> sendMessageDtoWithTemplate(MessageDTO dto) throws ExecutionException, InterruptedException, JsonProcessingException {
-        logger.info("{}", dto);
+    @Operation(summary = "Send single message MessageDTO with POST request",
+            description = "Send single message MessageDTO with POST request /sendMessageDto_template. Example: For send: \"http :8081/api/producer/sendMessageDto_route\" < dto.json" +
+                    "Receive param MessageDTO")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Message sent successfully")
+    })
+    @PostMapping(value = "/sendMessageDto_template", consumes = "application/json", produces = "application/json")
+    public ResponseEntity<MessageDTO> sendMessageDtoWithTemplate(final @RequestBody MessageDTO dto)
+            throws ExecutionException, InterruptedException, JsonProcessingException {
+        logger.info("Send DTO: {}", dto);
+
         CamelContext context = template.getCamelContext();
         Exchange exchange = new DefaultExchange(context);
 
@@ -62,11 +70,11 @@ public class CamelProducerRestController {
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
-        Object body = template.send("direct:messages", exchange);
+        Object body = template.send("direct:echo", exchange);
         logger.info("=======================================");
         logger.info(body.toString());
         MessageDTO receivedDto = mapper.readValue(body.toString(), MessageDTO.class);
-    return new ResponseEntity<>(receivedDto, HttpStatus.OK);
+        return new ResponseEntity<>(receivedDto, HttpStatus.OK);
     }
 
     // For send: "http :8081/api/producer/sendMessageDto_route"

@@ -44,6 +44,20 @@ http http://192.168.1.20:8082/api/messages
 
 Сообщения отправляются каждые 5 сек, время отправки в __name__.
 
+### Отправка через REST
+
+Отправить 10 сообщений:
+
+````shell
+$ http :8081/api/producer/sendManyMessageDto/10
+
+HTTP/1.1 200 
+Connection: keep-alive
+Content-Type: application/json
+
+10
+````
+
 ### Создание FAT jar файла
 
 ````shell
@@ -76,3 +90,7 @@ Deploy to local Nexus repository:
 ````shell
 ./mvnw deploy
 ````
+
+### Swagger
+
+Доступен через URL [http://127.0.0.1:8081/swagger-ui/index.html](http://127.0.0.1:8081/swagger-ui/index.html)

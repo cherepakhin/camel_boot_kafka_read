@@ -3,6 +3,7 @@ package ru.perm.v.camel.simple_kafka.producer.dto;
 import lombok.Getter;
 import lombok.Setter;
 
+import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Objects;
@@ -13,7 +14,9 @@ import java.util.UUID;
 public class MessageDTO {
     private static int counter = 0;
     private UUID id = UUID.randomUUID();
+    @Size(min = 5)
     private String name = "";
+    @Size(min = 5)
     private String description = "";
     private static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 

@@ -90,7 +90,7 @@ $ jq -rc . producer/doc/example_message1.json
 Прочитать сообщение через REST: 
 
 ````shell
-$ http :9090/api/messages/
+$ http :8082/api/messages/
 [
     {
         "id": "f10e37fa-0da7-4854-a292-33948f2ce330",
@@ -111,7 +111,7 @@ $ http :9090/api/messages/
 $ export BOOTSTRAP_SERVERS=http://192.168.1.20:9092
 $ ./mvnw spring-boot:run
 
-$ http :9090/api/messages/
+$ http :8082/api/messages/
 HTTP/1.1 200
 Connection: keep-alive
 Content-Type: application/json
@@ -147,13 +147,13 @@ $ producer/doc/send_many_messages.sh 100
 Consumer примет сообщения. Прочитать принятые сообщения командой:
 
 ````shell
-$ http :9090/api/messages/
+$ http :8082/api/messages/
 ````
 
 Удалить все сообщения в базе данных:
 
 ````shell
-$ http DELETE :9090/api/messages/
+$ http DELETE :8082/api/messages/
 ````
 
 # Запуск всего комплекса

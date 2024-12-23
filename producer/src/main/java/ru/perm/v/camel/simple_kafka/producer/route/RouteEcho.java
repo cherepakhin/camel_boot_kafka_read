@@ -17,8 +17,17 @@ public class RouteEcho extends RouteBuilder {
 
     @Override
     public void configure() throws Exception {
-        from("direct:echo").process(messageBodyLogger)
-                .to("direct:end");
+        // Компонент direct в Apache Camel позволяет разбить один маршрут на много маленьких.
+        // маршрут:
+        // from("theSamePoint1").process(?).to("theSamePoint2");
+        // можно разбить на:
+        // from("theSamePoint1").to("direct:intermediatePoint");
+        // from("direct:intermediatePoint").process(?).to("theSamePoint2");
+
+//        from("direct:echo").process(messageBodyLogger)
+//                .to("direct:echoto");
+        from("direct:echo")
+                .to("direct:echoto");
 
     }
 }
