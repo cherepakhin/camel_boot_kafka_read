@@ -1,8 +1,6 @@
 package ru.perm.v.camel.simple_kafka.producer.route;
 
 import lombok.RequiredArgsConstructor;
-import org.apache.camel.Produce;
-import org.apache.camel.ProducerTemplate;
 import org.apache.camel.builder.RouteBuilder;
 import org.springframework.stereotype.Component;
 import ru.perm.v.camel.simple_kafka.producer.processor.MessageBodyLogger;
