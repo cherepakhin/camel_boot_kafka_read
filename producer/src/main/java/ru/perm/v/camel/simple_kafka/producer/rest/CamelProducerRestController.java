@@ -6,9 +6,11 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.apache.camel.*;
+import org.apache.camel.CamelContext;
+import org.apache.camel.ConsumerTemplate;
+import org.apache.camel.Exchange;
+import org.apache.camel.ProducerTemplate;
 import org.apache.camel.builder.RouteBuilder;
-import org.apache.camel.impl.DefaultCamelContext;
 import org.apache.camel.support.DefaultExchange;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,9 +31,7 @@ import java.util.concurrent.ExecutionException;
 public class CamelProducerRestController {
 
     private final CamelContext context;
-    // for example work with Camel
-//    @Autowired
-    private ProducerTemplate producerTemplate;
+    private final ProducerTemplate producerTemplate;
 
     @Autowired
     RouteMessagesToKafka routeMessagesToKafka;

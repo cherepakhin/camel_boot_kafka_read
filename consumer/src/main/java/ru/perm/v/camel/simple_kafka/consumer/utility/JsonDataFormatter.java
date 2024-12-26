@@ -11,5 +11,4 @@ public class JsonDataFormatter {
 		jsonDataFormat.addModule(new JavaTimeModule());
 		return jsonDataFormat;
 	}
-
 }
