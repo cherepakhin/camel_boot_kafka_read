@@ -12,18 +12,6 @@ import lombok.Data;
 public class KafkaConfigurationProperties {
 
 	private String topicName;
-	private DeadLetter deadLetter = new DeadLetter();
 	private Integer shedulePeriod;
-
-	@Data
-	public class DeadLetter {
-		private String topicName;
-		private Integer retries;
-		/***
-		 * Delay between messages that fail to publish in milliseconds
-		 */
-		private Long delay;
-
-	}
 
 }

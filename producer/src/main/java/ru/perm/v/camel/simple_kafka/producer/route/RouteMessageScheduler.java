@@ -27,7 +27,7 @@ public class RouteMessageScheduler extends RouteBuilder {
      * если period=0 - sheduler отключен
      * сообщение логируется messageBodyLogger
      * сообщение логируется вторым логером messageBodyLoggerSecond (для интереса)
-     * JsonDataFormatter спец.средство Camel для перевода объекта в json (типа ObjectMapper).
+     * JsonDataFormatter спец.средство Camel для перевода объекта в json (типа ObjectMapper), но для Camel!
      * JsonDataFormatter принимает поток сообщений и конвертирует их в JSON.
      */
     @Override

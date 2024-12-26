@@ -5,10 +5,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
-import org.apache.camel.CamelContext;
-import org.apache.camel.Exchange;
-import org.apache.camel.Produce;
-import org.apache.camel.ProducerTemplate;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import org.apache.camel.*;
+import org.apache.camel.builder.RouteBuilder;
+import org.apache.camel.impl.DefaultCamelContext;
 import org.apache.camel.support.DefaultExchange;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,10 +25,13 @@ import java.util.concurrent.ExecutionException;
 @RestController
 @RequestMapping("/api/producer")
 @Validated
+@Tag(name = "REST controller for sending messages to Kafka")
 public class CamelProducerRestController {
 
-    @Produce("direct:echo")
-    private ProducerTemplate template;
+    private final CamelContext context;
+    // for example work with Camel
+//    @Autowired
+    private ProducerTemplate producerTemplate;
 
     @Autowired
     RouteMessagesToKafka routeMessagesToKafka;
@@ -38,21 +41,40 @@ public class CamelProducerRestController {
     ObjectMapper mapper = new ObjectMapper();
     Exchange exchange;
 
+    public CamelProducerRestController(@Autowired
+                                       ProducerTemplate producerTemplate) {
+        super();
+        this.producerTemplate = producerTemplate;
+        context = producerTemplate.getCamelContext();
+
+        try {
+            context.addRoutes(new RouteBuilder() {
+                public void configure() throws Exception {
+                    from("direct:echo_route").to("seda:end");
+                }
+            });
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     @GetMapping("/send")
     @Operation(summary = "Send a 'Hello' message to camel", description = "Send a simple 'Hello' message to route  \"direct:echo\"")
     @ApiResponse(responseCode = "200", description = "Message sent successfully")
-    public String send() throws ExecutionException, InterruptedException {
-        CamelContext context = template.getCamelContext();
-        exchange = new DefaultExchange(context);
-        exchange.getIn().setBody("Hello");
-        return template.send("direct:echo", exchange)
-                .getMessage().getBody(String.class);
+    public String send() throws Exception {
+        producerTemplate.sendBody("direct:echo_route", "Hello Everyone");
+
+        ConsumerTemplate consumerTemplate = context.createConsumerTemplate();
+        String message = consumerTemplate.receiveBody("seda:end", String.class);
+
+        return message;
     }
 
     //TODO: validate
     @Operation(summary = "Send single message MessageDTO with POST request",
-            description = "Send single message MessageDTO with POST request /sendMessageDto_template. Example: For send: \"http :8081/api/producer/sendMessageDto_route\" < dto.json" +
-                    "Receive param MessageDTO")
+            description = "Send single message MessageDTO with POST request /sendMessageDto_template. " +
+                    "Example: For send: \"http :8081/api/producer/sendMessageDto_route\" < dto.json." +
+                    "Receive end respond MessageDTO")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Message sent successfully")
     })
@@ -61,7 +83,7 @@ public class CamelProducerRestController {
             throws ExecutionException, InterruptedException, JsonProcessingException {
         logger.info("Send DTO: {}", dto);
 
-        CamelContext context = template.getCamelContext();
+        CamelContext context = producerTemplate.getCamelContext();
         Exchange exchange = new DefaultExchange(context);
 
         try {
@@ -69,7 +91,7 @@ public class CamelProducerRestController {
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
-        Object body = template.send("direct:echo", exchange);
+        Object body = producerTemplate.send("direct:echo", exchange);
         logger.info("=======================================");
         logger.info(body.toString());
         MessageDTO receivedDto = mapper.readValue(body.toString(), MessageDTO.class);

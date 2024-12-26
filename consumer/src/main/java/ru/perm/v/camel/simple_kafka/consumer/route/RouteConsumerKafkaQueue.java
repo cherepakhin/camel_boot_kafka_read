@@ -49,8 +49,12 @@ public class RouteConsumerKafkaQueue extends RouteBuilder {
         log.info("kafkaConfigurationProperties.broker: {}", kafkaConfigurationProperties.broker);
         String fromKafka = getRoute(kafkaConfigurationProperties);
         log.info("fromKafka: {}", fromKafka);
-        from(fromKafka).log("Message received from Kafka : ${body}").unmarshal(JsonDataFormatter.get(MessageDTO.class))
-                .process(myMessageBodyLogger).process(messageDatasourceProcessor).end();
+        from(fromKafka)
+                .log("Message received from Kafka : ${body}")
+                .unmarshal(JsonDataFormatter.get(MessageDTO.class))
+                .process(myMessageBodyLogger)
+                .process(messageDatasourceProcessor)
+                .end();
     }
 
     public String getRoute(KafkaConfigurationProperties kafkaConfigurationProperties) {

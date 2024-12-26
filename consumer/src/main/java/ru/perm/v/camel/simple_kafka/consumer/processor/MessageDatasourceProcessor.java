@@ -25,6 +25,10 @@ public class MessageDatasourceProcessor implements Processor {
         logger.info("Process body: " + exchange.getMessage().getBody().toString());
         Object body = exchange.getMessage().getBody();
         logger.info("Body: " + body);
+        if(body.getClass().isInstance(MessageDTO.class)) {
+            logger.severe("NOT MessageDTO");
+            return;
+        }
         try {
             MessageDTO dto = (MessageDTO) body;
             logger.info("After CAST:" + body );
